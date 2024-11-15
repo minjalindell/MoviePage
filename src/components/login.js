@@ -15,7 +15,7 @@ function Login() {
     };
 
     try {
-      const response = await fetch('http://localhost:5000/login', {
+      const response = await fetch('http://localhost:3000/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -26,7 +26,6 @@ function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        // Jos kirjautuminen onnistuu, voit esimerkiksi tallentaa tokenin localStorageen
         localStorage.setItem('authToken', data.token);
       } else {
         setErrorMessage(data.error || 'Kirjautuminen epäonnistui');

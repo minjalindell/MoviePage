@@ -24,6 +24,7 @@
     "pg": "^8.13.1"
   },
   "devDependencies": {
+    "chai": "^5.1.2",
     "cross-env": "^7.0.3",
     "mocha": "^10.8.2"
   }

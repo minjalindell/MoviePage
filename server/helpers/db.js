@@ -16,8 +16,17 @@ const openDb = () => {
     port: process.env.DB_PORT,              
   });
 };
-
 const pool = openDb();
+
+pool.connect()
+  .then(() => {
+    console.log('Database connected successfully');
+  })
+  .catch(err => {
+    console.error('Database connection error', err.stack);
+  });
+
+
 
 export { pool };
 
