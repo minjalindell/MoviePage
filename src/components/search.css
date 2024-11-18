@@ -1,0 +1,162 @@
+/* search.css */
+
+#container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: black;
+    color: white;
+    min-height: 100vh;
+}
+
+h3 {
+    color: pink;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Asettelu hakukentille */
+.search-filters {
+    display: flex;
+    justify-content: space-between; /* Kentät tasataan vaakasuunnassa */
+    gap: 20px; /* Väli kenttien välillä */
+    margin-bottom: 20px;
+    width: 100%; /* Kenttien leveys täyttää käytettävissä olevan tilan */
+    max-width: 900px; /* Rajoittaa kenttien leveyden */
+}
+
+.search-filters div {
+    flex: 1; /* Kentät jakavat tilan tasaisesti */
+}
+
+/* Form elementit */
+input, select, button {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: #222;
+    color: white;
+}
+
+/* Paikkamerkintä */
+input::placeholder, select::placeholder {
+    color: #bbb;
+}
+
+/* Painike */
+button {
+    background-color: deeppink;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: rgb(253, 90, 177);
+}
+
+/* Taulukko */
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+table td {
+    padding: 12px;
+    border: 1px solid #444;
+    text-align: center;
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background-color: #333;
+}
+
+table tr:nth-child(odd) {
+    background-color: #222;
+}
+
+/* Paginointi */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    margin: 0 4px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.pagination a:hover {
+    background-color: deeppink;
+    color: white;
+}
+
+/* Responsiivisuus */
+@media (max-width: 768px) {
+    #container {
+        padding: 15px;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    .search-filters {
+        flex-direction: column; /* Kentät menevät pystysuoraan pienemmillä näytöillä */
+        gap: 10px;
+        width: 100%;
+    }
+
+    input, select, button {
+        font-size: 0.9rem;
+        width: 100%; /* Tekee syöttökentistä ja napista koko leveydeltään */
+        padding: 12px;
+    }
+
+    table td {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    #container {
+        padding: 10px;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+    }
+
+    .search-filters {
+        flex-direction: column; /* Kentät menevät pystysuoraan pienemmillä laitteilla */
+    }
+
+    input, select, button {
+        width: 100%;
+        font-size: 0.85rem;
+        padding: 8px;
+    }
+
+    table td {
+        padding: 8px;
+        font-size: 0.85rem;
+    }
+
+    .pagination a {
+        padding: 6px 12px;
+    }
+}
+
+  
+  

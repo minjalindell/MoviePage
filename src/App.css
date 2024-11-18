@@ -1,38 +1,127 @@
+/* App.css */
+
+/* Yleiset tyylit */
 .App {
   text-align: center;
+  background-color: black;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  background-color: black;
+  color: white; 
+  margin: 0; 
+  font-family: Arial, sans-serif; 
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
+  text-align: center;
+  padding: 20px 0;
 }
 
-.App-link {
-  color: #61dafb;
+.App-nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px; 
+  background-color: #222; 
+  padding: 10px 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.nav-button {
+  background-color: deeppink;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.nav-button:hover {
+  background-color: #45a049;
+}
+
+.nav-link {
+  text-decoration: none;
+}
+
+.App-section {
+  background-color: black;
+  padding: 20px;
+  text-align: center;
+}
+
+.App-section h2 {
+  color: pink;
+  margin-bottom: 20px;
+}
+
+.section-button {
+  background-color: deeppink; 
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.section-button:hover {
+  background-color: #0056b3;
+}
+
+/* Responsiivisuus */
+@media (max-width: 768px) {
+  .App-nav {
+    flex-direction: column; 
+    gap: 15px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .nav-button {
+    font-size: 1.1rem;
+    padding: 12px 25px; 
+  }
+
+  .App-section {
+    padding: 15px;
+  }
+
+  .section-button {
+    font-size: 1rem; 
+    padding: 12px 25px;
+  }
+
+  .App-header h1 {
+    font-size: 1.5rem; 
   }
 }
+
+@media (max-width: 480px) {
+  .App-nav {
+    flex-direction: column; 
+    gap: 10px; 
+  }
+
+  .nav-button {
+    font-size: 1rem; 
+    padding: 10px 20px; 
+  }
+
+  .App-header h1 {
+    font-size: 1.2rem;
+  }
+
+  .App-section h2 {
+    font-size: 1.2rem; 
+  }
+
+  .section-button {
+    font-size: 0.9rem; 
+    padding: 10px 20px; 
+  }
+}
+
+
