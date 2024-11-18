@@ -1,0 +1,104 @@
+/* login.css */
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: black;
+  }
+  
+  .login-form {
+    background-color: lightblue;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(252, 251, 251, 0.1);
+    width: 100%; 
+    max-width: 400px;
+    text-align: center;
+  }
+
+  .login-form h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  /* Kenttien label */
+  .login-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  /* Input-kentät */
+  .login-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  /* Painike */
+  .login-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: deeppink;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+
+  .login-form button:hover {
+    background-color: rgb(253, 90, 177);
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 10px;
+    font-size: 0.9rem;
+  }
+  
+  /* Responsiivisuus */
+  
+  @media (max-width: 768px) {
+    .login-form {
+      padding: 20px;
+      max-width: 90%; 
+    }
+  
+    .login-form h2 {
+      font-size: 1.3rem;
+    }
+  
+    .login-form input,
+    .login-form button {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+
+    .login-form {
+      padding: 15px;
+      max-width: 95%;
+    }
+  
+    .login-form h2 {
+      font-size: 1.2rem;
+    }
+  
+    .login-form input,
+    .login-form button {
+      padding: 8px;
+      font-size: 0.9rem;
+    }
+  }
+  
