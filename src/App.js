@@ -19,19 +19,19 @@ function App() {
               </header>
               <nav className="App-nav">
                 <Link to="/login" className="nav-link">
-                  <button className="nav-button">Kirjaudu</button>
+                  <button className="nav-button">Log in</button>
                 </Link>
                 <Link to="/register" className="nav-link">
-                  <button className="nav-button">Rekisteröidy</button>
+                  <button className="nav-button">Register</button>
                 </Link>
               </nav>
               <section className="App-section">
-                <h2>Tutustu tarjontaan</h2>
+                <h2>Check out the selection</h2>
                 <Link to="/shows">
-                  <button className="section-button">Hae näytöksiä</button>
+                  <button className="section-button">Search shows</button>
                 </Link>
                 <Link to="/search">
-                  <button className="section-button">Hae leffoja</button>
+                  <button className="section-button">Search movies</button>
                 </Link>
               </section>
             </div>
