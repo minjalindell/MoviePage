@@ -86,20 +86,36 @@ table tr:nth-child(odd) {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    flex-wrap: wrap; /* Varmistaa, että painikkeet siirtyvät seuraavalle riville tarvittaessa */
+    gap: 8px; /* Lisää väli painikkeiden väliin */
 }
 
 .pagination a {
     color: white;
     padding: 8px 16px;
     text-decoration: none;
-    margin: 0 4px;
     border-radius: 4px;
     border: 1px solid #ccc;
+    background-color: #222;
+    display: inline-block; /* Varmistaa, että painikkeet ovat peräkkäin */
 }
 
 .pagination a:hover {
     background-color: deeppink;
     color: white;
+}
+
+/* Aktivoi aktiivinen sivu */
+.pagination .selected {
+    background-color: deeppink;
+    color: white;
+}
+
+/* Poista linkin korostus valitsemattomilla sivuilla */
+.pagination .disabled {
+    background-color: #444;
+    color: #777;
+    pointer-events: none;
 }
 
 /* Responsiivisuus */
@@ -157,6 +173,3 @@ table tr:nth-child(odd) {
         padding: 6px 12px;
     }
 }
-
-  
-  
