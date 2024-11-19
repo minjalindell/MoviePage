@@ -23,8 +23,7 @@
     font-size: 1.5rem;
     color: #333;
   }
-  
-  /* Kenttien label */
+
   .register-form label {
     display: block;
     margin-bottom: 8px;
@@ -32,7 +31,7 @@
     color: #555;
   }
   
-  /* Input-kentät */
+ 
   .register-form input {
     width: 100%;
     padding: 10px;
@@ -42,7 +41,7 @@
     font-size: 1rem;
   }
   
-  /* Painike */
+
   .register-form button {
     width: 100%;
     padding: 10px;

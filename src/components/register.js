@@ -8,7 +8,7 @@ function Register() {
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
-  // Salasanan validointifunktio
+
   const validatePassword = (password) => {
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
     return passwordRegex.test(password);
@@ -17,13 +17,12 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Etteivät pyydetyt kentät jäätyisi tyhjiksi
+  
     if (!email || !password) {
       setError('Email and password are necessary');
       return;
     }
 
-    // Tarkistetaan salasanan validiteetti ennen lähettämistä
     if (!validatePassword(password)) {
       setError('The password must be at least 8 characters long, contain at least one uppercase letter, and one number.');
       return;
