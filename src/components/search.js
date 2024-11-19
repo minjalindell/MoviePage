@@ -94,55 +94,59 @@ function Search() {
  
   return (
     <div id="container">
-      <h3>Search movies</h3>
- 
-      <div>
-        <label>Title:</label>
-        <input
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search by title"
-        />
-      </div>
- 
-      <div>
-        <label>Genre:</label>
-        <select value={genre} onChange={(e) => setGenre(e.target.value)}>
-          <option value="">-- Select Genre --</option>
-          {genres.map((g) => (
-            <option key={g.id} value={g.id}>
-              {g.name}
-            </option>
-          ))}
-        </select>
-      </div>
- 
-      <div>
-        <label>Year:</label>
-        <input
-          type="number"
-          value={year}
-          onChange={(e) => setYear(e.target.value)}
-          placeholder="Search by release year"
-        />
-      </div>
- 
-      <button onClick={search} type="button">
-        Search
-      </button>
- 
-      <ReactPaginate
-        breakLabel="..."
-        nextLabel=" >"
-        onPageChange={(e) => setPage(e.selected + 1)}
-        pageRangeDisplayed={5}
-        pageCount={pageCount}
-        previousLabel="< "
-        renderOnZeroPageCount={null}
+  <h3>Search movies</h3>
+
+  {/* Hakukenttien ryhmä */}
+  <div className="search-filters">
+    <div>
+      <label>Title:</label>
+      <input
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search by title"
       />
- 
-      <Movies />
     </div>
+
+    <div>
+      <label>Genre:</label>
+      <select value={genre} onChange={(e) => setGenre(e.target.value)}>
+        <option value="">-- Select Genre --</option>
+        {genres.map((g) => (
+          <option key={g.id} value={g.id}>
+            {g.name}
+          </option>
+        ))}
+      </select>
+    </div>
+
+    <div>
+      <label>Year:</label>
+      <input
+        type="number"
+        value={year}
+        onChange={(e) => setYear(e.target.value)}
+        placeholder="Search by release year"
+      />
+    </div>
+  </div>
+
+  <button onClick={search} type="button">
+    Search
+  </button>
+
+  <ReactPaginate
+    breakLabel="..."
+    nextLabel=" >"
+    onPageChange={(e) => setPage(e.selected + 1)}
+    pageRangeDisplayed={5}
+    pageCount={pageCount}
+    previousLabel="< "
+    renderOnZeroPageCount={null}
+  />
+
+  <Movies />
+</div>
+
   );
 }
  
