@@ -1,12 +1,11 @@
-// src/components/Login.js
 import React, { useState } from 'react';
 import './login.css';
-
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState(''); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,7 +16,7 @@ function Login() {
     };
 
     try {
-      const response = await fetch('http://localhost:3000/login', {
+      const response = await fetch('http://localhost:3001/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -28,19 +27,25 @@ function Login() {
       const data = await response.json();
 
       if (response.ok) {
+        //onnistui
         localStorage.setItem('authToken', data.token);
+        setSuccessMessage('Login successfull!'); 
+        setErrorMessage('');
       } else {
-        setErrorMessage(data.error || 'Kirjautuminen epäonnistui');
+        //epäonnistui
+        setErrorMessage(data.message || 'Login failed');
+        setSuccessMessage('');
       }
     } catch (error) {
-      setErrorMessage('Virhe kirjautumisessa');
+      setErrorMessage('Error in login');
+      setSuccessMessage('');
     }
   };
 
   return (
     <div className="login-container">
       <div className="login-form">
-        <h2>Kirjaudu sisään</h2>
+        <h2>Log in</h2>
         <form onSubmit={handleSubmit}>
           <label>Email:</label>
           <input
@@ -56,8 +61,13 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button type="submit">Kirjaudu</button>
+          <button type="submit">Log in</button>
         </form>
+        
+       
+        {successMessage && <p className="success-message">{successMessage}</p>}
+        
+    
         {errorMessage && <p className="error-message">{errorMessage}</p>}
       </div>
     </div>
@@ -65,4 +75,5 @@ function Login() {
 }
 
 export default Login;
+
 

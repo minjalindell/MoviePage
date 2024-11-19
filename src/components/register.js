@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';  // Axios käytetään HTTP-pyyntöihin
-import './register.css'; // Liitetään CSS-tiedosto
+import axios from 'axios';  
+import './register.css'; 
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -8,25 +8,44 @@ function Register() {
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
+
+  const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+  
+    if (!email || !password) {
+      setError('Email and password are necessary');
+      return;
+    }
+
+    if (!validatePassword(password)) {
+      setError('The password must be at least 8 characters long, contain at least one uppercase letter, and one number.');
+      return;
+    }
+
     try {
       const response = await axios.post('http://localhost:3001/register', {
         email,
         password,
       });
-      setSuccessMessage('Rekisteröinti onnistui!');
+      setSuccessMessage('Registeration succesfull!');
       setEmail('');
       setPassword('');
+      setError(''); 
     } catch (err) {
-      setError(err.response?.data?.message || 'Jokin meni pieleen');
+      setError(err.response?.data?.message || 'Something went wrong:(');
     }
   };
 
   return (
     <div className="register-container">
       <div className="register-form">
-        <h2>Rekisteröidy</h2>
+        <h2>Register</h2>
         {error && <p className="error-message">{error}</p>}
         {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
         <form onSubmit={handleSubmit}>
@@ -40,7 +59,7 @@ function Register() {
             />
           </div>
           <div>
-            <label>Salasana:</label>
+            <label>Password:</label>
             <input 
               type="password" 
               value={password} 
@@ -48,7 +67,7 @@ function Register() {
               required 
             />
           </div>
-          <button type="submit">Rekisteröidy</button>
+          <button type="submit">Register</button>
         </form>
       </div>
     </div>
@@ -56,4 +75,5 @@ function Register() {
 }
 
 export default Register;
+
 
