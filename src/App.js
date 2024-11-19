@@ -38,10 +38,10 @@ function App() {
           }
         />
 
-        {/* Login-sivu */}
+
         <Route path="/login" element={<Login />} />
 
-        {/* Register-sivu */}
+
         <Route path="/register" element={<Register />} />
 
         <Route path="/search" element={<Search/>} />

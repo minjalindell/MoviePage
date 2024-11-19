@@ -49,11 +49,11 @@ function Search() {
     let endpoint = '';
  
     if (query) {
-      // Käytä 'search/movie' kun nimen haku on mukana
+  
       endpoint = 'search/movie';
       url = `https://api.themoviedb.org/3/${endpoint}?query=${query}&page=${page}`;
     } else {
-      // Käytä 'discover/movie' kun nimiä ei haeta
+
       endpoint = 'discover/movie';
       url = `https://api.themoviedb.org/3/${endpoint}?include_adult=false&page=${page}`;
       if (genre) url += `&with_genres=${genre}`;
@@ -71,7 +71,7 @@ function Search() {
       .then((json) => {
         let filteredMovies = json.results || [];
  
-        // Suodata nimen perusteella (jos genre tai vuosi lisätty)
+
         if (genre || year) {
           filteredMovies = filteredMovies.filter((movie) => {
             const matchesGenre = genre ? movie.genre_ids.includes(Number(genre)) : true;

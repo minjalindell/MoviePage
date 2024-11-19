@@ -16,21 +16,21 @@ h3 {
     margin-bottom: 20px;
 }
 
-/* Asettelu hakukentille */
+
 .search-filters {
     display: flex;
-    justify-content: space-between; /* Kentät tasataan vaakasuunnassa */
-    gap: 20px; /* Väli kenttien välillä */
+    justify-content: space-between; 
+    gap: 20px; 
     margin-bottom: 20px;
-    width: 100%; /* Kenttien leveys täyttää käytettävissä olevan tilan */
-    max-width: 900px; /* Rajoittaa kenttien leveyden */
+    width: 100%; 
+    max-width: 900px; 
 }
 
 .search-filters div {
-    flex: 1; /* Kentät jakavat tilan tasaisesti */
+    flex: 1; 
 }
 
-/* Form elementit */
+
 input, select, button {
     padding: 10px;
     margin-bottom: 15px;
@@ -41,12 +41,12 @@ input, select, button {
     color: white;
 }
 
-/* Paikkamerkintä */
+
 input::placeholder, select::placeholder {
     color: #bbb;
 }
 
-/* Painike */
+
 button {
     background-color: deeppink;
     color: white;
@@ -59,7 +59,7 @@ button:hover {
     background-color: rgb(253, 90, 177);
 }
 
-/* Taulukko */
+
 table {
     width: 100%;
     margin-top: 20px;
@@ -81,7 +81,7 @@ table tr:nth-child(odd) {
     background-color: #222;
 }
 
-/* Paginointi */
+
 .pagination {
     display: flex;
     justify-content: center;
@@ -113,14 +113,14 @@ table tr:nth-child(odd) {
     }
 
     .search-filters {
-        flex-direction: column; /* Kentät menevät pystysuoraan pienemmillä näytöillä */
+        flex-direction: column; 
         gap: 10px;
         width: 100%;
     }
 
     input, select, button {
         font-size: 0.9rem;
-        width: 100%; /* Tekee syöttökentistä ja napista koko leveydeltään */
+        width: 100%; 
         padding: 12px;
     }
 
@@ -139,7 +139,7 @@ table tr:nth-child(odd) {
     }
 
     .search-filters {
-        flex-direction: column; /* Kentät menevät pystysuoraan pienemmillä laitteilla */
+        flex-direction: column;
     }
 
     input, select, button {

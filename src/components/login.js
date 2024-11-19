@@ -5,7 +5,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState(''); // Onnistumisviesti
+  const [successMessage, setSuccessMessage] = useState(''); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,12 +27,12 @@ function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        // Kirjautuminen onnistui
+        //onnistui
         localStorage.setItem('authToken', data.token);
         setSuccessMessage('Login successfull!'); 
         setErrorMessage('');
       } else {
-        // Kirjautuminen epäonnistui
+        //epäonnistui
         setErrorMessage(data.message || 'Login failed');
         setSuccessMessage('');
       }
@@ -64,10 +64,10 @@ function Login() {
           <button type="submit">Log in</button>
         </form>
         
-        {/* Näytetään onnistumisviesti */}
+       
         {successMessage && <p className="success-message">{successMessage}</p>}
         
-        {/* Näytetään virheviesti */}
+    
         {errorMessage && <p className="error-message">{errorMessage}</p>}
       </div>
     </div>

@@ -27,12 +27,9 @@ router.post('/register', async (req, res) => {
       'INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *',
       [email, hashedPassword]
     );
-
-    // Loggaus
     console.log("Received email:", email);
-    console.log("Received password:", password); // Tämä voi olla turvallisuusriski, älä tallenna salasanoja logeihin
 
-    // Vastaus onnistuneesta rekisteröinnistä
+    // Onnistunut rekisteröinti
     res.status(201).json({
       id: result.rows[0].id,
       email: result.rows[0].email,
@@ -40,7 +37,7 @@ router.post('/register', async (req, res) => {
   } catch (error) {
     console.error('Error in registration:', error);
 
-    // Jos virhe johtuu jo olemassa olevasta sähköpostiosoitteesta (SQL-virhekoodi 23505)
+
     if (error.code === '23505') {
       return res.status(409).json({ message: 'Email already exists' });
     }
@@ -56,7 +53,7 @@ router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Hae käyttäjä tietokannasta
+    // Käyttäjä tietokannasta
     const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
 
     if (result.rowCount === 0) {
@@ -65,13 +62,13 @@ router.post('/login', async (req, res) => {
 
     const user = result.rows[0];
 
-    // Vertaile salasanaa
+    // Salasanan vertailu
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
       return res.status(401).json({ message: 'Virheellinen salasana' });
     }
 
-    // Luo JWT-token
+    // JWT-token luodaan
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
 
     return res.status(200).json({
@@ -81,7 +78,7 @@ router.post('/login', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error in login:', error);  // Loggaa virhe
+    console.error('Error in login:', error);  
     return res.status(500).json({ message: 'Sisäinen virhe palvelimella' });
   }
 });
