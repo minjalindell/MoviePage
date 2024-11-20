@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './profile.css'; // Luo tarvittaessa oma CSS tiedosto tyylejä varten.
+import './profile.css'; 
 
 function Profile() {
   return (
