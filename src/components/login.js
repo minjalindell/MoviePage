@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import './login.css';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState(''); 
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,12 +29,13 @@ function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        //onnistui
+        // Onnistui
         localStorage.setItem('authToken', data.token);
-        setSuccessMessage('Login successfull!'); 
+        setSuccessMessage('Login successful!');
         setErrorMessage('');
+        navigate('/profile');
       } else {
-        //epäonnistui
+        // Epäonnistui
         setErrorMessage(data.message || 'Login failed');
         setSuccessMessage('');
       }
