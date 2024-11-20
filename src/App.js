@@ -7,6 +7,9 @@ import Search from './components/search';
 import Profile from './components/profile';
 import MovieDetails from './components/MovieDetails';
 import Shows from './components/shows';
+import TopMovies from './components/topMovies';
+import TopMoviesFull from './components/TopMoviesFull';
+import ReviewPage from './components/Reviewpage';
 
 function App() {
   return (
@@ -37,6 +40,10 @@ function App() {
                   <button className="section-button">Search movies</button>
                 </Link>
               </section>
+              {/*top movies komponentti*/}
+              <section className='App-top-movies'>
+                <TopMovies/>
+              </section>
             </div>
           }
         />
@@ -48,6 +55,8 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/movie/:id" element={<MovieDetails />} />
         <Route path="/shows" element={<Shows />} />
+        <Route path="/top-movies" element={<TopMoviesFull />} />
+        <Route path="/reviews/:movieId" element={<ReviewPage />} />
 
       </Routes>
     </Router>

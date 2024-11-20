@@ -1,6 +1,4 @@
-/* App.css */
 
-/* Yleiset tyylit */
 .App {
   text-align: center;
   background-color: black;
@@ -73,7 +71,6 @@ body {
   background-color: #0056b3;
 }
 
-/* Responsiivisuus */
 @media (max-width: 768px) {
   .App-nav {
     flex-direction: column; 
@@ -125,3 +122,25 @@ body {
 }
 
 
+/*----------------------*/
+.top-movies {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-top: 1px solid #ddd;
+}
+
+.top-movies-list {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.movie-item {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.movie-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+/*----------------------*/
