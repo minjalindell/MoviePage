@@ -6,6 +6,7 @@ import Register from './components/register';
 import Search from './components/search';
 import Profile from './components/profile';
 import MovieDetails from './components/MovieDetails';
+import Shows from './components/shows';
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
         <Route path="/search" element={<Search/>} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/movie/:id" element={<MovieDetails />} />
+        <Route path="/shows" element={<Shows />} />
 
       </Routes>
     </Router>

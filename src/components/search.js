@@ -62,7 +62,7 @@ const Search = () => {
     <div id="container">
       <h3>Search Movies</h3>
 
-      {/* Hakulomake */}
+      {/* Haku */}
       <div>
         <input
           value={query}
