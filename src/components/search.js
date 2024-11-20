@@ -1,15 +1,16 @@
-import ReactPaginate from 'react-paginate';
-import { useEffect, useState } from 'react';
-import './search.css';
- 
-function Search() {
+import ReactPaginate from "react-paginate";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+const Search = () => {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
-  const [query, setQuery] = useState('');
-  const [genre, setGenre] = useState('');
-  const [year, setYear] = useState('');
- 
+  const [query, setQuery] = useState("");
+  const [genre, setGenre] = useState("");
+  const [year, setYear] = useState("");
+  const navigate = useNavigate();
+
   const genres = [
     { id: 28, name: "Action" },
     { id: 12, name: "Adventure" },
@@ -31,123 +32,107 @@ function Search() {
     { id: 10752, name: "War" },
     { id: 37, name: "Western" },
   ];
- 
-  const Movies = () => {
-    return (
-      <table>
-        {movies && movies.map((movie) => (
-          <tr key={movie.id}>
-            <td>{movie.title}</td>
-          </tr>
-        ))}
-      </table>
-    );
-  };
- 
-  const search = () => {
-    let url = '';
-    let endpoint = '';
- 
-    if (query) {
-  
-      endpoint = 'search/movie';
-      url = `https://api.themoviedb.org/3/${endpoint}?query=${query}&page=${page}`;
-    } else {
 
-      endpoint = 'discover/movie';
-      url = `https://api.themoviedb.org/3/${endpoint}?include_adult=false&page=${page}`;
-      if (genre) url += `&with_genres=${genre}`;
-      if (year) url += `&primary_release_year=${year}`;
-    }
- 
+  const search = () => {
+    let url = `https://api.themoviedb.org/3/${query ? "search/movie" : "discover/movie"}?page=${page}`;
+    if (query) url += `&query=${query}`;
+    if (genre) url += `&with_genres=${genre}`;
+    if (year) url += `&primary_release_year=${year}`;
+
     fetch(url, {
       headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMWY5YjZiNmIyY2M4YjQwOTk2YWE1MzY2NmIwMDJkNSIsIm5iZiI6MTczMTY1OTg4NC44OTM1NSwic3ViIjoiNjczNDUzZjgwNTgxNjRjNDA1MjNmYTBkIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.xiEsZpA1oJhq910VPdQAqPrZmnktqGJMj58imsF0RtI",
+        Authorization: 
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMWY5YjZiNmIyY2M4YjQwOTk2YWE1MzY2NmIwMDJkNSIsIm5iZiI6MTczMTY1OTg4NC44OTM1NSwic3ViIjoiNjczNDUzZjgwNTgxNjRjNDA1MjNmYTBkIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.xiEsZpA1oJhq910VPdQAqPrZmnktqGJMj58imsF0RtI",
         "Content-Type": "application/json",
       },
     })
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then((json) => {
-        let filteredMovies = json.results || [];
- 
-
-        if (genre || year) {
-          filteredMovies = filteredMovies.filter((movie) => {
-            const matchesGenre = genre ? movie.genre_ids.includes(Number(genre)) : true;
-            const matchesYear = year ? movie.release_date?.startsWith(year) : true;
-            return matchesGenre && matchesYear;
-          });
-        }
- 
-        setMovies(filteredMovies);
+        setMovies(json.results || []);
         setPageCount(json.total_pages || 0);
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => console.log(error));
   };
- 
+
   useEffect(() => {
     search();
   }, [page]);
- 
+
   return (
     <div id="container">
-  <h3>Search movies</h3>
+      <h3>Search Movies</h3>
 
-  {/* Hakukenttien ryhmä */}
-  <div className="search-filters">
-    <div>
-      <label>Title:</label>
-      <input
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search by title"
+      {/* Hakulomake */}
+      <div>
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search by title"
+        />
+      </div>
+
+      <div>
+        <select value={genre} onChange={(e) => setGenre(e.target.value)}>
+          <option value="">-- Select Genre --</option>
+          {genres.map((g) => (
+            <option key={g.id} value={g.id}>
+              {g.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <input
+          type="number"
+          value={year}
+          onChange={(e) => setYear(e.target.value)}
+          placeholder="Search by release year"
+        />
+      </div>
+
+      <button onClick={search}>Search</button>
+
+      {/* Sivutuksen komponentti */}
+      <ReactPaginate
+        breakLabel="..."
+        nextLabel=" >"
+        onPageChange={(e) => setPage(e.selected + 1)}
+        pageRangeDisplayed={5}
+        pageCount={pageCount}
+        previousLabel="< "
+        renderOnZeroPageCount={null}
       />
+
+      {/* Elokuvataulukko */}
+      <table>
+  {movies.map((movie) => (
+    <tr key={movie.id}>
+      <td>
+        {/* Elokuvan posteri */}
+        {movie.poster_path && (
+          <img
+            src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+            alt={`${movie.title} poster`}
+            style={{
+              maxWidth: "50px",
+              borderRadius: "4px",
+              marginRight: "10px",
+              verticalAlign: "middle",
+            }}
+          />
+        )}
+
+        {/* Elokuvan nimi ja navigointipainike */}
+        <button onClick={() => navigate(`/movie/${movie.id}`)} style={{ background: "none", border: "none", color: "blue", textDecoration: "underline", cursor: "pointer" }}>
+          {movie.title}
+        </button>
+      </td>
+    </tr>
+  ))}
+</table>
     </div>
-
-    <div>
-      <label>Genre:</label>
-      <select value={genre} onChange={(e) => setGenre(e.target.value)}>
-        <option value="">-- Select Genre --</option>
-        {genres.map((g) => (
-          <option key={g.id} value={g.id}>
-            {g.name}
-          </option>
-        ))}
-      </select>
-    </div>
-
-    <div>
-      <label>Year:</label>
-      <input
-        type="number"
-        value={year}
-        onChange={(e) => setYear(e.target.value)}
-        placeholder="Search by release year"
-      />
-    </div>
-  </div>
-
-  <button onClick={search} type="button">
-    Search
-  </button>
-
-  <ReactPaginate
-    breakLabel="..."
-    nextLabel=" >"
-    onPageChange={(e) => setPage(e.selected + 1)}
-    pageRangeDisplayed={5}
-    pageCount={pageCount}
-    previousLabel="< "
-    renderOnZeroPageCount={null}
-  />
-
-  <Movies />
-</div>
-
   );
-}
- 
+};
+
 export default Search;

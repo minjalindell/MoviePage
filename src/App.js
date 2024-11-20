@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Login from './components/login';
 import Register from './components/register';
 import Search from './components/search';
+import Profile from './components/profile';
+import MovieDetails from './components/MovieDetails';
 
 function App() {
   return (
@@ -40,11 +42,10 @@ function App() {
 
 
         <Route path="/login" element={<Login />} />
-
-
         <Route path="/register" element={<Register />} />
-
         <Route path="/search" element={<Search/>} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/movie/:id" element={<MovieDetails />} />
 
       </Routes>
     </Router>

@@ -1,97 +1,100 @@
-
+/* Yleisiä säätöjä */
 #container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
-    background-color: black;
-    color: white;
-    min-height: 100vh;
-}
-
-label {
-    display: block; /* Asettaa labelin omalle rivilleen */
-    margin-bottom: 5px; /* Lisää etäisyyttä hakulaatikkoon */
-    font-weight: bold; /* (valinnainen) Tekee tekstistä korostetumman */
-}
-
-
-h3 {
-    color: pink;
+    font-family: Arial, sans-serif;
+    color: #333;
+    display: flex;
+    flex-direction: column; /* Asettaa elementit pystysuoraan */
+    align-items: center; /* Keskittää kaikki lapset vaakasuunnassa */
+    justify-content: center; /* Keskittää kaikki lapset pystysuunnassa */
+    height: 100vh; /* Varmistaa, että sisältö on keskellä koko näkymää */
+  }
+  
+  h3 {
     font-size: 2rem;
     margin-bottom: 20px;
-}
-
-
-.search-filters {
-    display: flex;
-    justify-content: space-between; 
-    gap: 20px; 
-    margin-bottom: 20px;
-    width: 100%; 
-    max-width: 900px; 
-}
-
-.search-filters div {
-    flex: 1; 
-}
-
-
-input, select, button {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-    background-color: #222;
-    color: white;
-}
-
-
-input::placeholder, select::placeholder {
-    color: #bbb;
-}
-
-
-button {
-    background-color: deeppink;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: rgb(253, 90, 177);
-}
-
-
-table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-}
-
-table td {
-    padding: 12px;
-    border: 1px solid #444;
     text-align: center;
+    color: #4a90e2;
+  }
+  
+  /* Hakulomake: Käytetään Flexboxia */
+  .search-form {
+    display: flex;
+    justify-content: center; /* Keskittää kaikki kentät */
+    align-items: center;     /* Keskittää kentät pystysuunnassa */
+    gap: 10px;               /* Väli kenttien välillä */
+    flex-wrap: wrap;         /* Sallii kenttien rivittymisen pienemmillä näytöillä */
+    margin-bottom: 20px;
+  }
+  
+  .search-form input,
+  .search-form select,
+  .search-form button {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 200px; /* Asenna leveys kentille */
+  }
+  
+  button {
+    background-color: #4a90e2;
     color: white;
-}
-
-table tr:nth-child(even) {
-    background-color: #333;
-}
-
-table tr:nth-child(odd) {
-    background-color: #222;
-}
-
-
-.pagination {
+    cursor: pointer;
+    border: none;
+  }
+  
+  button:hover {
+    background-color: #357ab7;
+  }
+  
+  /* Elokuvan lista */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  table th,
+  table td {
+    padding: 10px;
+    text-align: left;
+  }
+  
+  table tr:nth-child(even) {
+    background-color: #f4f4f4;
+  }
+  
+  table tr:hover {
+    background-color: #ddd;
+  }
+  
+  img {
+    max-width: 100px;
+    border-radius: 5px;
+    margin-right: 15px;
+  }
+  
+  button {
+    background: none;
+    border: none;
+    color: #4a90e2;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    text-decoration: none;
+  }
+  
+  /* Sivutuksen tyylit */
+  .react-paginate {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+<<<<<<< HEAD
     flex-wrap: wrap; /* Varmistaa, että painikkeet siirtyvät seuraavalle riville tarvittaessa */
     gap: 8px; /* Lisää väli painikkeiden väliin */
 }
@@ -126,56 +129,101 @@ table tr:nth-child(odd) {
 
 /* Responsiivisuus */
 @media (max-width: 768px) {
+=======
+  }
+  
+  .react-paginate ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .react-paginate li {
+    margin: 0 5px;
+  }
+  
+  .react-paginate a {
+    text-decoration: none;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333;
+  }
+  
+  .react-paginate a:hover {
+    background-color: #4a90e2;
+    color: white;
+  }
+  
+  .react-paginate .selected {
+    background-color: #4a90e2;
+    color: white;
+  }
+  
+  /* Responsiivisuus: pienemmille näytöille (esim. puhelimille ja tableteille) */
+  
+  @media (max-width: 768px) {
+>>>>>>> c302a6d84231a90ae10cf8ac1e45d73187dad5eb
     #container {
-        padding: 15px;
+      padding: 10px;
     }
-
+  
     h3 {
-        font-size: 1.5rem;
+      font-size: 1.5rem;
     }
-
-    .search-filters {
-        flex-direction: column; 
-        gap: 10px;
-        width: 100%;
+  
+    .search-form input,
+    .search-form select,
+    .search-form button {
+      width: 100%; /* Kentät vievät koko leveyden pienillä näytöillä */
+      font-size: 0.9rem;
     }
-
-    input, select, button {
-        font-size: 0.9rem;
-        width: 100%; 
-        padding: 12px;
+  
+    table {
+      font-size: 0.9rem;
     }
-
-    table td {
-        padding: 10px;
+  
+    img {
+      max-width: 80px;
     }
-}
-
-@media (max-width: 480px) {
-    #container {
-        padding: 10px;
+  
+    .react-paginate a {
+      padding: 6px 10px;
     }
-
+  }
+  
+  @media (max-width: 480px) {
     h3 {
-        font-size: 1.2rem;
+      font-size: 1.25rem;
     }
-
-    .search-filters {
-        flex-direction: column;
+  
+    .search-form input,
+    .search-form select,
+    .search-form button {
+      font-size: 0.8rem;
     }
-
-    input, select, button {
-        width: 100%;
-        font-size: 0.85rem;
-        padding: 8px;
-    }
-
+  
+    table th,
     table td {
-        padding: 8px;
-        font-size: 0.85rem;
+      font-size: 0.8rem;
+      padding: 8px;
     }
-
-    .pagination a {
-        padding: 6px 12px;
+  
+    .react-paginate a {
+      padding: 4px 8px;
     }
+<<<<<<< HEAD
 }
+=======
+  
+    img {
+      max-width: 60px;
+    }
+  }
+  
+  
+  
+
+  
+  
+>>>>>>> c302a6d84231a90ae10cf8ac1e45d73187dad5eb
