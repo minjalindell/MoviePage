@@ -6,7 +6,14 @@ import Register from './components/register';
 import Search from './components/search';
 import Profile from './components/profile';
 import MovieDetails from './components/MovieDetails';
+<<<<<<< HEAD
 import ProtectedRoute from './components/ProtectedRoute';
+=======
+import Shows from './components/shows';
+
+
+
+>>>>>>> 1c77d9d917b799b283386a62dcca73e4fb42ad49
 
 function App() {
   return (
@@ -68,14 +75,17 @@ function AppRoutes() {
                 </Link>
               </nav>
               <section className="App-section">
-                <h2>Check out the selection</h2>
-                <Link to="/shows">
-                  <button className="section-button">Search shows</button>
-                </Link>
-                <Link to="/search">
-                  <button className="section-button">Search movies</button>
-                </Link>
+              <h2>Check out the selection</h2>
+                <div className="section-buttons">  {/* Tämä div keskittää napit */}
+                  <Link to="/shows">
+                    <button className="section-button">Search shows</button>
+                  </Link>
+                  <Link to="/search">
+                    <button className="section-button">Search movies</button>
+                  </Link>
+                </div>
               </section>
+
             </div>
           }
         />
@@ -94,6 +104,11 @@ function AppRoutes() {
         />
         
         <Route path="/movie/:id" element={<MovieDetails />} />
+<<<<<<< HEAD
+=======
+        <Route path="/shows" element={<Shows />} />
+
+>>>>>>> 1c77d9d917b799b283386a62dcca73e4fb42ad49
       </Routes>
     </>
   );

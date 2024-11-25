@@ -1,37 +1,54 @@
 
 .App {
   text-align: center;
-  background-color: black;
+  background-color: #000;
+  color: #fff;
 }
 
 body {
-  background-color: black;
-  color: white; 
-  margin: 0; 
-  font-family: Arial, sans-serif; 
+  background-color: #000;
+  color: #fff;
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  box-sizing: border-box;
 }
 
+/* Otsikko */
 .App-header {
-  color: white;
+  font-family: 'Bangers', cursive;
+  color: #fff;
   text-align: center;
-  padding: 20px 0;
+  padding: 30px 0;
+  background-color: #222;
+  border-bottom: 2px solid #444;
 }
 
+.App-header h1 {
+  font-size: 3rem;
+  margin: 0;
+  font-weight: bold;
+  color: #ff1493;
+}
+
+/* Navigaatio */
 .App-nav {
   display: flex;
   justify-content: center;
-  gap: 20px; 
-  background-color: #222; 
-  padding: 10px 0;
+  gap: 20px;
+  background-color: #333;
+  padding: 15px 0;
+  border-bottom: 2px solid #444;
 }
 
 .nav-button {
-  background-color: deeppink;
-  color: white;
+  background-color: #ff1493;
+  color: #fff;
   border: none;
-  padding: 10px 20px;
+  padding: 12px 25px;
   border-radius: 5px;
   cursor: pointer;
+<<<<<<< HEAD
   font-size: 1rem;
   transition: background-color 0.3s ease;
   text-decoration: none;
@@ -39,89 +56,125 @@ body {
 
 .nav-button:hover {
   background-color: rgb(253, 90, 177);
+=======
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-button:hover {
+  background-color: #ff69b4;
+  transform: scale(1.05);
+>>>>>>> 1c77d9d917b799b283386a62dcca73e4fb42ad49
 }
 
 .nav-link {
   text-decoration: none;
 }
 
+/* Pääsisältö */
 .App-section {
-  background-color: black;
-  padding: 20px;
+  background-color: #000;
+  padding: 40px 20px;
   text-align: center;
 }
 
 .App-section h2 {
-  color: pink;
+  color: #ff1493;
+  font-size: 2rem;
   margin-bottom: 20px;
 }
 
+/* section-buttons div tyylit */
+.section-buttons {
+  display: flex;           /* Asetetaan flexbox käyttöön */
+  justify-content: center; /* Keskitetään napit vaaka-akselilla */
+  gap: 20px;               /* Lisätään väli nappeihin */
+  margin-top: 20px;        /* Lisää vähän tilaa h2:n ja nappien väliin */
+}
+
+/* section-button -nappien tyylit */
 .section-button {
-  background-color: deeppink; 
-  color: white;
+  background-color: #ff1493;
+  color: #fff;
   border: none;
-  padding: 10px 20px;
-  margin: 10px;
+  padding: 12px 25px;
+  margin: 10px;            /* Varmistetaan, että napit eivät ole liian tiukasti kiinni toisissaan */
   border-radius: 5px;
   cursor: pointer;
+<<<<<<< HEAD
   font-size: 1rem;
   transition: background-color 0.3s ease;
   text-decoration: none;
+=======
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+>>>>>>> 1c77d9d917b799b283386a62dcca73e4fb42ad49
 }
 
 .section-button:hover {
-  background-color: #0056b3;
+  background-color: #ff69b4;
+  transform: scale(1.05);
+}
+
+/* Poista linkkien alaviiva */
+.nav-link, .section-button {
+  text-decoration: none;
 }
 
 /* Responsiivisuus */
 @media (max-width: 768px) {
   .App-nav {
-    flex-direction: column; 
+    flex-direction: column;
     gap: 15px;
   }
 
   .nav-button {
-    font-size: 1.1rem;
-    padding: 12px 25px; 
-  }
-
-  .App-section {
-    padding: 15px;
-  }
-
-  .section-button {
-    font-size: 1rem; 
+    font-size: 1.2rem;
     padding: 12px 25px;
   }
 
   .App-header h1 {
-    font-size: 1.5rem; 
+    font-size: 2.5rem;
+  }
+
+  .App-section {
+    padding: 30px 10px;
+  }
+
+  .section-button {
+    font-size: 1.1rem;
+    padding: 12px 25px;
   }
 }
 
 @media (max-width: 480px) {
   .App-nav {
-    flex-direction: column; 
-    gap: 10px; 
+    flex-direction: column;
+    gap: 10px;
   }
 
   .nav-button {
-    font-size: 1rem; 
-    padding: 10px 20px; 
+    font-size: 1rem;
+    padding: 10px 20px;
   }
 
   .App-header h1 {
-    font-size: 1.2rem;
+    font-size: 1.8rem;
   }
 
   .App-section h2 {
-    font-size: 1.2rem; 
+    font-size: 1.5rem;
   }
 
   .section-button {
-    font-size: 0.9rem; 
-    padding: 10px 20px; 
+    font-size: 1rem;
+    padding: 10px 20px;
   }
+
+  a {
+    text-decoration: none;  /* Poistaa alaviivan kaikista linkeistä */
+  }
+  
 }
 
 .logout-message {
@@ -138,6 +191,12 @@ body {
   transition: opacity 0.5s ease;
 }
 
+<<<<<<< HEAD
 .logout-message.hide {
   opacity: 0;
 }
+=======
+
+
+
+>>>>>>> 1c77d9d917b799b283386a62dcca73e4fb42ad49

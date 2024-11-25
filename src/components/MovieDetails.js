@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import './MovieDetails.css';
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -23,31 +24,31 @@ const MovieDetails = () => {
   }
 
   return (
-    <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
+    <div className="movie-details-container">
       {/* Elokuvan nimi */}
-      <h2>{movie.title}</h2>
+      <h2 className="movie-title">{movie.title}</h2>
 
       {/* Posteri ja taustakuva */}
-      <div style={{ display: "flex", gap: "20px" }}>
+      <div className="movie-images">
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
           alt={movie.title}
-          style={{ maxWidth: "200px", borderRadius: "8px" }}
+          className="movie-poster"
         />
         {movie.backdrop_path && (
           <img
             src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
             alt={`${movie.title} Backdrop`}
-            style={{ maxWidth: "400px", borderRadius: "8px" }}
+            className="movie-backdrop"
           />
         )}
       </div>
 
       {/* Kuvaus */}
-      <p style={{ marginTop: "20px" }}>{movie.overview}</p>
+      <p className="movie-overview">{movie.overview}</p>
 
       {/* Lisätiedot */}
-      <div>
+      <div className="movie-details">
         <h4>Details</h4>
         <p><strong>Original Title:</strong> {movie.original_title}</p>
         <p><strong>Release Date:</strong> {movie.release_date}</p>
@@ -61,7 +62,7 @@ const MovieDetails = () => {
       </div>
 
       {/* Tuotantoyhtiöt */}
-      <div>
+      <div className="production-companies">
         <h4>Production Companies</h4>
         <ul>
           {movie.production_companies.map(company => (
@@ -70,7 +71,7 @@ const MovieDetails = () => {
                 <img
                   src={`https://image.tmdb.org/t/p/w200${company.logo_path}`}
                   alt={company.name}
-                  style={{ maxWidth: "100px", verticalAlign: "middle", marginRight: "10px" }}
+                  className="production-logo"
                 />
               )}
               {company.name} ({company.origin_country})

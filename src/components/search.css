@@ -1,8 +1,203 @@
+<<<<<<< HEAD
 .Search-header {
   color: white;
   text-align: center;
   padding: 20px 0;
 }
+=======
+/* Yleinen asettelu */
+#container {
+  font-family: Arial, sans-serif;
+  margin: 20px auto;
+  max-width: 900px;
+  padding: 20px;
+  background-color: #1e1e2f;
+  border-radius: 8px;
+  color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Hakukenttä ja valikot */
+input, select, button {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  margin: 10px auto;
+  padding: 10px;
+  border: 1px solid #333;
+  border-radius: 5px;
+  background-color: #2c2c3e;
+  color: #fff;
+  font-size: 14px;
+  
+}
+
+input::placeholder, select, button {
+  color: #aaa;
+}
+
+a {
+  text-decoration: none;  /* Poistaa alaviivan kaikista linkeistä */
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background-color: deeppink;
+  color: #1e1e2f;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: deeppink;
+}
+
+/* Taulukko elokuville */
+table {
+  width: 100%;
+  margin: 20px 0;
+  border-collapse: collapse;
+}
+
+tr {
+  background-color: #29293d;
+  transition: background-color 0.3s ease;
+}
+
+tr:hover {
+  background-color: #36364e;
+}
+
+td {
+  padding: 10px;
+  border-bottom: 1px solid #444;
+  display: flex;
+  align-items: center;
+}
+
+td img {
+  max-width: 50px;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+td button {
+  background: none;
+  border: none;
+  color: #4daaf7;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+
+td button:hover {
+  color: #77c7ff;
+}
+
+/* React-paginate tyylit */
+/* React-paginate tyylit */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  gap: 5px;
+}
+
+.pagination li {
+  margin: 0;
+}
+
+.pagination li a {
+  display: block;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: #2c2c3e;
+  color: #fff;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.pagination li a:hover {
+  background-color: deeppink;
+  color: #1e1e2f;
+  transform: scale(1.1);
+}
+
+.pagination .selected a {
+  background-color: deeppink;
+  color: #1e1e2f;
+  font-weight: bold;
+}
+
+/* Lisää marginaalia nuolipainikkeille */
+.pagination li.previous a,
+.pagination li.next a {
+  font-weight: bold;
+  padding: 8px 16px;
+}
+
+/* Responsiivinen sivutus */
+@media (max-width: 480px) {
+  .pagination li a {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}
+
+
+/* Responsiivisuus */
+@media (max-width: 768px) {
+  #container {
+    padding: 15px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+
+  input, select, button {
+    font-size: 14px;
+  }
+
+  td {
+    font-size: 14px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  td img {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  h3 {
+    font-size: 16px;
+  }
+
+  input, select, button {
+    width: 90%;
+    font-size: 12px;
+  }
+
+  .pagination li a {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}
+
+
+  
+>>>>>>> 1c77d9d917b799b283386a62dcca73e4fb42ad49
 
 .Search-nav{
   display: flex;
