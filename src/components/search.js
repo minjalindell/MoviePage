@@ -1,8 +1,7 @@
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import './search.css';
-
 
 const Search = () => {
   const [movies, setMovies] = useState([]);
@@ -11,7 +10,6 @@ const Search = () => {
   const [query, setQuery] = useState("");
   const [genre, setGenre] = useState("");
   const [year, setYear] = useState("");
-  const navigate = useNavigate();
 
   const genres = [
     { id: 28, name: "Action" },
@@ -56,12 +54,43 @@ const Search = () => {
       .catch((error) => console.log(error));
   };
 
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Poistetaan tarvittavat tiedot localStorage ja sessionStorage:sta
+    localStorage.removeItem("authToken");
+    sessionStorage.clear();
+
+    // Navigoidaan etusivulle ja välitetään state-parametreina uloskirjautumisviesti
+    navigate("/", { state: { fromLogout: true } });
+  };
+
   useEffect(() => {
-    search();
-  }, [page]);
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      navigate("/");
+    } else {
+      search();
+    }
+  }, [navigate, page]);
 
   return (
-    <div id="container">
+    <div>
+      <header className="Profile-header">
+        <h1>The best movie page</h1>
+      </header>
+      <nav className="Profile-nav">
+        <Link to="/shows">
+          <button className="nav-button">Search shows</button>
+        </Link>
+        <Link to="/profile">
+          <button className="nav-button">Profile</button>
+        </Link>
+        <button className="nav-button" onClick={handleLogout}>
+          Log out
+        </button>
+      </nav>
+
       <h3>Search Movies</h3>
 
       {/* Haku */}
@@ -112,34 +141,42 @@ const Search = () => {
         activeClassName="selected"
       />
 
-
       {/* Elokuvataulukko */}
       <table>
-  {movies.map((movie) => (
-    <tr key={movie.id}>
-      <td>
-        {/* Elokuvan posteri */}
-        {movie.poster_path && (
-          <img
-            src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-            alt={`${movie.title} poster`}
-            style={{
-              maxWidth: "50px",
-              borderRadius: "4px",
-              marginRight: "10px",
-              verticalAlign: "middle",
-            }}
-          />
-        )}
+        {movies.map((movie) => (
+          <tr key={movie.id}>
+            <td>
+              {/* Elokuvan posteri */}
+              {movie.poster_path && (
+                <img
+                  src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                  alt={`${movie.title} poster`}
+                  style={{
+                    maxWidth: "50px",
+                    borderRadius: "4px",
+                    marginRight: "10px",
+                    verticalAlign: "middle",
+                  }}
+                />
+              )}
 
-        {/* Elokuvan nimi ja navigointipainike */}
-        <button onClick={() => navigate(`/movie/${movie.id}`)} style={{ background: "none", border: "none", color: "blue", textDecoration: "underline", cursor: "pointer" }}>
-          {movie.title}
-        </button>
-      </td>
-    </tr>
-  ))}
-</table>
+              {/* Elokuvan nimi ja navigointipainike */}
+              <button
+                onClick={() => navigate(`/movie/${movie.id}`)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  color: "blue",
+                  textDecoration: "underline",
+                  cursor: "pointer",
+                }}
+              >
+                {movie.title}
+              </button>
+            </td>
+          </tr>
+        ))}
+      </table>
     </div>
   );
 };

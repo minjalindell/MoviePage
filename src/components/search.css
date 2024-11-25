@@ -1,3 +1,8 @@
+.Search-header {
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+}
 /* Yleinen asettelu */
 #container {
   font-family: Arial, sans-serif;
@@ -186,6 +191,27 @@ td button:hover {
     padding: 6px 10px;
     font-size: 12px;
   }
+}
+
+.Search-nav{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background-color: #222;
+  padding: 10px 0;
+}
+
+
+
+.footer {
+  background-color: #222; /* Tumma tausta */
+  color: white; /* Valkoinen teksti */
+  text-align: center; /* Keskitetty teksti */
+  padding: 10px 0; /* Ylä- ja alapadding */
+  position: fixed; /* Kiinnitetään näytön alaosaan */
+  bottom: 0; /* Asettuu näytön alaosaan */
+  width: 100%; /* Kattaa koko leveyden */
+  font-size: 14px; /* Tekstin koko */
 }
   
   

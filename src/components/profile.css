@@ -1,0 +1,82 @@
+.Profile {
+    text-align: center;
+    background-color: black;
+  }
+.Profile-header {
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+  }
+  .Profile-nav {
+    display: flex; /* Flexbox-asettelu */
+    gap: 20px; /* Väli kaikkien painikkeiden välillä */
+    background-color: #222; /* Taustaväri */
+    padding: 10px; /* Ylä- ja alapadding */
+    justify-content: center; /* Keskittää painikkeet vaakasuunnassa */
+    align-items: center; /* Asettaa kaikki painikkeet samalle pystysuoralle tasolle */
+}
+
+.Profile-nav > * {
+    margin: 0; /* Poistaa kaikki oletusmarginaalit */
+    flex-shrink: 0; /* Estää elementtejä kutistumasta */
+}
+
+.nav-button {
+    padding: 10px 20px; /* Sisennys painikkeen sisällä */
+    color: white; /* Tekstin väri */
+    background-color: #ff1493; /* Painikkeen taustaväri */
+    border: none; /* Poistaa reunat */
+    border-radius: 5px; /* Pyöristetyt kulmat */
+    cursor: pointer; /* Vaihtaa osoittimen */
+    font-size: 16px; /* Tekstin koko */
+}
+
+.nav-button:hover {
+    background-color: #ff69b4; /* Hover-efekti */
+}
+
+.profile-container {
+    display: flex; /* Käytetään joustavaa asettelua */
+    flex-direction: column; /* Asetetaan elementit pystysuoraan */
+    align-items: center; /* Keskitetään elementit vaakasuunnassa */
+    justify-content: center; /* Keskitetään elementit pystysuunnassa */
+    min-height: 100vh; /* Käytetään koko ikkunan korkeus */
+    background-color: #222; /* Lisätään taustaväri (valinnainen) */
+    color: white; /* Tekstin väri */
+  }
+  
+  .profile-header h1 {
+    font-size: 2.5rem; /* Isompi otsikko */
+    margin-bottom: 20px; /* Väli otsikon ja muiden elementtien välillä */
+  }
+  
+  .profile-nav {
+    display: flex; /* Joustava asettelu navigoinnille */
+    gap: 15px; /* Väli painikkeiden välillä */
+  }
+  
+  .profile-button {
+    padding: 10px 20px; /* Napin sisäinen väli */
+    font-size: 1rem; /* Tekstin koko */
+    color: white;
+    background-color: deeppink; /* Napin taustaväri */
+    border: none;
+    border-radius: 5px; /* Pyöristetyt kulmat */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Hover-animaatio */
+    text-decoration: none;
+  }
+  
+  .profile-button:hover {
+    background-color: rgb(253, 90, 177); /* Hover-väri */
+  }
+  .app-footer {
+    background-color: #333; /* Tumma tausta */
+    color: white; /* Valkoinen teksti */
+    text-align: center; /* Keskitetty teksti */
+    padding: 10px 0; /* Ylä- ja alapadding */
+    position: fixed; /* Kiinnitetään näytön alaosaan */
+    bottom: 0; /* Asettuu näytön alaosaan */
+    width: 100%; /* Kattaa koko leveyden */
+    font-size: 14px; /* Tekstin koko */
+  }
