@@ -8,29 +8,33 @@
     padding: 20px 0;
   }
   .Profile-nav {
-    display: flex;
-    justify-content: center;
-    gap: 20px; 
-    background-color: #222; 
-    padding: 10px 0;
-  }
-  .profile-buttons-container {
-    display: flex;
-    flex-direction: column; /* Asettaa lapset pystysuuntaan */
-    align-items: center; /* Keskittää painikkeet vaakasuunnassa */
-    gap: 10px; /* Lisää väliä painikkeiden väliin */
-  }
-  .nav-button {
-    background-color: deeppink;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-    text-decoration: none;
-  }
+    display: flex; /* Flexbox-asettelu */
+    gap: 20px; /* Väli kaikkien painikkeiden välillä */
+    background-color: #222; /* Taustaväri */
+    padding: 10px; /* Ylä- ja alapadding */
+    justify-content: center; /* Keskittää painikkeet vaakasuunnassa */
+    align-items: center; /* Asettaa kaikki painikkeet samalle pystysuoralle tasolle */
+}
+
+.Profile-nav > * {
+    margin: 0; /* Poistaa kaikki oletusmarginaalit */
+    flex-shrink: 0; /* Estää elementtejä kutistumasta */
+}
+
+.nav-button {
+    padding: 10px 20px; /* Sisennys painikkeen sisällä */
+    color: white; /* Tekstin väri */
+    background-color: #ff1493; /* Painikkeen taustaväri */
+    border: none; /* Poistaa reunat */
+    border-radius: 5px; /* Pyöristetyt kulmat */
+    cursor: pointer; /* Vaihtaa osoittimen */
+    font-size: 16px; /* Tekstin koko */
+}
+
+.nav-button:hover {
+    background-color: #ff69b4; /* Hover-efekti */
+}
+
 .profile-container {
     display: flex; /* Käytetään joustavaa asettelua */
     flex-direction: column; /* Asetetaan elementit pystysuoraan */

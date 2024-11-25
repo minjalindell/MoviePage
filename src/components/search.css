@@ -1,10 +1,9 @@
-<<<<<<< HEAD
+
 .Search-header {
   color: white;
   text-align: center;
   padding: 20px 0;
 }
-=======
 /* Yleinen asettelu */
 #container {
   font-family: Arial, sans-serif;
@@ -195,10 +194,6 @@ td button:hover {
   }
 }
 
-
-  
->>>>>>> 1c77d9d917b799b283386a62dcca73e4fb42ad49
-
 .Search-nav{
   display: flex;
   justify-content: center;
@@ -207,19 +202,6 @@ td button:hover {
   padding: 10px 0;
 }
 
-.nav-button {
-  background-color: deeppink;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
-}
-.button:hover {
-  background-color: rgb(253, 90, 177); /* Hover-väri */
-}
 
 
 .footer {

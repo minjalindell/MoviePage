@@ -6,14 +6,8 @@ import Register from './components/register';
 import Search from './components/search';
 import Profile from './components/profile';
 import MovieDetails from './components/MovieDetails';
-<<<<<<< HEAD
 import ProtectedRoute from './components/ProtectedRoute';
-=======
 import Shows from './components/shows';
-
-
-
->>>>>>> 1c77d9d917b799b283386a62dcca73e4fb42ad49
 
 function App() {
   return (
@@ -29,34 +23,29 @@ function AppRoutes() {
   const [logoutMessage, setLogoutMessage] = useState(""); // Viesti uloskirjautumisesta
   const location = useLocation(); // Käytetään vain Routerin sisällä
 
+  // Käytämme useEffectiä, joka tarkistaa, onko käyttäjä kirjautunut ulos
   useEffect(() => {
-    // Tarkistetaan, onko 'state' mukana reitissä ja onko se 'fromLogout'
     if (location.state && location.state.fromLogout) {
       setLogoutMessage("You have successfully logged out.");
     } else {
-      setLogoutMessage("");
+      setLogoutMessage(""); // Jos ei ole uloskirjautunut, tyhjennetään viesti
     }
   }, [location]);
 
+  // Viestin poistaminen automaattisesti 5 sekunnin kuluttua
   useEffect(() => {
     if (logoutMessage) {
       const timer = setTimeout(() => {
-        setLogoutMessage("");
-      }, 5000); // Ilmoitus katoaa 5 sekunnin kuluttua
-  
-      return () => clearTimeout(timer);
+        setLogoutMessage(""); // Tyhjennetään viesti
+      }, 5000);
+      return () => clearTimeout(timer); // Puhdistetaan timer
     }
   }, [logoutMessage]);
-
 
   return (
     <>
       {/* Näytetään uloskirjautumisviesti */}
-      {logoutMessage && (
-        <div className="logout-message">
-          {logoutMessage}
-        </div>
-      )}
+      {logoutMessage && <div className="logout-message">{logoutMessage}</div>}
 
       <Routes>
         <Route
@@ -75,8 +64,8 @@ function AppRoutes() {
                 </Link>
               </nav>
               <section className="App-section">
-              <h2>Check out the selection</h2>
-                <div className="section-buttons">  {/* Tämä div keskittää napit */}
+                <h2>Check out the selection</h2>
+                <div className="section-buttons">
                   <Link to="/shows">
                     <button className="section-button">Search shows</button>
                   </Link>
@@ -85,7 +74,6 @@ function AppRoutes() {
                   </Link>
                 </div>
               </section>
-
             </div>
           }
         />
@@ -104,11 +92,7 @@ function AppRoutes() {
         />
         
         <Route path="/movie/:id" element={<MovieDetails />} />
-<<<<<<< HEAD
-=======
         <Route path="/shows" element={<Shows />} />
-
->>>>>>> 1c77d9d917b799b283386a62dcca73e4fb42ad49
       </Routes>
     </>
   );
