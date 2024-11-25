@@ -1,10 +1,24 @@
 import { useEffect, useState } from "react";
 import './shows.css';
+import { Link, useNavigate, useLocation } from "react-router-dom"; 
 
 function Shows() {
   const [areas, setAreas] = useState([]);
   const [selectedArea, setSelectedArea] = useState("");
   const [showings, setShowings] = useState([]);
+  const [logoutMessage, setLogoutMessage] = useState("");  // Viestin tila
+
+  const navigate = useNavigate();
+  const location = useLocation(); // Käytämme locationia viestin näyttämiseen
+  
+  const handleLogout = () => {
+    // Poistetaan tarvittavat tiedot localStorage ja sessionStorage:sta
+    localStorage.removeItem("authToken");
+    sessionStorage.clear();
+  
+    // Navigoidaan etusivulle ja välitetään state parametreina
+    navigate("/", { state: { fromLogout: true } });
+  };
 
   const getFinnkinoTheaters = (xml) => {
     const parser = new DOMParser();
@@ -61,8 +75,33 @@ function Shows() {
       year: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
-    }).format(date).replace(' ', ' klo ');
+    }).format(date).replace(' ', ' klo ');  // Muotoillaan aika
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      navigate("/");
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    if (location.state && location.state.fromLogout) {
+      setLogoutMessage("You have successfully logged out.");
+    } else {
+      setLogoutMessage(""); // Tyhjennetään viesti, jos ei ole uloskirjautunut
+    }
+  }, [location]);
+
+  // Varmistetaan, että viesti poistuu 5 sekunnin kuluttua
+  useEffect(() => {
+    if (logoutMessage) {
+      const timer = setTimeout(() => {
+        setLogoutMessage(""); // Tyhjennetään viesti
+      }, 5000);
+      return () => clearTimeout(timer); // Puhdistetaan timer
+    }
+  }, [logoutMessage]);
 
   useEffect(() => {
     fetch("https://www.finnkino.fi/xml/TheatreAreas/")
@@ -85,6 +124,25 @@ function Shows() {
 
   return (
     <div>
+      {/* Näytetään uloskirjautumisviesti */}
+      {logoutMessage && <div className="logout-message">{logoutMessage}</div>}
+
+      <header className="Profile-header">
+        <h1>The best movie page</h1>
+      </header>
+
+      <nav className="Profile-nav">
+        <Link to="/search">
+          <button className="nav-button">Search movies</button>
+        </Link>
+        <Link to="/profile">
+          <button className="nav-button">Profile</button>
+        </Link>
+        <button className="nav-button" onClick={handleLogout}>
+          Log out
+        </button>
+      </nav>
+
       <h3>Select a Theatre Area</h3>
       <select onChange={(e) => setSelectedArea(e.target.value)} value={selectedArea}>
         <option value="">-- Select Theatre Area --</option>
