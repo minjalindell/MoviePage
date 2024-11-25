@@ -8,6 +8,9 @@ import Profile from './components/profile';
 import MovieDetails from './components/MovieDetails';
 import Shows from './components/shows';
 
+
+
+
 function App() {
   return (
     <Router>
@@ -29,14 +32,17 @@ function App() {
                 </Link>
               </nav>
               <section className="App-section">
-                <h2>Check out the selection</h2>
-                <Link to="/shows">
-                  <button className="section-button">Search shows</button>
-                </Link>
-                <Link to="/search">
-                  <button className="section-button">Search movies</button>
-                </Link>
+              <h2>Check out the selection</h2>
+                <div className="section-buttons">  {/* Tämä div keskittää napit */}
+                  <Link to="/shows">
+                    <button className="section-button">Search shows</button>
+                  </Link>
+                  <Link to="/search">
+                    <button className="section-button">Search movies</button>
+                  </Link>
+                </div>
               </section>
+
             </div>
           }
         />

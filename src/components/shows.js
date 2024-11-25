@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import './shows.css';
 
 function Shows() {
-  const [areas, setAreas] = useState([]); 
-  const [selectedArea, setSelectedArea] = useState(""); 
+  const [areas, setAreas] = useState([]);
+  const [selectedArea, setSelectedArea] = useState("");
   const [showings, setShowings] = useState([]);
 
   const getFinnkinoTheaters = (xml) => {
@@ -34,19 +35,33 @@ function Shows() {
 
         const showingsArray = [];
         for (let i = 0; i < showingsList.length; i++) {
+          const startTime = showingsList[i].getElementsByTagName("dttmShowStart")[0].textContent;
+
+          // Muunna ISO-aika (UTC) suomalaiseen muotoon
+          const formattedTime = formatDateTime(startTime);
+
           showingsArray.push({
-            movieTitle: showingsList[i].getElementsByTagName("Title")[0]
-              .textContent,
-            startTime: showingsList[i].getElementsByTagName("dttmShowStart")[0]
-              .textContent,
+            movieTitle: showingsList[i].getElementsByTagName("Title")[0].textContent,
+            startTime: formattedTime,
           });
         }
 
-        setShowings(showingsArray); 
+        setShowings(showingsArray);
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const formatDateTime = (isoString) => {
+    const date = new Date(isoString);
+    return new Intl.DateTimeFormat('fi-FI', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(date).replace(' ', ' klo ');
   };
 
   useEffect(() => {
@@ -62,9 +77,9 @@ function Shows() {
 
   useEffect(() => {
     if (selectedArea) {
-      getShowings(selectedArea); 
+      getShowings(selectedArea);
     } else {
-      setShowings([]); 
+      setShowings([]);
     }
   }, [selectedArea]);
 
@@ -80,24 +95,24 @@ function Shows() {
         ))}
       </select>
 
-
       {selectedArea && showings.length > 0 && (
         <div>
-            <section className="ajat">
-          <h3>Showings in selected theatre:</h3>
-          <ul>
-            {showings.map((show, index) => (
-              <li key={index}>
-                {show.movieTitle} - {show.startTime}
-              </li>
-            ))}
-          </ul>
+          <section className="ajat">
+            <h3>Showings in selected theatre:</h3>
+            <ul>
+              {showings.map((show, index) => (
+                <li key={index}>
+                  {show.movieTitle} - {show.startTime}
+                </li>
+              ))}
+            </ul>
           </section>
         </div>
-        
       )}
 
-      {selectedArea && showings.length === 0 && <p>No showings available for this area.</p>}
+      {selectedArea && showings.length === 0 && (
+        <p>No showings available for this area.</p>
+      )}
     </div>
   );
 }

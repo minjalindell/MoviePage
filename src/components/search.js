@@ -1,6 +1,8 @@
 import ReactPaginate from "react-paginate";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import './search.css';
+
 
 const Search = () => {
   const [movies, setMovies] = useState([]);
@@ -102,7 +104,14 @@ const Search = () => {
         pageCount={pageCount}
         previousLabel="< "
         renderOnZeroPageCount={null}
+        containerClassName="pagination"
+        pageClassName="page-item"
+        pageLinkClassName="page-link"
+        previousClassName="previous"
+        nextClassName="next"
+        activeClassName="selected"
       />
+
 
       {/* Elokuvataulukko */}
       <table>

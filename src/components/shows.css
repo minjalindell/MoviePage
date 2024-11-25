@@ -1,0 +1,62 @@
+/* shows.css */
+body {
+    background-color: #000; /* Musta tausta */
+    color: #fff; /* Valkoinen teksti */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h3 {
+    color: deeppink; /* Sininen korostus otsikoille */
+    text-align: center;
+  }
+
+  a {
+    text-decoration: none;  /* Poistaa alaviivan kaikista linkeistä */
+  }
+  
+  select {
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: #333; /* Tumma tausta */
+    color: #fff;
+    border: 1px solid #555; /* Tumma reunus */
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  option {
+    background-color: #000; /* Musta tausta dropdownin sisällä */
+    color: #fff;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #222; /* Tumma laatikko */
+    color: #fff;
+    border: 1px solid #333; /* Kevyt reunus */
+    border-radius: 5px;
+  }
+  
+  .ajat {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #111; /* Erittäin tumma tausta sisällölle */
+    border-radius: 10px;
+    max-width: 600px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Varjo */
+  }
+  
+  p {
+    text-align: center;
+    font-style: italic;
+    color: #aaa; /* Hieman himmeämpi valkoinen */
+  }
