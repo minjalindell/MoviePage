@@ -1,22 +1,47 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './profile.css'; 
+import React from "react";
+import { Link, useNavigate } from "react-router-dom"; 
+import "./profile.css";
+import axios from "axios";
 
 function Profile() {
+  const navigate = useNavigate(); 
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    sessionStorage.clear();
+
+    navigate("/", { state: { fromLogout: true } });
+  };
+    
+
   return (
-    <div className="profile-container">
-      <header className="profile-header">
-        <h1>Your Profile</h1>
+    <div className="Profile">
+      <header className="Profile-header">
+        <h1>The best movie page</h1>
       </header>
-      <nav className="profile-nav">
+      <nav className="Profile-nav">
         <Link to="/search">
           <button className="profile-button">Search movies</button>
         </Link>
         <Link to="/shows">
           <button className="profile-button">Search shows</button>
         </Link>
+        <button className="profile-button" onClick={handleLogout}>
+          Log out
+        </button>
       </nav>
-      {/* Lisää muita profiilikohtia täällä, kuten suosikit, arvostelut, jne. */}
+
+      <h1>Your Profile</h1>
+
+      <div className="profile-buttons-container">
+        <button className="profile-button">Favourites</button>
+        <button className="profile-button">Groups</button>
+        <button className="profile-button">Reviews</button>
+      </div>
+
+
+
+      <button className="delete-button" >Delete</button>
     </div>
   );
 }

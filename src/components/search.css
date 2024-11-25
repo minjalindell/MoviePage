@@ -1,229 +1,40 @@
-/* Yleisiä säätöjä */
-#container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    color: #333;
-    display: flex;
-    flex-direction: column; /* Asettaa elementit pystysuoraan */
-    align-items: center; /* Keskittää kaikki lapset vaakasuunnassa */
-    justify-content: center; /* Keskittää kaikki lapset pystysuunnassa */
-    height: 100vh; /* Varmistaa, että sisältö on keskellä koko näkymää */
-  }
-  
-  h3 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    text-align: center;
-    color: #4a90e2;
-  }
-  
-  /* Hakulomake: Käytetään Flexboxia */
-  .search-form {
-    display: flex;
-    justify-content: center; /* Keskittää kaikki kentät */
-    align-items: center;     /* Keskittää kentät pystysuunnassa */
-    gap: 10px;               /* Väli kenttien välillä */
-    flex-wrap: wrap;         /* Sallii kenttien rivittymisen pienemmillä näytöillä */
-    margin-bottom: 20px;
-  }
-  
-  .search-form input,
-  .search-form select,
-  .search-form button {
-    padding: 10px;
-    font-size: 1rem;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    width: 200px; /* Asenna leveys kentille */
-  }
-  
-  button {
-    background-color: #4a90e2;
-    color: white;
-    cursor: pointer;
-    border: none;
-  }
-  
-  button:hover {
-    background-color: #357ab7;
-  }
-  
-  /* Elokuvan lista */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  table th,
-  table td {
-    padding: 10px;
-    text-align: left;
-  }
-  
-  table tr:nth-child(even) {
-    background-color: #f4f4f4;
-  }
-  
-  table tr:hover {
-    background-color: #ddd;
-  }
-  
-  img {
-    max-width: 100px;
-    border-radius: 5px;
-    margin-right: 15px;
-  }
-  
-  button {
-    background: none;
-    border: none;
-    color: #4a90e2;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    text-decoration: none;
-  }
-  
-  /* Sivutuksen tyylit */
-  .react-paginate {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-<<<<<<< HEAD
-    flex-wrap: wrap; /* Varmistaa, että painikkeet siirtyvät seuraavalle riville tarvittaessa */
-    gap: 8px; /* Lisää väli painikkeiden väliin */
+.Search-header {
+  color: white;
+  text-align: center;
+  padding: 20px 0;
 }
 
-.pagination a {
-    color: white;
-    padding: 8px 16px;
-    text-decoration: none;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    background-color: #222;
-    display: inline-block; /* Varmistaa, että painikkeet ovat peräkkäin */
+.Search-nav{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background-color: #222;
+  padding: 10px 0;
 }
 
-.pagination a:hover {
-    background-color: deeppink;
-    color: white;
+.nav-button {
+  background-color: deeppink;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+.button:hover {
+  background-color: rgb(253, 90, 177); /* Hover-väri */
 }
 
-/* Aktivoi aktiivinen sivu */
-.pagination .selected {
-    background-color: deeppink;
-    color: white;
-}
 
-/* Poista linkin korostus valitsemattomilla sivuilla */
-.pagination .disabled {
-    background-color: #444;
-    color: #777;
-    pointer-events: none;
+.footer {
+  background-color: #222; /* Tumma tausta */
+  color: white; /* Valkoinen teksti */
+  text-align: center; /* Keskitetty teksti */
+  padding: 10px 0; /* Ylä- ja alapadding */
+  position: fixed; /* Kiinnitetään näytön alaosaan */
+  bottom: 0; /* Asettuu näytön alaosaan */
+  width: 100%; /* Kattaa koko leveyden */
+  font-size: 14px; /* Tekstin koko */
 }
-
-/* Responsiivisuus */
-@media (max-width: 768px) {
-=======
-  }
   
-  .react-paginate ul {
-    display: flex;
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .react-paginate li {
-    margin: 0 5px;
-  }
-  
-  .react-paginate a {
-    text-decoration: none;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    color: #333;
-  }
-  
-  .react-paginate a:hover {
-    background-color: #4a90e2;
-    color: white;
-  }
-  
-  .react-paginate .selected {
-    background-color: #4a90e2;
-    color: white;
-  }
-  
-  /* Responsiivisuus: pienemmille näytöille (esim. puhelimille ja tableteille) */
-  
-  @media (max-width: 768px) {
->>>>>>> c302a6d84231a90ae10cf8ac1e45d73187dad5eb
-    #container {
-      padding: 10px;
-    }
-  
-    h3 {
-      font-size: 1.5rem;
-    }
-  
-    .search-form input,
-    .search-form select,
-    .search-form button {
-      width: 100%; /* Kentät vievät koko leveyden pienillä näytöillä */
-      font-size: 0.9rem;
-    }
-  
-    table {
-      font-size: 0.9rem;
-    }
-  
-    img {
-      max-width: 80px;
-    }
-  
-    .react-paginate a {
-      padding: 6px 10px;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    h3 {
-      font-size: 1.25rem;
-    }
-  
-    .search-form input,
-    .search-form select,
-    .search-form button {
-      font-size: 0.8rem;
-    }
-  
-    table th,
-    table td {
-      font-size: 0.8rem;
-      padding: 8px;
-    }
-  
-    .react-paginate a {
-      padding: 4px 8px;
-    }
-<<<<<<< HEAD
-}
-=======
-  
-    img {
-      max-width: 60px;
-    }
-  }
-  
-  
-  
-
-  
-  
->>>>>>> c302a6d84231a90ae10cf8ac1e45d73187dad5eb

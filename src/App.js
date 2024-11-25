@@ -1,17 +1,57 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';  
+import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';  
 import Login from './components/login';
 import Register from './components/register';
 import Search from './components/search';
 import Profile from './components/profile';
 import MovieDetails from './components/MovieDetails';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
     <Router>
+      <div className="App">
+        <AppRoutes />
+      </div>
+    </Router>
+  );
+}
+
+function AppRoutes() {
+  const [logoutMessage, setLogoutMessage] = useState(""); // Viesti uloskirjautumisesta
+  const location = useLocation(); // Käytetään vain Routerin sisällä
+
+  useEffect(() => {
+    // Tarkistetaan, onko 'state' mukana reitissä ja onko se 'fromLogout'
+    if (location.state && location.state.fromLogout) {
+      setLogoutMessage("You have successfully logged out.");
+    } else {
+      setLogoutMessage("");
+    }
+  }, [location]);
+
+  useEffect(() => {
+    if (logoutMessage) {
+      const timer = setTimeout(() => {
+        setLogoutMessage("");
+      }, 5000); // Ilmoitus katoaa 5 sekunnin kuluttua
+  
+      return () => clearTimeout(timer);
+    }
+  }, [logoutMessage]);
+
+
+  return (
+    <>
+      {/* Näytetään uloskirjautumisviesti */}
+      {logoutMessage && (
+        <div className="logout-message">
+          {logoutMessage}
+        </div>
+      )}
+
       <Routes>
-        {/* Pääsivu */}
         <Route
           path="/"
           element={
@@ -39,23 +79,24 @@ function App() {
             </div>
           }
         />
-
-
+        
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/search" element={<Search/>} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/search" element={<Search />} />
+        
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        
         <Route path="/movie/:id" element={<MovieDetails />} />
-
       </Routes>
-    </Router>
+    </>
   );
 }
 
 export default App;
-
-
-
-
-
-

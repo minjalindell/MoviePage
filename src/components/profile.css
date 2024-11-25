@@ -1,0 +1,78 @@
+.Profile {
+    text-align: center;
+    background-color: black;
+  }
+.Profile-header {
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+  }
+  .Profile-nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px; 
+    background-color: #222; 
+    padding: 10px 0;
+  }
+  .profile-buttons-container {
+    display: flex;
+    flex-direction: column; /* Asettaa lapset pystysuuntaan */
+    align-items: center; /* Keskittää painikkeet vaakasuunnassa */
+    gap: 10px; /* Lisää väliä painikkeiden väliin */
+  }
+  .nav-button {
+    background-color: deeppink;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+  }
+.profile-container {
+    display: flex; /* Käytetään joustavaa asettelua */
+    flex-direction: column; /* Asetetaan elementit pystysuoraan */
+    align-items: center; /* Keskitetään elementit vaakasuunnassa */
+    justify-content: center; /* Keskitetään elementit pystysuunnassa */
+    min-height: 100vh; /* Käytetään koko ikkunan korkeus */
+    background-color: #222; /* Lisätään taustaväri (valinnainen) */
+    color: white; /* Tekstin väri */
+  }
+  
+  .profile-header h1 {
+    font-size: 2.5rem; /* Isompi otsikko */
+    margin-bottom: 20px; /* Väli otsikon ja muiden elementtien välillä */
+  }
+  
+  .profile-nav {
+    display: flex; /* Joustava asettelu navigoinnille */
+    gap: 15px; /* Väli painikkeiden välillä */
+  }
+  
+  .profile-button {
+    padding: 10px 20px; /* Napin sisäinen väli */
+    font-size: 1rem; /* Tekstin koko */
+    color: white;
+    background-color: deeppink; /* Napin taustaväri */
+    border: none;
+    border-radius: 5px; /* Pyöristetyt kulmat */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Hover-animaatio */
+    text-decoration: none;
+  }
+  
+  .profile-button:hover {
+    background-color: rgb(253, 90, 177); /* Hover-väri */
+  }
+  .app-footer {
+    background-color: #333; /* Tumma tausta */
+    color: white; /* Valkoinen teksti */
+    text-align: center; /* Keskitetty teksti */
+    padding: 10px 0; /* Ylä- ja alapadding */
+    position: fixed; /* Kiinnitetään näytön alaosaan */
+    bottom: 0; /* Asettuu näytön alaosaan */
+    width: 100%; /* Kattaa koko leveyden */
+    font-size: 14px; /* Tekstin koko */
+  }
