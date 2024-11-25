@@ -57,6 +57,8 @@ function App() {
         <Route path="/shows" element={<Shows />} />
         <Route path="/top-movies" element={<TopMoviesFull />} />
         <Route path="/reviews/:movieId" element={<ReviewPage />} />
+        <Route path="/MovieDetails/:id" element={<MovieDetails />} />
+
 
       </Routes>
     </Router>

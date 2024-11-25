@@ -2,10 +2,19 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+
+import { useNavigate } from "react-router-dom";
+
+
+
 const ReviewPage = () => {
   const { movieId } = useParams(); 
   const [movie, setMovie] = useState(null);
   const [reviews, setReviews] = useState([]);
+
+
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     fetch(`https://api.themoviedb.org/3/movie/${movieId}?language=en-US`, {
@@ -37,12 +46,24 @@ const ReviewPage = () => {
 
   return (
     <div>
-      <h1>{movie.title} - Reviews</h1>
+      <h1
+        style={{ cursor: "pointer", color: "blue" }}
+        onClick={() => navigate(`/MovieDetails/${movie.id}`)}
+      >
+        {movie.title} - Reviews
+      </h1>
       <img
         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
         alt={movie.title}
         style={{ maxWidth: "200px", marginBottom: "20px" }}
       />
+    
+
+
+      
+    
+    
+    
       <p>{movie.overview}</p>
 
       <h3>User Reviews</h3>

@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 
 const MovieDetails = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
+
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     fetch(`https://api.themoviedb.org/3/movie/${id}`, {
@@ -79,6 +84,20 @@ const MovieDetails = () => {
           ))}
         </ul>
       </div>
+      <button
+        onClick={() => navigate(`/reviews/${id}`)} 
+        style={{
+          marginTop: "20px",
+          padding: "10px 20px",
+          backgroundColor: "#007BFF",
+          color: "white",
+          border: "none",
+          borderRadius: "5px",
+          cursor: "pointer",
+        }}
+      >
+        Reviews
+      </button>
     </div>
   );
 };
