@@ -8,6 +8,10 @@ import Profile from './components/profile';
 import MovieDetails from './components/MovieDetails';
 import ProtectedRoute from './components/ProtectedRoute';
 import Shows from './components/shows';
+import ReviewPage from './components/Reviewpage';
+import TopMovies from './components/topMovies';
+import TopMoviesFull from './components/TopMoviesFull';
+
 
 function App() {
   return (
@@ -73,8 +77,11 @@ function AppRoutes() {
                     <button className="section-button">Search movies</button>
                   </Link>
                 </div>
+
+                <TopMovies/>
               </section>
             </div>
+            
           }
         />
         
@@ -93,6 +100,10 @@ function AppRoutes() {
         
         <Route path="/movie/:id" element={<MovieDetails />} />
         <Route path="/shows" element={<Shows />} />
+
+        <Route path="/top-movies" element={<TopMoviesFull />} />
+        <Route path="/reviews/:movieId" element={<ReviewPage />} />
+        <Route path="/MovieDetails/:id" element={<MovieDetails />} />
       </Routes>
     </>
   );

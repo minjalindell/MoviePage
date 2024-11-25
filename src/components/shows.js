@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import './shows.css';
 import { Link, useNavigate, useLocation } from "react-router-dom"; 
 
+
 function Shows() {
   const [areas, setAreas] = useState([]);
   const [selectedArea, setSelectedArea] = useState("");
@@ -103,6 +104,9 @@ function Shows() {
     }
   }, [logoutMessage]);
 
+    }).format(date).replace(' ', ' klo ');
+  };
+  
   useEffect(() => {
     fetch("https://www.finnkino.fi/xml/TheatreAreas/")
       .then((response) => response.text())
