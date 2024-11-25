@@ -1,6 +1,5 @@
 /* Container for the entire movie details */
 .movie-details-container {
-<<<<<<< HEAD
     padding: 20px;
     max-width: 800px;
     margin: 0 auto;
@@ -70,15 +69,6 @@
   .production-companies img {
     max-width: 100px;
     border-radius: 8px;
-  }
-  
-  
-  
-
-  
-
-  
-=======
   padding: 20px;
   max-width: 800px;
   margin: 0 auto;
@@ -149,4 +139,3 @@
   max-width: 100px;
   border-radius: 8px;
 }
->>>>>>> 373a5e06575be8193b1dd0a234b5c90e3f654666
