@@ -6,12 +6,11 @@ import { pool } from '../helpers/db.js';
 const router = express.Router();
 
 
-//rekisteröityminen
 router.post('/register', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Salasanan vahvuusvaatimukset
+
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
     if (!passwordRegex.test(password)) {
       return res.status(400).json({
@@ -19,17 +18,16 @@ router.post('/register', async (req, res) => {
       });
     }
 
-    // Salasanan hashoaminen
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // SQL-kysely käyttäjän lisäämiseksi
+
     const result = await pool.query(
       'INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *',
       [email, hashedPassword]
     );
     console.log("Received email:", email);
 
-    // Onnistunut rekisteröinti
+
     res.status(201).json({
       id: result.rows[0].id,
       email: result.rows[0].email,
@@ -47,12 +45,10 @@ router.post('/register', async (req, res) => {
 });
 
 
-// Kirjautuminen
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Käyttäjä tietokannasta
     const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
 
     if (result.rowCount === 0) {
@@ -61,13 +57,13 @@ router.post('/login', async (req, res) => {
 
     const user = result.rows[0];
 
-    // Salasanan vertailu
+
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
       return res.status(401).json({ message: 'Virheellinen salasana' });
     }
 
-    // JWT-token luodaan
+
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
 
     return res.status(200).json({

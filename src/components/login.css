@@ -1,5 +1,3 @@
-/* login.css */
-
 .login-container {
     display: flex;
     justify-content: center;
@@ -24,7 +22,7 @@
     color: #333;
   }
   
-  /* Kenttien label */
+  
   .login-form label {
     display: block;
     margin-bottom: 8px;
@@ -32,7 +30,7 @@
     color: #555;
   }
   
-  /* Input-kentät */
+
   .login-form input {
     width: 100%;
     padding: 10px;
@@ -42,7 +40,6 @@
     font-size: 1rem;
   }
   
-  /* Painike */
   .login-form button {
     width: 100%;
     padding: 10px;
@@ -67,7 +64,7 @@
     font-size: 0.9rem;
   }
   
-  /* Responsiivisuus */
+
   
   @media (max-width: 768px) {
     .login-form {

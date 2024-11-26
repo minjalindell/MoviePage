@@ -1,4 +1,4 @@
-/* register.css */
+
 
 .register-container {
     display: flex;
@@ -64,7 +64,7 @@
     font-size: 0.9rem;
   }
   
-  /* Responsiivisuus */
+
   @media (max-width: 768px) {
     .register-form {
       padding: 20px;

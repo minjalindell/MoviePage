@@ -1,0 +1,55 @@
+.top-movies {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .top-movies h3 {
+    font-size: 24px;
+    font-weight: bold;
+    color: deeppink;
+    margin-bottom: 20px;
+  }
+  
+  .top-movies-list {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .movie-item {
+    cursor: pointer;
+    margin: 15px;
+    text-align: center;
+    border: 1px solid deeppink;
+    border-radius: 8px;
+    padding: 10px;
+    max-width: 200px;
+    background-color: deeppink;
+  }
+  
+  .movie-item img {
+    border-radius: 4px;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .movie-item p {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    margin: 0;
+  }
+  .showMoreButton {
+    padding: 10px 20px; 
+    font-size: 1rem;
+    color: white;
+    background-color: deeppink; 
+    border: none;
+    border-radius: 5px; 
+    cursor: pointer;
+    transition: background-color 0.3s ease; 
+    text-decoration: none;
+  }
+  
+  .showMoreButton:hover {
+    background-color: rgb(253, 90, 177); 
+  }

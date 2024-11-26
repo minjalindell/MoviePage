@@ -56,27 +56,11 @@ const Search = () => {
 
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    // Poistetaan tarvittavat tiedot localStorage ja sessionStorage:sta
-    localStorage.removeItem("authToken");
-    sessionStorage.clear();
 
-    // Navigoidaan etusivulle ja välitetään state-parametreina uloskirjautumisviesti
-    navigate("/", { state: { fromLogout: true } });
-  };
-
-  useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-      navigate("/");
-    } else {
-      search();
-    }
-  }, [navigate, page]);
 
   return (
     <div>
-      <header className="Profile-header">
+      <header className="search-header">
         <h1>The best movie page</h1>
       </header>
       <nav className="Profile-nav">
@@ -86,9 +70,6 @@ const Search = () => {
         <Link to="/profile">
           <button className="nav-button">Profile</button>
         </Link>
-        <button className="nav-button" onClick={handleLogout}>
-          Log out
-        </button>
       </nav>
 
       <h3>Search Movies</h3>

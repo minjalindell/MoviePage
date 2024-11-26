@@ -7,17 +7,16 @@ function Profile() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Poistetaan tarvittavat tiedot localStorage ja sessionStorage:sta
+
     localStorage.removeItem("authToken");
     sessionStorage.clear();
 
-    // Navigoidaan etusivulle ja välitetään state-parametreina viesti
     navigate("/", { state: { fromLogout: true } });
   };
 
   return (
     <div className="Profile">
-      <header className="Profile-header">
+      <header className="profile-header">
         <h1>The best movie page</h1>
       </header>
       <nav className="Profile-nav">

@@ -44,15 +44,15 @@ function Register() {
       const data = await response.json();
 
       if (response.ok) {
-        // Registration successful
-        localStorage.setItem('authToken', data.token); // Store token in localStorage
+
+        localStorage.setItem('authToken', data.token); 
         setSuccessMessage('Registration successful!');
         setErrorMessage('');
         setEmail('');
         setPassword('');
-        navigate('/profile'); // Redirect to profile
+        navigate('/login'); 
       } else {
-        // Registration failed
+
         setErrorMessage(data.message || 'Registration failed');
         setSuccessMessage('');
       }

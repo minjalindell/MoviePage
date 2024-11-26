@@ -6,7 +6,6 @@ import { before, after } from 'mocha';
 import { pool } from './helpers/db.js'
 
 
-//lisätään testikäyttäjä
 before(async () => {
     const email = 'login@foo.com';
     const password = 'login123';
@@ -14,14 +13,14 @@ before(async () => {
 });
 
 
-// poistetaan testikäyttäjä
+
 after(async () => {
     await pool.query('DELETE FROM users WHERE email = $1', ['login@foo.com']);  // Poistetaan testikäyttäjä
 });
 
-// rekisteröinti
+
 describe('POST register', () => {
-    // uniikki email joka testille
+
     const email = 'register' + Date.now() + '@foo.com';
     const password = 'Register123'; 
 
@@ -41,7 +40,7 @@ describe('POST register', () => {
     });
 });
 
-// kirjautuminen
+
 describe('POST login', () => {
     const email = 'login@foo.com';  
     const password = 'login123';  
