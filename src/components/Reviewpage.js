@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import "./Reviewpage.css"; 
 
 const ReviewPage = () => {
   const { movieId } = useParams(); 
@@ -9,7 +10,6 @@ const ReviewPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch movie details
     fetch(`https://api.themoviedb.org/3/movie/${movieId}?language=en-US`, {
       headers: {
         Authorization:
@@ -21,7 +21,6 @@ const ReviewPage = () => {
       .then((data) => setMovie(data))
       .catch((error) => console.error("Error fetching movie details:", error));
 
-    // Fetch reviews
     fetch(`https://api.themoviedb.org/3/movie/${movieId}/reviews?language=en-US`, {
       headers: {
         Authorization:
@@ -39,39 +38,45 @@ const ReviewPage = () => {
   }
 
   return (
-    <div>
+    <div className="review-page-container">
       <h1
-        style={{ cursor: "pointer", color: "blue" }}
-        onClick={() => navigate(`/MovieDetails/${movie.id}`)}
+        className="review-page-header"
       >
         {movie.title} - Reviews
       </h1>
       <img
+        className="review-page-image"
         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
         alt={movie.title}
-        style={{ maxWidth: "200px", marginBottom: "20px" }}
       />
+      <p className="review-page-overview">{movie.overview}</p>
+      <button
+  className="review-page-button"
+  onClick={() => navigate(`/MovieDetails/${movie.id}`)}
+>
+Click here to see details!
+</button>
 
-      <p>{movie.overview}</p>
-
-      <h3>User Reviews</h3>
-      {reviews.length > 0 ? (
-  <ul>
-    {reviews.map((review) => (
-      <li key={review.id}>
-        <h4>{review.author}</h4>
-        <p>{review.content}</p>
-        {review.author_details.rating !== null ? (
-          <p><strong>User Rating:</strong> {review.author_details.rating} / 10</p>
+      <h3 className="review-page-title">User Reviews</h3>
+      <div className="review-page-reviews">
+        {reviews.length > 0 ? (
+          <ul>
+            {reviews.map((review) => (
+              <li key={review.id}>
+                <h4>{review.author}</h4>
+                <p>{review.content}</p>
+                {review.author_details.rating !== null ? (
+                  <p><strong>User Rating:</strong> {review.author_details.rating} / 10</p>
+                ) : (
+                  <p><strong>User Rating:</strong> Not provided</p>
+                )}
+              </li>
+            ))}
+          </ul>
         ) : (
-          <p><strong>User Rating:</strong> Not provided</p>
+          <p className="no-reviews">No reviews yet</p>
         )}
-      </li>
-    ))}
-  </ul>
-) : (
-  <p>No reviews yet</p>
-)}
+      </div>
     </div>
   );
 };

@@ -7,13 +7,13 @@ const { sign } = pkg;
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
-// tietokannan alustus
+
 const initializeTestDb = async () => {
   try {
     const sqlPath = path.resolve('movie_test_db.sql');
     console.log(`Using SQL file at: ${sqlPath}`);
     const sql = fs.readFileSync(sqlPath, 'utf8');
-    // SQL kyselyt
+
     await pool.query(sql);
   } catch (error) {
     console.error("Error initializing database:", error);
@@ -21,10 +21,9 @@ const initializeTestDb = async () => {
   }
 };
 
-// testikäyttäjän lisääminen
 const insertTestUser = async (email, password) => {
   try {
-    // poistetaan vanhat testikäyttäjät
+
     await pool.query('DELETE FROM users WHERE email = $1', [email]);
     const hashedPassword = await bcrypt.hash(password, 10);
     await pool.query('INSERT INTO users (email, password) VALUES ($1, $2)', [email, hashedPassword]);
@@ -34,7 +33,7 @@ const insertTestUser = async (email, password) => {
   }
 };
 
-// tehdään token
+
 const getToken = (email) => {
   try {
     return sign({ user: email }, process.env.JWT_SECRET_KEY);

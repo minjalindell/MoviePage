@@ -1,9 +1,20 @@
-.Search-header {
-  color: white;
+
+.search-header {
+  font-family: 'Bangers', cursive;
+  color: #fff;
   text-align: center;
-  padding: 20px 0;
+  padding: 30px 0;
+  background-color: #000;
+  border-bottom: 2px solid #444;
+  color: #ff1493;
 }
-/* Yleinen asettelu */
+.search-header h1 {
+  font-size: 3rem;
+  margin: 0;
+  font-weight: bold;
+  color: #ff1493;
+}
+
 #container {
   font-family: Arial, sans-serif;
   margin: 20px auto;
@@ -20,7 +31,6 @@ h3 {
   margin-bottom: 20px;
 }
 
-/* Hakukenttä ja valikot */
 input, select, button {
   display: block;
   width: 100%;
@@ -40,7 +50,7 @@ input::placeholder, select, button {
 }
 
 a {
-  text-decoration: none;  /* Poistaa alaviivan kaikista linkeistä */
+  text-decoration: none;
 }
 
 button {
@@ -53,10 +63,9 @@ button {
 }
 
 button:hover {
-  background-color: deeppink;
+	background-color: #ff69b4;
 }
 
-/* Taulukko elokuville */
 table {
   width: 100%;
   margin: 20px 0;
@@ -98,8 +107,6 @@ td button:hover {
   color: #77c7ff;
 }
 
-/* React-paginate tyylit */
-/* React-paginate tyylit */
 .pagination {
   display: flex;
   justify-content: center;
@@ -136,14 +143,12 @@ td button:hover {
   font-weight: bold;
 }
 
-/* Lisää marginaalia nuolipainikkeille */
 .pagination li.previous a,
 .pagination li.next a {
   font-weight: bold;
   padding: 8px 16px;
 }
 
-/* Responsiivinen sivutus */
 @media (max-width: 480px) {
   .pagination li a {
     padding: 6px 10px;
@@ -151,8 +156,6 @@ td button:hover {
   }
 }
 
-
-/* Responsiivisuus */
 @media (max-width: 768px) {
   #container {
     padding: 15px;
@@ -204,18 +207,13 @@ td button:hover {
 
 
 .footer {
-  background-color: #222; /* Tumma tausta */
-  color: white; /* Valkoinen teksti */
-  text-align: center; /* Keskitetty teksti */
-  padding: 10px 0; /* Ylä- ja alapadding */
-  position: fixed; /* Kiinnitetään näytön alaosaan */
-  bottom: 0; /* Asettuu näytön alaosaan */
-  width: 100%; /* Kattaa koko leveyden */
-  font-size: 14px; /* Tekstin koko */
+  background-color: #222; 
+  color: white; 
+  text-align: center; 
+  padding: 10px 0; 
+  position: fixed; 
+  bottom: 0; 
+  width: 100%; 
+  font-size: 14px; 
 }
-  
-  
-  
-
-  
   
