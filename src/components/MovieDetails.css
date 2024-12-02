@@ -1,4 +1,4 @@
-/* Container for the entire movie details */
+
 .movie-details-container {
   padding: 20px;
   max-width: 800px;
@@ -7,7 +7,6 @@
   text-align: center;
 }
 
-/* Elokuvan nimi (title) */
 .movie-title {
   text-align: center;
   font-size: 2rem;
@@ -15,40 +14,34 @@
   color: #ff1493;
 }
 
-/* Kuvien säilytyslaatikko (posteri ja taustakuva) */
 .movie-images {
   display: flex;
   justify-content: center;
   gap: 20px;
-  flex-wrap: wrap; /* Kuvaustila pienemmillä näytöillä */
+  flex-wrap: wrap; 
   margin-bottom: 20px;
 }
 
-/* Posteri */
 .movie-poster {
   max-width: 200px;
   border-radius: 8px;
 }
 
-/* Taustakuva */
 .movie-backdrop {
   max-width: 400px;
   border-radius: 8px;
 }
 
-/* Elokuvan kuvaus */
 .movie-overview {
   margin-top: 20px;
   text-align: center;
   font-size: 1.1rem;
 }
 
-/* Lisätiedot */
 .movie-details {
   margin-top: 30px;
 }
 
-/* Tuotantoyhtiöiden logot */
 .production-companies ul {
   list-style-type: none;
   padding: 0;

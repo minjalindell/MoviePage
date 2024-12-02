@@ -7,11 +7,8 @@ function Profile() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Poistetaan tarvittavat tiedot localStorage ja sessionStorage:sta
     localStorage.removeItem("authToken");
     sessionStorage.clear();
-
-    // Navigoidaan etusivulle ja välitetään state-parametreina viesti
     navigate("/", { state: { fromLogout: true } });
   };
 
@@ -37,7 +34,7 @@ function Profile() {
       <div className="profile-buttons-container">
         <button className="profile-button">Favourites</button>
         <button className="profile-button">Groups</button>
-        <button className="profile-button">Reviews</button>
+        <button className="profile-button" onClick={() => navigate('/reviews')}>Reviews</button>
       </div>
 
       <button className="delete-button">Delete</button>

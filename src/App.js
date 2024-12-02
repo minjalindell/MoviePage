@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';  
-import Login from './components/login';
-import Register from './components/register';
+import Authentication from './components/authentication';
 import Search from './components/search';
 import Profile from './components/profile';
 import MovieDetails from './components/MovieDetails';
@@ -11,7 +10,6 @@ import Shows from './components/shows';
 import ReviewPage from './components/Reviewpage';
 import TopMovies from './components/topMovies';
 import TopMoviesFull from './components/TopMoviesFull';
-
 
 function App() {
   return (
@@ -60,11 +58,8 @@ function AppRoutes() {
                 <h1>The best movie page</h1>
               </header>
               <nav className="App-nav">
-                <Link to="/login" className="nav-link">
-                  <button className="nav-button">Log in</button>
-                </Link>
-                <Link to="/register" className="nav-link">
-                  <button className="nav-button">Register</button>
+                <Link to="/authentication" className="nav-link">
+                  <button className="nav-button">Log in / Register</button>
                 </Link>
               </nav>
               <section className="App-section">
@@ -80,12 +75,12 @@ function AppRoutes() {
                 <TopMovies/>
               </section>
             </div>
-            
           }
         />
         
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        {/* Yhdistämme kirjautumisen ja rekisteröinnin authentication.js-komponenttiin */}
+        <Route path="/authentication" element={<Authentication />} />
+        
         <Route path="/search" element={<Search />} />
         
         <Route
@@ -102,13 +97,13 @@ function AppRoutes() {
         <Route path="/top-movies" element={<TopMoviesFull />} />
         <Route path="/reviews/:movieId" element={<ReviewPage />} />
         <Route path="/MovieDetails/:id" element={<MovieDetails />} />
-
       </Routes>
     </>
   );
 }
 
 export default App;
+
 
 
 
