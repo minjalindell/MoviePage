@@ -1,5 +1,6 @@
 
 
+
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -39,43 +40,56 @@ const ReviewPage = () => {
   if (!movie) {
     return <p>Loading...</p>;
   }
-
-  return (
-    <div>
-      <h1
-        style={{ cursor: "pointer", color: "blue" }}
+return (
+  <div>
+    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+      <h1>{movie.title} - Reviews</h1>
+      <button
         onClick={() => navigate(`/MovieDetails/${movie.id}`)}
+        style={{
+          padding: "5px 10px",
+          fontSize: "14px",
+          cursor: "pointer",
+          backgroundColor: "#007BFF",
+          color: "#fff",
+          border: "none",
+          borderRadius: "5px",
+        }}
       >
-        {movie.title} - Reviews
-      </h1>
-      <img
-        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-        alt={movie.title}
-        style={{ maxWidth: "200px", marginBottom: "20px" }}
-      />
-
-      <p>{movie.overview}</p>
-
-      <h3>User Reviews</h3>
-      {reviews.length > 0 ? (
-  <ul>
-    {reviews.map((review) => (
-      <li key={review.id}>
-        <h4>{review.author}</h4>
-        <p>{review.content}</p>
-        {review.author_details.rating !== null ? (
-          <p><strong>User Rating:</strong> {review.author_details.rating} / 10</p>
-        ) : (
-          <p><strong>User Rating:</strong> Not provided</p>
-        )}
-      </li>
-    ))}
-  </ul>
-) : (
-  <p>No reviews yet</p>
-)}
+        Details
+      </button>
     </div>
-  );
-};
+    <img
+      src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+      alt={movie.title}
+      style={{ maxWidth: "200px", marginBottom: "20px" }}
+    />
 
+    <p>{movie.overview}</p>
+
+    <h3>User Reviews</h3>
+    {reviews.length > 0 ? (
+      <ul>
+        {reviews.map((review) => (
+          <li key={review.id}>
+            <h4>{review.author}</h4>
+            <p>{review.content}</p>
+            {review.author_details.rating !== null ? (
+              <p>
+                <strong>User Rating:</strong> {review.author_details.rating} / 10
+              </p>
+            ) : (
+              <p>
+                <strong>User Rating:</strong> Not provided
+              </p>
+            )}
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p>No reviews yet</p>
+    )}
+  </div>
+);
+}
 export default ReviewPage;
