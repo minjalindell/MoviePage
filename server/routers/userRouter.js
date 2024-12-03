@@ -73,18 +73,21 @@ router.post('/login', async (req, res) => {
     }
 
     // JWT-token luodaan
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' }); 
+    const token = jwt.sign({ id: user.user_id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+
+    // Vastauksen palautus
     return res.status(200).json({
-      id: user.id,
+      id: user.user_id, // Käytä user_id-tä tässä
       email: user.email,
       token: token,
     });
 
   } catch (error) {
-    console.error('Error in login:', error);  
+    console.error('Error in login:', error);
     return res.status(500).json({ message: 'Sisäinen virhe palvelimella' });
   }
 });
+
 
 
 

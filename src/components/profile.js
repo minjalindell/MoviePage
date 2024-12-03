@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from "react-router-dom"; 
 import "./profile.css";
-import axios from "axios";
+import { UserContext } from './context/userContext';
+
 
 function Profile() {
   const navigate = useNavigate();
+  const { signOut } = useContext(UserContext); 
 
  // Uloskirjautumisfunktio
 const handleLogout = () => {
-  // Poistetaan kaikki localStoragen tiedot
-  localStorage.clear();
-  console.log('Logged out. localStorage cleared.');
-    navigate("/", { state: { fromLogout: true } });
+  signOut();
+  console.log('Logged out. sessionStorage cleared.');
+  navigate("/", { state: { fromLogout: true } });
   };
 
   return (

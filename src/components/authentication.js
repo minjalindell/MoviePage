@@ -2,11 +2,9 @@ import React, { useState, useContext } from 'react';
 import { UserContext } from './context/userContext';
 import './authentication.css';
 import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
-
 
 function Authentication() {
-  const { signIn } = useContext(UserContext);
+  const { signIn, signUp } = useContext(UserContext); 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLogin, setIsLogin] = useState(true);
@@ -15,36 +13,25 @@ function Authentication() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const authData = { email, password };
-    const endpoint = isLogin ? '/login' : '/register';
+    const authData = { email, password };  // Varmista, että nämä arvot otetaan oikein
+  
+    console.log('Submitting:', authData);  // Lisää tämä rivi debuggausta varten
   
     try {
-      const response = await fetch(`http://localhost:3001${endpoint}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(authData),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        if (data.token) {
-          const decodedToken = jwtDecode(data.token);
-          signIn(data.token, decodedToken.userId, email);
-          navigate('/profile');
-        } else {
-          console.error('No token received');
-        }
+      if (isLogin) {
+        await signIn(email, password);  // Tarkista, että signIn-funktio saa molemmat arvot
+        navigate('/profile');
       } else {
-        setErrorMessage(data.message || 'An error occurred');
+        await signUp(email, password);
+        setIsLogin(true);
       }
     } catch (error) {
-      setErrorMessage('Error in authentication');
-      console.error('Authentication error:', error);
+      console.error('Virhe kirjautumisessa/rekisteröinnissä:', error);
+      setErrorMessage(error.message || 'An unexpected error occurred');
     }
   };
+  
+      
 
   return (
     <div className="authentication-container">
@@ -85,6 +72,7 @@ function Authentication() {
     </div>
   );
 }
+
 
 export default Authentication;
 
