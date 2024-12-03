@@ -6,9 +6,11 @@ import axios from "axios";
 function Profile() {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    sessionStorage.clear();
+ // Uloskirjautumisfunktio
+const handleLogout = () => {
+  // Poistetaan kaikki localStoragen tiedot
+  localStorage.clear();
+  console.log('Logged out. localStorage cleared.');
     navigate("/", { state: { fromLogout: true } });
   };
 

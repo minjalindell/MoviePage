@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
-import { jwtDecode } from 'jwt-decode';
+import React, { useState, useContext } from 'react';
+import { UserContext } from './context/userContext';
 import './authentication.css';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+
 
 function Authentication() {
+  const { signIn } = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLogin, setIsLogin] = useState(true);
@@ -12,13 +15,10 @@ function Authentication() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted');
-
     const authData = { email, password };
     const endpoint = isLogin ? '/login' : '/register';
-
+  
     try {
-        console.log('Sending request to backend...');
       const response = await fetch(`http://localhost:3001${endpoint}`, {
         method: 'POST',
         headers: {
@@ -26,31 +26,17 @@ function Authentication() {
         },
         body: JSON.stringify(authData),
       });
-      console.log('Request sent, awaiting response...');
 
       const data = await response.json();
-      console.log('Response data:', data);  //mitä saadaan backendiltä
 
       if (response.ok) {
-        console.log('Response is OK. Proceeding with saving to localStorage...');
-
-        // Puretaan JWT token
         if (data.token) {
-            const decodedToken = jwtDecode(data.token);
-            //Tarkistetaan että saadaan ID tokenista
-          console.log('Decoded Token:', decodedToken);
-
-          // Tallennetaan arvot local storageen
-          localStorage.setItem('authToken', data.token);  
-          localStorage.setItem('user_id', decodedToken.userId); 
-          localStorage.setItem('email', email); 
-          console.log('User ID saved:', decodedToken.id);   // printataan id
-
+          const decodedToken = jwtDecode(data.token);
+          signIn(data.token, decodedToken.userId, email);
+          navigate('/profile');
         } else {
           console.error('No token received');
         }
-
-        navigate('/profile');
       } else {
         setErrorMessage(data.message || 'An error occurred');
       }
@@ -64,7 +50,6 @@ function Authentication() {
     <div className="authentication-container">
       <div className="authentication-form">
         <h2>{isLogin ? 'Log in' : 'Register'}</h2>
-        
         <form onSubmit={handleSubmit}>
           <label>Email:</label>
           <input
@@ -102,6 +87,9 @@ function Authentication() {
 }
 
 export default Authentication;
+
+
+
 
 
 

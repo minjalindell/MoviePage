@@ -10,43 +10,43 @@ import Shows from './components/shows';
 import ReviewPage from './components/Reviewpage';
 import TopMovies from './components/topMovies';
 import TopMoviesFull from './components/TopMoviesFull';
+import UserProvider from './components/context/userProvider.js';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <AppRoutes />
-      </div>
-    </Router>
+    <UserProvider> 
+      <Router>
+        <div className="App">
+          <AppRoutes />
+        </div>
+      </Router>
+    </UserProvider>
   );
 }
 
 function AppRoutes() {
-  const [logoutMessage, setLogoutMessage] = useState(""); // Viesti uloskirjautumisesta
-  const location = useLocation(); // Käytetään vain Routerin sisällä
+  const [logoutMessage, setLogoutMessage] = useState(""); 
+  const location = useLocation();
 
-  // Käytämme useEffectiä, joka tarkistaa, onko käyttäjä kirjautunut ulos
   useEffect(() => {
     if (location.state && location.state.fromLogout) {
       setLogoutMessage("You have successfully logged out.");
     } else {
-      setLogoutMessage(""); // Jos ei ole uloskirjautunut, tyhjennetään viesti
+      setLogoutMessage("");
     }
   }, [location]);
 
-  // Viestin poistaminen automaattisesti 5 sekunnin kuluttua
   useEffect(() => {
     if (logoutMessage) {
       const timer = setTimeout(() => {
-        setLogoutMessage(""); // Tyhjennetään viesti
+        setLogoutMessage("");
       }, 5000);
-      return () => clearTimeout(timer); // Puhdistetaan timer
+      return () => clearTimeout(timer);
     }
   }, [logoutMessage]);
 
   return (
     <>
-      {/* Näytetään uloskirjautumisviesti */}
       {logoutMessage && <div className="logout-message">{logoutMessage}</div>}
 
       <Routes>
@@ -72,26 +72,15 @@ function AppRoutes() {
                     <button className="section-button">Search movies</button>
                   </Link>
                 </div>
-                <TopMovies/>
+                <TopMovies />
               </section>
             </div>
           }
         />
         
-        {/* Yhdistämme kirjautumisen ja rekisteröinnin authentication.js-komponenttiin */}
         <Route path="/authentication" element={<Authentication />} />
-        
         <Route path="/search" element={<Search />} />
-        
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
-        />
-        
+        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/movie/:id" element={<MovieDetails />} />
         <Route path="/shows" element={<Shows />} />
         <Route path="/top-movies" element={<TopMoviesFull />} />
@@ -103,6 +92,7 @@ function AppRoutes() {
 }
 
 export default App;
+
 
 
 
