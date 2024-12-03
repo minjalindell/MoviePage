@@ -46,3 +46,4 @@ const handleLogout = () => {
 }
 
 export default Profile;
+

@@ -5,7 +5,6 @@ import Authentication from './components/authentication';
 import Search from './components/search';
 import Profile from './components/profile';
 import MovieDetails from './components/MovieDetails';
-import ProtectedRoute from './components/ProtectedRoutes';
 import Shows from './components/shows';
 import ReviewPage from './components/Reviewpage';
 import TopMovies from './components/topMovies';
