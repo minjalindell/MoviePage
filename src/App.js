@@ -56,15 +56,10 @@ function AppRoutes() {
           path="/"
           element={
             <div className="App">
-              <header className="App-header">
-                <h1>The best movie page</h1>
-              </header>
               <nav className="App-nav">
+              <h1>The best movie page</h1>
                 <Link to="/login" className="nav-link">
-                  <button className="nav-button">Log in</button>
-                </Link>
-                <Link to="/register" className="nav-link">
-                  <button className="nav-button">Register</button>
+                  <button className="nav-button">Log in / Register</button>
                 </Link>
               </nav>
               <section className="App-section">

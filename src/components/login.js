@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './login.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -65,6 +65,9 @@ function Login() {
             required
           />
           <button type="submit">Log in</button>
+          <Link to="/register" className="nav-link">
+                  <button className="button">No account? Register here!</button>
+                </Link>
         </form>
         
        

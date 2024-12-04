@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './register.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -85,7 +85,10 @@ function Register() {
               required
             />
           </div>
-          <button type="submit">Register</button>
+          <button type="Registered">Register</button>
+          <Link to="/login" className="nav-link">
+                  <button className="button">Already registered? Login here!</button>
+                </Link>
         </form>
         
         {successMessage && <p className="success-message">{successMessage}</p>}
