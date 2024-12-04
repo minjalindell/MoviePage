@@ -49,7 +49,10 @@ router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    // Käyttäjä tietokannasta
+    console.log('Received login request...');
     const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    console.log('Query result:', result);
 
     if (result.rowCount === 0) {
       return res.status(401).json({ message: 'Käyttäjää ei löydy' });
@@ -57,26 +60,28 @@ router.post('/login', async (req, res) => {
 
     const user = result.rows[0];
 
+    console.log('User fetched from database:', user);
 
+    // Salasanan vertailu
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
       return res.status(401).json({ message: 'Virheellinen salasana' });
     }
 
-
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
-
+    const token = jwt.sign({ id: user.user_id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+    
     return res.status(200).json({
-      id: user.id,
+      id: user.user_id, 
       email: user.email,
       token: token,
     });
 
   } catch (error) {
-    console.error('Error in login:', error);  
+    console.error('Error in login:', error);
     return res.status(500).json({ message: 'Sisäinen virhe palvelimella' });
   }
 });
+
 
 
 

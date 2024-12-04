@@ -46,6 +46,7 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
+
     console.log('Login attempt:', email); 
 
     const userResult = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
@@ -67,9 +68,7 @@ const login = async (req, res) => {
 
   
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
-
     console.log("Login successful for user:", user.email);
-
     res.status(200).json({ message: 'Login successful', token });
   } catch (err) {
     console.error('Error while logging in:', err);

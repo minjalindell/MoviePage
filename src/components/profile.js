@@ -1,16 +1,15 @@
-import React from "react";
+import React, { useContext } from 'react';
 import { Link, useNavigate } from "react-router-dom"; 
 import "./profile.css";
-import axios from "axios";
+import { UserContext } from './context/userContext';
 
 function Profile() {
   const navigate = useNavigate();
+  const { user, signOut } = useContext(UserContext); 
 
   const handleLogout = () => {
-
-    localStorage.removeItem("authToken");
-    sessionStorage.clear();
-
+    signOut();
+    console.log('Logged out. sessionStorage cleared.');
     navigate("/", { state: { fromLogout: true } });
   };
 
@@ -33,10 +32,14 @@ function Profile() {
 
       <h1>Your Profile</h1>
 
+      <div className="user-info">
+        <p><strong>Email:</strong> {user.email || "No email available"}</p>
+      </div>
+
       <div className="profile-buttons-container">
         <button className="profile-button">Favourites</button>
         <button className="profile-button">Groups</button>
-        <button className="profile-button">Reviews</button>
+        <button className="profile-button" onClick={() => navigate('/reviews')}>Reviews</button>
       </div>
 
       <button className="delete-button">Delete</button>
@@ -45,3 +48,5 @@ function Profile() {
 }
 
 export default Profile;
+
+
