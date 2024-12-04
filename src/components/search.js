@@ -1,7 +1,9 @@
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import './search.css';
+import { UserContext } from './context/userContext';
+ 
 const Search = () => {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
@@ -10,7 +12,8 @@ const Search = () => {
   const [genre, setGenre] = useState("");
   const [year, setYear] = useState("");
   const navigate = useNavigate();
-
+  const { user } = useContext(UserContext);
+ 
   const genres = [
     { id: 28, name: "Action" },
     { id: 12, name: "Adventure" },
@@ -32,17 +35,16 @@ const Search = () => {
     { id: 10752, name: "War" },
     { id: 37, name: "Western" },
   ];
-
+ 
   const search = () => {
     let url = `https://api.themoviedb.org/3/${query ? "search/movie" : "discover/movie"}?page=${page}`;
     if (query) url += `&query=${query}`;
     if (genre) url += `&with_genres=${genre}`;
     if (year) url += `&primary_release_year=${year}`;
-
+ 
     fetch(url, {
       headers: {
-        Authorization: 
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMWY5YjZiNmIyY2M4YjQwOTk2YWE1MzY2NmIwMDJkNSIsIm5iZiI6MTczMTY1OTg4NC44OTM1NSwic3ViIjoiNjczNDUzZjgwNTgxNjRjNDA1MjNmYTBkIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.xiEsZpA1oJhq910VPdQAqPrZmnktqGJMj58imsF0RtI",
+        Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMWY5YjZiNmIyY2M4YjQwOTk2YWE1MzY2NmIwMDJkNSIsIm5iZiI6MTczMTY1OTg4NC44OTM1NSwic3ViIjoiNjczNDUzZjgwNTgxNjRjNDA1MjNmYTBkIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.xiEsZpA1oJhq910VPdQAqPrZmnktqGJMj58imsF0RtI",
         "Content-Type": "application/json",
       },
     })
@@ -53,16 +55,32 @@ const Search = () => {
       })
       .catch((error) => console.log(error));
   };
-
-  useEffect(() => {
-    search();
-  }, [page]);
-
+ 
+  const handleProfileNavigation = () => {
+    if (!user || !user.token) {
+      alert("You need to be logged in to access the profile page.");
+      navigate("/");
+    } else {
+      navigate("/profile");
+    }
+  };
+ 
   return (
-    <div id="container">
+    <div>
+      <header className="search-header">
+        <h1>The best movie page</h1>
+      </header>
+      <nav className="Profile-nav">
+        <Link to="/shows">
+          <button className="nav-button">Search shows</button>
+        </Link>
+        <button className="nav-button" onClick={handleProfileNavigation}>
+          Profile
+        </button>
+      </nav>
+ 
       <h3>Search Movies</h3>
-
-      {/* Haku */}
+ 
       <div>
         <input
           value={query}
@@ -70,7 +88,7 @@ const Search = () => {
           placeholder="Search by title"
         />
       </div>
-
+ 
       <div>
         <select value={genre} onChange={(e) => setGenre(e.target.value)}>
           <option value="">-- Select Genre --</option>
@@ -81,7 +99,7 @@ const Search = () => {
           ))}
         </select>
       </div>
-
+ 
       <div>
         <input
           type="number"
@@ -90,10 +108,9 @@ const Search = () => {
           placeholder="Search by release year"
         />
       </div>
-
+ 
       <button onClick={search}>Search</button>
-
-      {/* Sivutuksen komponentti */}
+ 
       <ReactPaginate
         breakLabel="..."
         nextLabel=" >"
@@ -102,37 +119,43 @@ const Search = () => {
         pageCount={pageCount}
         previousLabel="< "
         renderOnZeroPageCount={null}
+        containerClassName="pagination"
+        pageClassName="page-item"
+        pageLinkClassName="page-link"
+        previousClassName="previous"
+        nextClassName="next"
+        activeClassName="selected"
       />
-
-      {/* Elokuvataulukko */}
+ 
       <table>
-  {movies.map((movie) => (
-    <tr key={movie.id}>
-      <td>
-        {/* Elokuvan posteri */}
-        {movie.poster_path && (
-          <img
-            src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-            alt={`${movie.title} poster`}
-            style={{
-              maxWidth: "50px",
-              borderRadius: "4px",
-              marginRight: "10px",
-              verticalAlign: "middle",
-            }}
-          />
-        )}
-
-        {/* Elokuvan nimi ja navigointipainike */}
-        <button onClick={() => navigate(`/movie/${movie.id}`)} style={{ background: "none", border: "none", color: "blue", textDecoration: "underline", cursor: "pointer" }}>
-          {movie.title}
-        </button>
-      </td>
-    </tr>
-  ))}
-</table>
+        {movies.map((movie) => (
+          <tr key={movie.id}>
+            <td>
+              {movie.poster_path && (
+                <img
+                  src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                  alt={`${movie.title} poster`}
+                  style={{
+                    maxWidth: "50px",
+                    borderRadius: "4px",
+                    marginRight: "10px",
+                    verticalAlign: "middle",
+                  }}
+                />
+              )}
+              <button
+                onClick={() => navigate(`/movie/${movie.id}`)}
+              >
+                {movie.title}
+              </button>
+            </td>
+          </tr>
+        ))}
+      </table>
     </div>
   );
 };
-
+ 
 export default Search;
+ 
+ 

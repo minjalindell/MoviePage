@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
-
-
+ 
+ 
 const MovieDetails = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
-
+ 
   const navigate = useNavigate();
-
-
+ 
+ 
   useEffect(() => {
     fetch(`https://api.themoviedb.org/3/movie/${id}`, {
       headers: {
-        Authorization: 
+        Authorization:
         "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMWY5YjZiNmIyY2M4YjQwOTk2YWE1MzY2NmIwMDJkNSIsIm5iZiI6MTczMTY1OTg4NC44OTM1NSwic3ViIjoiNjczNDUzZjgwNTgxNjRjNDA1MjNmYTBkIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.xiEsZpA1oJhq910VPdQAqPrZmnktqGJMj58imsF0RtI",
         "Content-Type": "application/json",
       },
@@ -23,17 +22,16 @@ const MovieDetails = () => {
       .then((json) => setMovie(json))
       .catch((error) => console.log(error));
   }, [id]);
-
+ 
   if (!movie) {
     return <p>Loading...</p>;
   }
-
+ 
   return (
     <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
-      {/* Elokuvan nimi */}
+ 
       <h2>{movie.title}</h2>
-
-      {/* Posteri ja taustakuva */}
+ 
       <div style={{ display: "flex", gap: "20px" }}>
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -48,11 +46,9 @@ const MovieDetails = () => {
           />
         )}
       </div>
-
-      {/* Kuvaus */}
+ 
       <p style={{ marginTop: "20px" }}>{movie.overview}</p>
-
-      {/* Lisätiedot */}
+ 
       <div>
         <h4>Details</h4>
         <p><strong>Original Title:</strong> {movie.original_title}</p>
@@ -67,8 +63,7 @@ const MovieDetails = () => {
         <p><strong>Average Rating:</strong> {movie.vote_average} / 10</p>
         <p><strong>Total Votes:</strong> {movie.vote_count}</p>
       </div>
-
-      {/* Tuotantoyhtiöt */}
+ 
       <div>
         <h4>Production Companies</h4>
         <ul>
@@ -87,7 +82,7 @@ const MovieDetails = () => {
         </ul>
       </div>
       <button
-        onClick={() => navigate(`/reviews/${id}`)} 
+        onClick={() => navigate(`/reviews/${id}`)}
         style={{
           marginTop: "20px",
           padding: "10px 20px",
@@ -103,5 +98,6 @@ const MovieDetails = () => {
     </div>
   );
 };
-
+ 
 export default MovieDetails;
+ 

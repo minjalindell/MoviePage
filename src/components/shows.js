@@ -1,72 +1,82 @@
-
-import { useEffect, useState } from "react";
-
+import React, { useEffect, useState, useContext } from "react";
+import './shows.css';
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { UserContext } from './context/userContext';
+ 
 function Shows() {
-  const [areas, setAreas] = useState([]); 
-  const [selectedArea, setSelectedArea] = useState(""); 
-  const [selectedDate, setSelectedDate] = useState(""); 
+  const [areas, setAreas] = useState([]);
+  const [selectedArea, setSelectedArea] = useState("");
   const [showings, setShowings] = useState([]);
-
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useContext(UserContext);
+ 
   const getFinnkinoTheaters = (xml) => {
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xml, "application/xml");
     const root = xmlDoc.children;
     const theatres = root[0].children;
     const tempAreas = [];
-  
+ 
     for (let i = 0; i < theatres.length; i++) {
-      const id = theatres[i].children[0].innerHTML;
-      const name = theatres[i].children[1].innerHTML;
-  
-      if (name.includes("valitse alue") || name.includes("teatteri")) {
-        continue;
-      }
-  
-      tempAreas.push({ id, name });
+      tempAreas.push({
+        id: theatres[i].children[0].innerHTML,
+        name: theatres[i].children[1].innerHTML,
+      });
     }
-  
+ 
     setAreas(tempAreas);
   };
-
-  const getShowings = (areaId, date) => {
+ 
+  const getShowings = (areaId) => {
     if (!areaId) return;
-
-    const dateQuery = date ? `&dt=${date}` : ""; 
-    fetch(`https://www.finnkino.fi/xml/Schedule/?area=${areaId}${dateQuery}`)
+ 
+    fetch(`https://www.finnkino.fi/xml/Schedule/?area=${areaId}`)
       .then((response) => response.text())
       .then((xml) => {
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(xml, "application/xml");
         const showingsList = xmlDoc.getElementsByTagName("Show");
-
+ 
         const showingsArray = [];
         for (let i = 0; i < showingsList.length; i++) {
+          const startTime = showingsList[i].getElementsByTagName("dttmShowStart")[0].textContent;
+ 
+          const formattedTime = formatDateTime(startTime);
+ 
           showingsArray.push({
-            movieTitle: showingsList[i].getElementsByTagName("Title")[0]
-              .textContent,
-            startTime: formatDateTime(
-              showingsList[i].getElementsByTagName("dttmShowStart")[0]
-                .textContent
-            ),
+            movieTitle: showingsList[i].getElementsByTagName("Title")[0].textContent,
+            startTime: formattedTime,
           });
         }
-
-        setShowings(showingsArray); 
+ 
+        setShowings(showingsArray);
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
-  const formatDateTime = (dateTimeString) => {
-    const date = new Date(dateTimeString);
-    return date.toLocaleDateString("fi-FI", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    }) + " klo " + date.toLocaleTimeString("fi-FI", { hour: "2-digit", minute: "2-digit" });
+ 
+  const formatDateTime = (isoString) => {
+    const date = new Date(isoString);
+    return new Intl.DateTimeFormat('fi-FI', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(date).replace(' ', ' klo ');  
   };
-
+ 
+  const handleProfileNavigation = () => {
+    if (!user || !user.token) {
+      alert("You need to be logged in to access the profile page.");
+      navigate("/");
+    } else {
+      navigate("/profile");
+    }
+  };
+ 
   useEffect(() => {
     fetch("https://www.finnkino.fi/xml/TheatreAreas/")
       .then((response) => response.text())
@@ -77,28 +87,30 @@ function Shows() {
         console.log(error);
       });
   }, []);
-
+ 
   useEffect(() => {
     if (selectedArea) {
-      getShowings(selectedArea, selectedDate); 
+      getShowings(selectedArea);
     } else {
-      setShowings([]); 
+      setShowings([]);
     }
-  }, [selectedArea, selectedDate]);
-
-  const handleDateChange = (e) => {
-    const rawDate = e.target.value;
-    const formattedDate = formatDate(rawDate);
-    setSelectedDate(formattedDate);
-  };
-
-  const formatDate = (rawDate) => {
-    const [year, month, day] = rawDate.split("-");
-    return `${day}.${month}.${year}`;
-  };
-
+  }, [selectedArea]);
+ 
   return (
     <div>
+      <header className="Profile-header">
+        <h1>The best movie page</h1>
+      </header>
+ 
+      <nav className="Profile-nav">
+        <Link to="/search">
+          <button className="nav-button">Search movies</button>
+        </Link>
+        <button className="nav-button" onClick={handleProfileNavigation}>
+          Profile
+        </button>
+      </nav>
+ 
       <h3>Select a Theatre Area</h3>
       <select onChange={(e) => setSelectedArea(e.target.value)} value={selectedArea}>
         <option value="">-- Select Theatre Area --</option>
@@ -108,30 +120,28 @@ function Shows() {
           </option>
         ))}
       </select>
-
-      <h3>Select a Date</h3>
-      <input
-        type="date"
-        onChange={handleDateChange}
-        disabled={!selectedArea}
-      />
-
+ 
       {selectedArea && showings.length > 0 && (
         <div>
-          <h3>Showings in selected theatre:</h3>
-          <ul>
-            {showings.map((show, index) => (
-              <li key={index}>
-                {show.movieTitle} - {show.startTime}
-              </li>
-            ))}
-          </ul>
+          <section className="ajat">
+            <h3>Showings in selected theatre:</h3>
+            <ul>
+              {showings.map((show, index) => (
+                <li key={index}>
+                  {show.movieTitle} - {show.startTime}
+                </li>
+              ))}
+            </ul>
+          </section>
         </div>
       )}
-
-      {selectedArea && showings.length === 0 && <p>No showings available for this area and date.</p>}
+ 
+      {selectedArea && showings.length === 0 && (
+        <p>No showings available for this area.</p>
+      )}
     </div>
   );
 }
-
+ 
 export default Shows;
+ 
