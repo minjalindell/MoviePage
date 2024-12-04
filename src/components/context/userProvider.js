@@ -13,7 +13,7 @@ export default function UserProvider({ children }) {
 
   const signIn = async (email, password) => {
     try {
-      console.log('Attempting to sign in with:', { email, password });  
+      console.log('Attempting to sign in with:', { email, password });  // Debuggaus
       const response = await axios.post(`${url}/user/login`, { email, password }, {
         headers: { 'Content-Type': 'application/json' }
       });
