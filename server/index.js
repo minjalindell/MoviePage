@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import { login, register } from './helpers/auth.js';
 import userRouter from './routers/userRouter.js'; 
+import reviewRouter from './routers/reviewRouter.js';
 
 dotenv.config();
 
@@ -10,7 +11,12 @@ const port = 3001;
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000', 
+  methods: ['GET', 'POST'],
+  credentials: true,
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -19,8 +25,9 @@ app.get('/',(req,res)=> {
 })
 
 app.post('/login', login);  
-app.post('/register', register);  
+app.post('/register', register); 
 
+app.use('/reviews', reviewRouter); 
 app.use('/user', userRouter);
 
 app.use((err, req, res, next) => {

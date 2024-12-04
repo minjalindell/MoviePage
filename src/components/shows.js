@@ -1,17 +1,15 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import './shows.css';
 import { Link, useNavigate, useLocation } from "react-router-dom"; 
+import { UserContext } from './context/userContext'; 
 
 function Shows() {
   const [areas, setAreas] = useState([]);
   const [selectedArea, setSelectedArea] = useState("");
   const [showings, setShowings] = useState([]);
-  const [logoutMessage, setLogoutMessage] = useState("");  
-
   const navigate = useNavigate();
   const location = useLocation(); 
-  
-  
+  const { user } = useContext(UserContext);
 
   const getFinnkinoTheaters = (xml) => {
     const parser = new DOMParser();
@@ -44,7 +42,6 @@ function Shows() {
         for (let i = 0; i < showingsList.length; i++) {
           const startTime = showingsList[i].getElementsByTagName("dttmShowStart")[0].textContent;
 
-
           const formattedTime = formatDateTime(startTime);
 
           showingsArray.push({
@@ -70,7 +67,15 @@ function Shows() {
       minute: '2-digit',
     }).format(date).replace(' ', ' klo ');  
   };
-;
+
+  const handleProfileNavigation = () => {
+    if (!user || !user.token) {
+      alert("You need to be logged in to access the profile page.");
+      navigate("/"); 
+    } else {
+      navigate("/profile"); 
+    }
+  };
 
   useEffect(() => {
     fetch("https://www.finnkino.fi/xml/TheatreAreas/")
@@ -93,10 +98,7 @@ function Shows() {
 
   return (
     <div>
-      {/* Näytetään uloskirjautumisviesti */}
-      {logoutMessage && <div className="logout-message">{logoutMessage}</div>}
-
-      <header className="shows-header">
+      <header className="Profile-header">
         <h1>The best movie page</h1>
       </header>
 
@@ -104,10 +106,9 @@ function Shows() {
         <Link to="/search">
           <button className="nav-button">Search movies</button>
         </Link>
-        <Link to="/profile">
-          <button className="nav-button">Profile</button>
-        </Link>
-
+        <button className="nav-button" onClick={handleProfileNavigation}>
+          Profile
+        </button>
       </nav>
 
       <h3>Select a Theatre Area</h3>

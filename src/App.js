@@ -1,48 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Routes, Link, useLocation, useNavigate } from 'react-router-dom';  
-import Login from './components/login';
-import Register from './components/register';
+import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';  
+import Authentication from './components/authentication';
 import Search from './components/search';
 import Profile from './components/profile';
 import MovieDetails from './components/MovieDetails';
-import ProtectedRoute from './components/ProtectedRoutes';
 import Shows from './components/shows';
 import ReviewPage from './components/Reviewpage';
 import TopMovies from './components/topMovies';
 import TopMoviesFull from './components/TopMoviesFull';
+import UserProvider from './components/context/userProvider.js';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <AppRoutes />
-      </div>
-    </Router>
+    <UserProvider> 
+      <Router>
+        <div className="App">
+          <AppRoutes />
+        </div>
+      </Router>
+    </UserProvider>
   );
 }
 
 function AppRoutes() {
   const [logoutMessage, setLogoutMessage] = useState(""); 
- 
-  const location = useLocation(); 
-  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     // Tarkistetaan onko käyttäjä kirjautunut ja logout-viestiä ei pitäisi näkyä
     if (location.state && location.state.fromLogout) {
       setLogoutMessage("You have successfully logged out.");
     } else {
-      setLogoutMessage(""); 
+      setLogoutMessage("");
     }
   }, [location]);
 
   useEffect(() => {
     if (logoutMessage) {
       const timer = setTimeout(() => {
-        setLogoutMessage(""); 
+        setLogoutMessage("");
       }, 5000);
-      return () => clearTimeout(timer); 
+      return () => clearTimeout(timer);
     }
   }, [logoutMessage]);
 
@@ -57,8 +56,7 @@ function AppRoutes() {
           element={
             <div className="App">
               <nav className="App-nav">
-              <h1>The best movie page</h1>
-                <Link to="/login" className="nav-link">
+                <Link to="/authentication" className="nav-link">
                   <button className="nav-button">Log in / Register</button>
                 </Link>
               </nav>
@@ -72,26 +70,16 @@ function AppRoutes() {
                     <button className="section-button">Search movies</button>
                   </Link>
                 </div>
-
-                <TopMovies/>
+                <TopMovies />
               </section>
             </div>
           }
         />
         
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/search" element={<Search />} />
-
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
-        />
         
+        <Route path="/authentication" element={<Authentication />} />
+        <Route path="/search" element={<Search/>} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/movie/:id" element={<MovieDetails />} />
         <Route path="/shows" element={<Shows />} />
 
@@ -104,3 +92,11 @@ function AppRoutes() {
 }
 
 export default App;
+
+
+
+
+
+
+
+
