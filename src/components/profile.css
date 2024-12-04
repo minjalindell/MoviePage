@@ -23,19 +23,11 @@
 
   .Profile-nav {
     display: flex; 
-<<<<<<< HEAD
     gap: 20px;
     background-color: #222;
     padding: 10px; 
     justify-content: center;
     align-items: center;
-=======
-    gap: 20px; 
-    background-color: #222; 
-    padding: 10px; 
-    justify-content: center; 
-    align-items: center; 
->>>>>>> e13e34ec6577682fd18ee2a25e3acfb939255fac
 }
 
 .Profile-nav > * {
@@ -44,34 +36,22 @@
 }
 
 .nav-button {
-<<<<<<< HEAD
     padding: 10px 20px;
     color: white; 
     background-color: #ff1493;
     border: none;
-=======
-    padding: 10px 20px; 
-    color: white;
-    background-color: #ff1493; 
-    border: none; 
->>>>>>> e13e34ec6577682fd18ee2a25e3acfb939255fac
     border-radius: 5px; 
     cursor: pointer; 
     font-size: 16px;
 }
 
 .nav-button:hover {
-<<<<<<< HEAD
     background-color: #ff69b4;
-=======
-    background-color: #ff69b4; 
->>>>>>> e13e34ec6577682fd18ee2a25e3acfb939255fac
 }
 
 .profile-container {
     display: flex; 
     flex-direction: column; 
-<<<<<<< HEAD
     align-items: center; 
     justify-content: center;
     min-height: 100vh;
@@ -82,13 +62,6 @@
   .profile-header h1 {
     font-size: 2.5rem; 
     margin-bottom: 20px;
-=======
-    align-items: center;
-    justify-content: center; 
-    min-height: 100vh; 
-    background-color: #222; 
-    color: white; 
->>>>>>> e13e34ec6577682fd18ee2a25e3acfb939255fac
   }
 
   
@@ -105,11 +78,7 @@
     border: none;
     border-radius: 5px; 
     cursor: pointer;
-<<<<<<< HEAD
     transition: background-color 0.3s ease;
-=======
-    transition: background-color 0.3s ease; 
->>>>>>> e13e34ec6577682fd18ee2a25e3acfb939255fac
     text-decoration: none;
   }
   
@@ -118,11 +87,7 @@
   }
   .app-footer {
     background-color: #333; 
-<<<<<<< HEAD
     color: white;
-=======
-    color: white; 
->>>>>>> e13e34ec6577682fd18ee2a25e3acfb939255fac
     text-align: center; 
     padding: 10px 0; 
     position: fixed; 
