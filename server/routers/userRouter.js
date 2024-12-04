@@ -72,12 +72,10 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Virheellinen salasana' });
     }
 
-    // JWT-token luodaan
     const token = jwt.sign({ id: user.user_id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
-
-    // Vastauksen palautus
+    
     return res.status(200).json({
-      id: user.user_id, // Käytä user_id-tä tässä
+      id: user.user_id, 
       email: user.email,
       token: token,
     });

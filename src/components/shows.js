@@ -1,24 +1,15 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import './shows.css';
 import { Link, useNavigate, useLocation } from "react-router-dom"; 
+import { UserContext } from './context/userContext'; 
 
 function Shows() {
   const [areas, setAreas] = useState([]);
   const [selectedArea, setSelectedArea] = useState("");
   const [showings, setShowings] = useState([]);
-  const [logoutMessage, setLogoutMessage] = useState("");  // Viestin tila
-
   const navigate = useNavigate();
-  const location = useLocation(); // Käytämme locationia viestin näyttämiseen
-  
-  const handleLogout = () => {
-    // Poistetaan tarvittavat tiedot localStorage ja sessionStorage:sta
-    localStorage.removeItem("authToken");
-    sessionStorage.clear();
-  
-    // Navigoidaan etusivulle ja välitetään state parametreina
-    navigate("/", { state: { fromLogout: true } });
-  };
+  const location = useLocation(); 
+  const { user } = useContext(UserContext);
 
   const getFinnkinoTheaters = (xml) => {
     const parser = new DOMParser();
@@ -51,7 +42,6 @@ function Shows() {
         for (let i = 0; i < showingsList.length; i++) {
           const startTime = showingsList[i].getElementsByTagName("dttmShowStart")[0].textContent;
 
-          // Muunna ISO-aika (UTC) suomalaiseen muotoon
           const formattedTime = formatDateTime(startTime);
 
           showingsArray.push({
@@ -75,33 +65,17 @@ function Shows() {
       year: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
-    }).format(date).replace(' ', ' klo ');  // Muotoillaan aika
+    }).format(date).replace(' ', ' klo ');  
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-      navigate("/");
-    }
-  }, [navigate]);
-
-  useEffect(() => {
-    if (location.state && location.state.fromLogout) {
-      setLogoutMessage("You have successfully logged out.");
+  const handleProfileNavigation = () => {
+    if (!user || !user.token) {
+      alert("You need to be logged in to access the profile page.");
+      navigate("/"); 
     } else {
-      setLogoutMessage(""); // Tyhjennetään viesti, jos ei ole uloskirjautunut
+      navigate("/profile"); 
     }
-  }, [location]);
-
-  // Varmistetaan, että viesti poistuu 5 sekunnin kuluttua
-  useEffect(() => {
-    if (logoutMessage) {
-      const timer = setTimeout(() => {
-        setLogoutMessage(""); // Tyhjennetään viesti
-      }, 5000);
-      return () => clearTimeout(timer); // Puhdistetaan timer
-    }
-  }, [logoutMessage]);
+  };
 
   useEffect(() => {
     fetch("https://www.finnkino.fi/xml/TheatreAreas/")
@@ -124,9 +98,6 @@ function Shows() {
 
   return (
     <div>
-      {/* Näytetään uloskirjautumisviesti */}
-      {logoutMessage && <div className="logout-message">{logoutMessage}</div>}
-
       <header className="Profile-header">
         <h1>The best movie page</h1>
       </header>
@@ -135,11 +106,8 @@ function Shows() {
         <Link to="/search">
           <button className="nav-button">Search movies</button>
         </Link>
-        <Link to="/profile">
-          <button className="nav-button">Profile</button>
-        </Link>
-        <button className="nav-button" onClick={handleLogout}>
-          Log out
+        <button className="nav-button" onClick={handleProfileNavigation}>
+          Profile
         </button>
       </nav>
 

@@ -30,10 +30,9 @@ const MovieDetails = () => {
 
   return (
     <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
-      {/* Elokuvan nimi */}
+
       <h2>{movie.title}</h2>
 
-      {/* Posteri ja taustakuva */}
       <div style={{ display: "flex", gap: "20px" }}>
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -49,10 +48,8 @@ const MovieDetails = () => {
         )}
       </div>
 
-      {/* Kuvaus */}
       <p style={{ marginTop: "20px" }}>{movie.overview}</p>
 
-      {/* Lisätiedot */}
       <div>
         <h4>Details</h4>
         <p><strong>Original Title:</strong> {movie.original_title}</p>
@@ -68,7 +65,6 @@ const MovieDetails = () => {
         <p><strong>Total Votes:</strong> {movie.vote_count}</p>
       </div>
 
-      {/* Tuotantoyhtiöt */}
       <div>
         <h4>Production Companies</h4>
         <ul>

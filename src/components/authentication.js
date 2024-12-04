@@ -13,13 +13,13 @@ function Authentication() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const authData = { email, password };  // Varmista, että nämä arvot otetaan oikein
+    const authData = { email, password };
   
-    console.log('Submitting:', authData);  // Lisää tämä rivi debuggausta varten
+    console.log('Submitting:', authData); 
   
     try {
       if (isLogin) {
-        await signIn(email, password);  // Tarkista, että signIn-funktio saa molemmat arvot
+        await signIn(email, password);
         navigate('/profile');
       } else {
         await signUp(email, password);

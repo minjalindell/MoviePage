@@ -1,18 +1,16 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Link, useNavigate } from "react-router-dom"; 
 import "./profile.css";
 import { UserContext } from './context/userContext';
 
-
 function Profile() {
   const navigate = useNavigate();
-  const { signOut } = useContext(UserContext); 
+  const { user, signOut } = useContext(UserContext); 
 
- // Uloskirjautumisfunktio
-const handleLogout = () => {
-  signOut();
-  console.log('Logged out. sessionStorage cleared.');
-  navigate("/", { state: { fromLogout: true } });
+  const handleLogout = () => {
+    signOut();
+    console.log('Logged out. sessionStorage cleared.');
+    navigate("/", { state: { fromLogout: true } });
   };
 
   return (
@@ -34,6 +32,10 @@ const handleLogout = () => {
 
       <h1>Your Profile</h1>
 
+      <div className="user-info">
+        <p><strong>Email:</strong> {user.email || "No email available"}</p>
+      </div>
+
       <div className="profile-buttons-container">
         <button className="profile-button">Favourites</button>
         <button className="profile-button">Groups</button>
@@ -46,4 +48,5 @@ const handleLogout = () => {
 }
 
 export default Profile;
+
 

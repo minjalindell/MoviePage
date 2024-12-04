@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import './search.css';
+import { UserContext } from './context/userContext';
 
 const Search = () => {
   const [movies, setMovies] = useState([]);
@@ -10,6 +11,8 @@ const Search = () => {
   const [query, setQuery] = useState("");
   const [genre, setGenre] = useState("");
   const [year, setYear] = useState("");
+  const navigate = useNavigate();
+  const { user } = useContext(UserContext);
 
   const genres = [
     { id: 28, name: "Action" },
@@ -41,8 +44,7 @@ const Search = () => {
 
     fetch(url, {
       headers: {
-        Authorization: 
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMWY5YjZiNmIyY2M4YjQwOTk2YWE1MzY2NmIwMDJkNSIsIm5iZiI6MTczMTY1OTg4NC44OTM1NSwic3ViIjoiNjczNDUzZjgwNTgxNjRjNDA1MjNmYTBkIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.xiEsZpA1oJhq910VPdQAqPrZmnktqGJMj58imsF0RtI",
+        Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMWY5YjZiNmIyY2M4YjQwOTk2YWE1MzY2NmIwMDJkNSIsIm5iZiI6MTczMTY1OTg4NC44OTM1NSwic3ViIjoiNjczNDUzZjgwNTgxNjRjNDA1MjNmYTBkIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.xiEsZpA1oJhq910VPdQAqPrZmnktqGJMj58imsF0RtI",
         "Content-Type": "application/json",
       },
     })
@@ -54,25 +56,14 @@ const Search = () => {
       .catch((error) => console.log(error));
   };
 
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    // Poistetaan tarvittavat tiedot localStorage ja sessionStorage:sta
-    localStorage.removeItem("authToken");
-    sessionStorage.clear();
-
-    // Navigoidaan etusivulle ja välitetään state-parametreina uloskirjautumisviesti
-    navigate("/", { state: { fromLogout: true } });
-  };
-
-  useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-      navigate("/");
+  const handleProfileNavigation = () => {
+    if (!user || !user.token) {
+      alert("You need to be logged in to access the profile page.");
+      navigate("/"); 
     } else {
-      search();
+      navigate("/profile");
     }
-  }, [navigate, page]);
+  };
 
   return (
     <div>
@@ -83,17 +74,13 @@ const Search = () => {
         <Link to="/shows">
           <button className="nav-button">Search shows</button>
         </Link>
-        <Link to="/profile">
-          <button className="nav-button">Profile</button>
-        </Link>
-        <button className="nav-button" onClick={handleLogout}>
-          Log out
+        <button className="nav-button" onClick={handleProfileNavigation}>
+          Profile
         </button>
       </nav>
 
       <h3>Search Movies</h3>
 
-      {/* Haku */}
       <div>
         <input
           value={query}
@@ -124,7 +111,6 @@ const Search = () => {
 
       <button onClick={search}>Search</button>
 
-      {/* Sivutuksen komponentti */}
       <ReactPaginate
         breakLabel="..."
         nextLabel=" >"
@@ -141,12 +127,10 @@ const Search = () => {
         activeClassName="selected"
       />
 
-      {/* Elokuvataulukko */}
       <table>
         {movies.map((movie) => (
           <tr key={movie.id}>
             <td>
-              {/* Elokuvan posteri */}
               {movie.poster_path && (
                 <img
                   src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
@@ -159,17 +143,8 @@ const Search = () => {
                   }}
                 />
               )}
-
-              {/* Elokuvan nimi ja navigointipainike */}
               <button
                 onClick={() => navigate(`/movie/${movie.id}`)}
-                style={{
-                  background: "none",
-                  border: "none",
-                  color: "blue",
-                  textDecoration: "underline",
-                  cursor: "pointer",
-                }}
               >
                 {movie.title}
               </button>

@@ -77,8 +77,10 @@ function AppRoutes() {
           }
         />
         
+
+        
         <Route path="/authentication" element={<Authentication />} />
-        <Route path="/search" element={<Search />} />
+        <Route path="/search" element={<Search/>} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/movie/:id" element={<MovieDetails />} />
         <Route path="/shows" element={<Shows />} />
