@@ -28,6 +28,7 @@ function AppRoutes() {
   const location = useLocation();
 
   useEffect(() => {
+    // Tarkistetaan onko käyttäjä kirjautunut ja logout-viestiä ei pitäisi näkyä
     if (location.state && location.state.fromLogout) {
       setLogoutMessage("You have successfully logged out.");
     } else {
@@ -43,6 +44,7 @@ function AppRoutes() {
       return () => clearTimeout(timer);
     }
   }, [logoutMessage]);
+
 
   return (
     <>
@@ -77,13 +79,13 @@ function AppRoutes() {
           }
         />
         
-
         
         <Route path="/authentication" element={<Authentication />} />
         <Route path="/search" element={<Search/>} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/movie/:id" element={<MovieDetails />} />
         <Route path="/shows" element={<Shows />} />
+
         <Route path="/top-movies" element={<TopMoviesFull />} />
         <Route path="/reviews/:movieId" element={<ReviewPage />} />
         <Route path="/MovieDetails/:id" element={<MovieDetails />} />

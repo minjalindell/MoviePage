@@ -4,7 +4,7 @@ const { Pool } = pkg;
 
 dotenv.config();  
 
-// Yhteyden avaus
+
 const openDb = () => {
   return new Pool({
     user: process.env.DB_USER,               

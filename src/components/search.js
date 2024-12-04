@@ -67,7 +67,7 @@ const Search = () => {
 
   return (
     <div>
-      <header className="Profile-header">
+      <header className="search-header">
         <h1>The best movie page</h1>
       </header>
       <nav className="Profile-nav">

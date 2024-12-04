@@ -6,12 +6,11 @@ import { pool } from '../helpers/db.js';
 const router = express.Router();
 
 
-//rekisteröityminen
 router.post('/register', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Salasanan vahvuusvaatimukset
+
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
     if (!passwordRegex.test(password)) {
       return res.status(400).json({
@@ -19,17 +18,16 @@ router.post('/register', async (req, res) => {
       });
     }
 
-    // Salasanan hashoaminen
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // SQL-kysely käyttäjän lisäämiseksi
+
     const result = await pool.query(
       'INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *',
       [email, hashedPassword]
     );
     console.log("Received email:", email);
 
-    // Onnistunut rekisteröinti
+
     res.status(201).json({
       id: result.rows[0].id,
       email: result.rows[0].email,
@@ -47,8 +45,6 @@ router.post('/register', async (req, res) => {
 });
 
 
-
-// Kirjautuminen
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;

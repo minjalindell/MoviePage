@@ -2,18 +2,40 @@
     text-align: center;
     background-color: black;
   }
-.Profile-header {
-    color: white;
+  .profile-header {
+    font-family: 'Bangers', cursive;
+    color: #fff;
     text-align: center;
-    padding: 20px 0;
+    padding: 30px 0;
+    background-color: #000;
+    border-bottom: 2px solid #444;
+    color: #ff1493;
   }
+  .profile-header h1 {
+    font-size: 3rem;
+    margin: 0;
+    font-weight: bold;
+    color: #ff1493;
+  }
+  h1 {
+    color: #ff1493;
+  }
+
   .Profile-nav {
     display: flex; 
+<<<<<<< HEAD
     gap: 20px;
     background-color: #222;
     padding: 10px; 
     justify-content: center;
     align-items: center;
+=======
+    gap: 20px; 
+    background-color: #222; 
+    padding: 10px; 
+    justify-content: center; 
+    align-items: center; 
+>>>>>>> e13e34ec6577682fd18ee2a25e3acfb939255fac
 }
 
 .Profile-nav > * {
@@ -22,22 +44,34 @@
 }
 
 .nav-button {
+<<<<<<< HEAD
     padding: 10px 20px;
     color: white; 
     background-color: #ff1493;
     border: none;
+=======
+    padding: 10px 20px; 
+    color: white;
+    background-color: #ff1493; 
+    border: none; 
+>>>>>>> e13e34ec6577682fd18ee2a25e3acfb939255fac
     border-radius: 5px; 
     cursor: pointer; 
     font-size: 16px;
 }
 
 .nav-button:hover {
+<<<<<<< HEAD
     background-color: #ff69b4;
+=======
+    background-color: #ff69b4; 
+>>>>>>> e13e34ec6577682fd18ee2a25e3acfb939255fac
 }
 
 .profile-container {
     display: flex; 
     flex-direction: column; 
+<<<<<<< HEAD
     align-items: center; 
     justify-content: center;
     min-height: 100vh;
@@ -48,7 +82,15 @@
   .profile-header h1 {
     font-size: 2.5rem; 
     margin-bottom: 20px;
+=======
+    align-items: center;
+    justify-content: center; 
+    min-height: 100vh; 
+    background-color: #222; 
+    color: white; 
+>>>>>>> e13e34ec6577682fd18ee2a25e3acfb939255fac
   }
+
   
   .profile-nav {
     display: flex; 
@@ -63,7 +105,11 @@
     border: none;
     border-radius: 5px; 
     cursor: pointer;
+<<<<<<< HEAD
     transition: background-color 0.3s ease;
+=======
+    transition: background-color 0.3s ease; 
+>>>>>>> e13e34ec6577682fd18ee2a25e3acfb939255fac
     text-decoration: none;
   }
   
@@ -72,7 +118,11 @@
   }
   .app-footer {
     background-color: #333; 
+<<<<<<< HEAD
     color: white;
+=======
+    color: white; 
+>>>>>>> e13e34ec6577682fd18ee2a25e3acfb939255fac
     text-align: center; 
     padding: 10px 0; 
     position: fixed; 

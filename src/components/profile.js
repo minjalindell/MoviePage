@@ -15,7 +15,7 @@ function Profile() {
 
   return (
     <div className="Profile">
-      <header className="Profile-header">
+      <header className="profile-header">
         <h1>The best movie page</h1>
       </header>
       <nav className="Profile-nav">

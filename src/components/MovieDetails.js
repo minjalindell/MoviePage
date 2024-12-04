@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 
-
 const MovieDetails = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
