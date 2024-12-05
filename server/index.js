@@ -4,6 +4,7 @@ import cors from 'cors';
 import { login, register } from './helpers/auth.js';
 import userRouter from './routers/userRouter.js'; 
 import reviewRouter from './routers/reviewRouter.js';
+import groupsRouter from './routers/groupsRouter.js';
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ app.post('/register', register);
 
 app.use('/reviews', reviewRouter); 
 app.use('/user', userRouter);
+app.use('/groups', groupsRouter);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

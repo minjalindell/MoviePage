@@ -41,7 +41,7 @@ function Profile() {
 
       <div className="profile-buttons-container">
         <button className="profile-button">Favourites</button>
-        <button className="profile-button">Groups</button>
+        <button className="profile-button" onClick={() => navigate('/groups')}>Groups</button>
         <button className="profile-button" onClick={() => navigate('/reviews')}>Reviews</button>
       </div>
 
