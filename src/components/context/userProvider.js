@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { UserContext } from "./userContext.js";
 import axios from "axios";
+import { UserContext } from "./userContext.js";
 
 const url = 'http://localhost:3001'
 
