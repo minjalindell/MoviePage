@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from "./context/userContext.js";
+import './Reviewpage.css'; // Tuodaan tyylitiedosto
 
 const ReviewPage = () => {
   const { movieId } = useParams();
+  const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
   const [rating, setRating] = useState(1);
   const [reviewText, setReviewText] = useState("");
@@ -12,16 +14,30 @@ const ReviewPage = () => {
 
   const userEmail = user?.email;
 
+  // Haetaan elokuvan tiedot API:sta
   useEffect(() => {
     fetch(`https://api.themoviedb.org/3/movie/${movieId}`, {
       headers: {
-        Authorization: "Bearer YOUR-TMDB-API-KEY",
+        Authorization: "Bearer YOUR_API_KEY",
         "Content-Type": "application/json",
       },
     })
       .then((res) => res.json())
       .then((json) => setMovie(json))
       .catch((error) => console.log("Error fetching movie details:", error));
+  }, [movieId]);
+
+  // Haetaan arvostelut tietokannasta
+  useEffect(() => {
+    fetch(`/reviews/${movieId}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Failed to fetch reviews');
+        }
+        return res.json();
+      })
+      .then((data) => setReviews(data))
+      .catch((error) => console.error("Error fetching reviews:", error));
   }, [movieId]);
 
   const handleSubmit = (e) => {
@@ -32,7 +48,6 @@ const ReviewPage = () => {
       return;
     }
 
-  
     const newReview = {
       user_email: userEmail,
       movie_id: movieId,
@@ -41,10 +56,30 @@ const ReviewPage = () => {
       review_text: reviewText,
     };
 
-    // Lisää arvostelu komponentin tilaan (local state!!!!)
-    setReviews((prevReviews) => [...prevReviews, newReview]);
-    setRating(1);
-    setReviewText("");
+    // Lähetetään arvostelu backendille
+    fetch('/reviews', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newReview),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to submit review");
+        }
+        return res.json();
+      })
+      .then(() => {
+        // Päivitetään arvostelut komponentissa ja tyhjennetään lomake
+        setReviews((prevReviews) => [...prevReviews, newReview]);
+        setRating(1);
+        setReviewText("");
+      })
+      .catch((error) => {
+        console.error("Error submitting review:", error);
+        alert("There was an error submitting your review. Please try again later.");
+      });
   };
 
   if (!movie) {
@@ -62,6 +97,14 @@ const ReviewPage = () => {
           style={{ maxWidth: "300px", borderRadius: "8px" }}
         />
       </div>
+
+      {/* Movie details button */}
+      <button
+        className="movie-details-button"
+        onClick={() => navigate(`/movie/${movieId}`)}
+      >
+        Movie Details
+      </button>
 
       <h3>Add a Review</h3>
       {userEmail ? (
@@ -107,6 +150,9 @@ const ReviewPage = () => {
 };
 
 export default ReviewPage;
+
+
+
 
 
 
