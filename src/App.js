@@ -10,6 +10,7 @@ import ReviewPage from './components/Reviewpage';
 import TopMovies from './components/topMovies';
 import TopMoviesFull from './components/TopMoviesFull';
 import UserProvider from './components/context/userProvider';
+import Groups from './components/groups';
 import './App.css'
 
 function App() {
@@ -118,6 +119,8 @@ function AppRoutes() {
         <Route
           path="/MovieDetails/:id"
           element={<ProtectedRoute element={<MovieDetails />} />}
+        />
+        <Route path="/groups" element={<ProtectedRoute element={<Groups />} />}
         />
       </Routes>
     </>
