@@ -19,6 +19,9 @@ function Profile() {
         <h1>The best movie page</h1>
       </header>
       <nav className="Profile-nav">
+      <Link to="/">
+          <button className="nav-button">Home</button>
+        </Link>
         <Link to="/search">
           <button className="nav-button">Search movies</button>
         </Link>

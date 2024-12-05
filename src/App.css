@@ -1,4 +1,3 @@
-
 .App {
 	text-align: center;
 	background-color: #000;
@@ -12,7 +11,6 @@ body {
 	line-height: 1.6;
 	box-sizing: border-box;
 }
-
 .App-header {
 	font-family: 'Bangers', cursive;
 	color: #fff;
@@ -28,8 +26,9 @@ body {
 	font-weight: bold;
 	color: #ff1493;
 }
-
 .App-nav {
+	font-family: 'Bangers', cursive;
+	font-size: 2rem;
 	display: flex;
 	justify-content: center;
 	gap: 20px;

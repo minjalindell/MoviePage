@@ -98,7 +98,7 @@ function Shows() {
 
   return (
     <div>
-      <header className="Profile-header">
+      <header className="shows-header">
         <h1>The best movie page</h1>
       </header>
 
