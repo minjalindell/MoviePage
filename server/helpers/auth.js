@@ -5,11 +5,11 @@ import { pool } from './db.js';
 const register = async (req, res) => {
   const { email, password } = req.body;
 
-  // Salasanan vaatimukset
+ 
   const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
   console.log('Regex test result:', passwordRegex.test(password)); 
-  // Täyttääkö salasana vaatimukset
+  
   if (!passwordRegex.test(password)) {
     console.log('Password does not meet the requirements'); 
     return res.status(400).json({
@@ -18,17 +18,17 @@ const register = async (req, res) => {
   }
 
   try {
-    // onko sposti jo käytössä
+ 
     const existingUser = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
 
     if (existingUser.rows.length > 0) {
       return res.status(400).json({ message: 'Email is already taken' });
     }
 
-    // Hashataan salasana
+  
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Uusi käyttäjä tietokantaan
+ 
     const newUser = await pool.query(
       'INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *',
       [email, hashedPassword]
@@ -46,6 +46,7 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
+
     console.log('Login attempt:', email); 
 
     const userResult = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
@@ -65,11 +66,9 @@ const login = async (req, res) => {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    // Luodaan JWT-token
+  
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
-
     console.log("Login successful for user:", user.email);
-
     res.status(200).json({ message: 'Login successful', token });
   } catch (err) {
     console.error('Error while logging in:', err);
@@ -78,7 +77,6 @@ const login = async (req, res) => {
 };
 
 export { register, login };
-
 
 
 

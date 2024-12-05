@@ -1,0 +1,137 @@
+
+.movie-details-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    color: #fff;
+    text-align: center;
+  }
+  
+  .movie-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #ff1493;
+  }
+  
+  .movie-images {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap; 
+    margin-bottom: 20px;
+  }
+  
+ 
+  .movie-poster {
+    max-width: 200px;
+    border-radius: 8px;
+  }
+  
+ 
+  .movie-backdrop {
+    max-width: 400px;
+    border-radius: 8px;
+  }
+ 
+  .movie-overview {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+  }
+
+  .movie-details {
+    margin-top: 30px;
+  }
+  
+  .production-companies ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .production-companies li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .production-logo {
+    max-width: 100px;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+  
+  .production-companies img {
+    max-width: 100px;
+    border-radius: 8px;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  color: #fff;
+  text-align: center;
+}
+
+<<<<<<< HEAD
+=======
+
+>>>>>>> e13e34ec6577682fd18ee2a25e3acfb939255fac
+.movie-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #ff1493;
+}
+
+.movie-images {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap; 
+  margin-bottom: 20px;
+}
+
+.movie-poster {
+  max-width: 200px;
+  border-radius: 8px;
+}
+
+.movie-backdrop {
+  max-width: 400px;
+  border-radius: 8px;
+}
+
+.movie-overview {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+<<<<<<< HEAD
+=======
+
+>>>>>>> e13e34ec6577682fd18ee2a25e3acfb939255fac
+.movie-details {
+  margin-top: 30px;
+}
+
+.production-companies ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.production-companies li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.production-logo {
+  max-width: 100px;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.production-companies img {
+  max-width: 100px;
+  border-radius: 8px;
+}
