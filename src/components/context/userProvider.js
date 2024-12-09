@@ -10,15 +10,14 @@ export default function UserProvider({ children }) {
     return storedUser ? JSON.parse(storedUser) : { email: '', token: '' };
   });
 
-
   const signIn = async (email, password) => {
     try {
-      console.log('Attempting to sign in with:', { email, password });  
+      console.log('Attempting to sign in with:', { email, password });
       const response = await axios.post(`${url}/user/login`, { email, password }, {
         headers: { 'Content-Type': 'application/json' }
       });
       console.log('Sign-in response:', response);
-      
+
       const { token } = response.data;
       if (token) {
         sessionStorage.setItem('user', JSON.stringify(response.data));
@@ -32,8 +31,6 @@ export default function UserProvider({ children }) {
       throw error.response?.data?.message || 'Sign-in failed';
     }
   };
-  
-
 
   const signUp = async (email, password) => {
     try {
@@ -52,6 +49,22 @@ export default function UserProvider({ children }) {
     setUser({ email: '', token: '' });
   };
 
+  const deleteAccount = async (userId, email) => {
+    try {
+      const response = await axios.delete(`${url}/user/delete`, {
+        data: { user_id: userId, email: email },
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      console.log('Account deleted:', response.data);
+    } catch (error) {
+      console.error('Account deletion failed:', error);
+      throw error;
+    }
+  };
+  
+  
   useEffect(() => {
     const storedUser = sessionStorage.getItem('user');
     if (storedUser) {
@@ -60,7 +73,7 @@ export default function UserProvider({ children }) {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser, signIn, signUp, signOut }}>
+    <UserContext.Provider value={{ user, setUser, signIn, signUp, signOut, deleteAccount }}>
       {children}
     </UserContext.Provider>
   );

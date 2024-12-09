@@ -36,7 +36,7 @@ describe('POST register', () => {
         const data = await response.json();
         expect(response.status).to.equal(201, data.error);
         expect(data).to.be.an('object');
-        expect(data).to.include.all.keys('id', 'email');
+        expect(data).to.include.all.keys('user_id', 'email');
     });
 });
 
@@ -57,7 +57,7 @@ describe('POST login', () => {
         const data = await response.json();
         expect(response.status).to.equal(200, data.error); 
         expect(data).to.be.an('object');
-        expect(data).to.include.all.keys('id', 'email', 'token'); 
+        expect(data).to.include.all.keys('user_id', 'email', 'token'); 
     });
 });
 
