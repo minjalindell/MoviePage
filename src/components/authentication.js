@@ -20,7 +20,7 @@ function Authentication() {
     try {
       if (isLogin) {
         await signIn(email, password);
-        navigate('/profile');
+        navigate('/');
       } else {
         await signUp(email, password);
         setIsLogin(true);
