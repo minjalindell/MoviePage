@@ -4,6 +4,7 @@ import cors from 'cors';
 import { login, register, deleteUser } from './helpers/auth.js';
 import userRouter from './routers/userRouter.js'; 
 import reviewRouter from './routers/reviewRouter.js';
+import groupsRouter from './routers/groupsRouter.js';
 
 dotenv.config();
 
@@ -40,6 +41,7 @@ app.delete('/delete', (req, res) => {
 
 app.use('/reviews', reviewRouter);
 app.use('/user', userRouter);
+app.use('/groups', groupsRouter);
 
 // Virheidenkäsittely
 app.use((err, req, res, next) => {
