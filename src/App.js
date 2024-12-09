@@ -26,7 +26,7 @@ function App() {
 }
 
 function AppRoutes() {
-  const { user, signOut } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [logoutMessage, setLogoutMessage] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
@@ -34,7 +34,6 @@ function AppRoutes() {
   useEffect(() => {
     if (location.state?.fromLogout) {
       setLogoutMessage("You have successfully logged out.");
-
       const newLocation = { ...location, state: {} };
       navigate(newLocation, { replace: true });
     }
@@ -48,7 +47,6 @@ function AppRoutes() {
       return () => clearTimeout(timer);
     }
   }, [logoutMessage]);
-
   const ProtectedRoute = ({ element }) => {
     if (!user.token) {
       return navigate("/authentication", { replace: true });
@@ -112,7 +110,5 @@ function AppRoutes() {
     </>
   );
 }
-
-
 
 export default App;

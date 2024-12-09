@@ -1,46 +1,61 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { UserContext } from "./context/userContext";
 import "./groups.css";
- 
+
 function Groups() {
-  const [groups, setGroups] = useState([]); // Tila ryhmien tallentamiseen
-  const [groupName, setGroupName] = useState(""); // Tila ryhmän nimen tallentamiseen
- 
-  // Haetaan kaikki kirjautuneen käyttäjän ryhmät palvelimelta
-  useEffect(() => {
-    axios
-      .get("http://localhost:3001/user/groups") // Päivitetty endpoint
-      .then((response) => {
-        setGroups(response.data); // Tallennetaan ryhmät tilaan
-      })
-      .catch((error) => {
-        console.error("Error fetching groups:", error);
+  const [groups, setGroups] = useState([]); 
+  const [groupName, setGroupName] = useState(""); 
+  const { user } = useContext(UserContext);
+
+  const fetchGroups = async () => {
+    if (!user.token) {
+      console.error("User is not authenticated.");
+      return; 
+    }
+
+    try {
+      const response = await axios.get("http://localhost:3001/groups", {
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
       });
-  }, []); // Haetaan ryhmät vain kerran komponentin latauksen jälkeen
- 
-  // Uuden ryhmän luominen
+      setGroups(response.data); 
+    } catch (error) {
+      console.error("Error fetching groups:", error.response?.data || error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchGroups();
+  }, [user.token]);
+
+
   const handleCreateGroup = () => {
     if (groupName.trim()) {
       console.log('Creating group with name:', groupName);
-      axios.post("http://localhost:3001/groups", { name: groupName })
-        .then((response) => {
-          console.log('Sent data', { name: groupName}); // Tarkista lähetetty data
-          console.log('Server response:', response.data); // tarkista vastaus
-          setGroups([...groups, response.data]); // Lisää uusi ryhmä listalle
-          setGroupName(""); // Tyhjennä syöttökenttä ryhmän luomisen jälkeen
-        })
-        .catch((error) => {
-          console.error("Error creating group:", error.response?.data || error.message); // Virheen käsittely
-        });
+      axios.post("http://localhost:3001/groups/new", { name: groupName,id:user.user_id }, {
+        headers: {
+          Authorization: `Bearer ${user.token}` 
+        }
+      })
+      .then((response) => {
+        console.log('Server response:', response.data);
+        setGroups([...groups, response.data]); 
+        setGroupName(""); 
+      })
+      .catch((error) => {
+        console.error("Error creating group:", error.response?.data || error.message);
+      });
     } else {
-      alert("Please enter a group name."); // Virheilmoitus jos nimi on tyhjä
+      alert("Please enter a group name.");
     }
   };
- 
+
   return (
     <div className="groups-container">
       <h1>Groups</h1>
- 
+
       <div className="groups-wrapper">
         {/* Käyttäjän omat ryhmät */}
         <div className="group-list">
@@ -55,22 +70,8 @@ function Groups() {
             </ul>
           )}
         </div>
- 
-        {/* Kaikki ryhmät */}
-        <div className="group-list">
-          <h2>All Groups</h2>
-          {groups.length === 0 ? (
-            <p>No groups found.</p>
-          ) : (
-            <ul>
-              {groups.map((group) => (
-                <li key={group.id}>{group.name}</li>
-              ))}
-            </ul>
-          )}
-        </div>
       </div>
- 
+
       {/* Uuden ryhmän luominen */}
       <div className="input-container">
         <h2>Create New Group</h2>
@@ -87,5 +88,6 @@ function Groups() {
     </div>
   );
 }
- 
+
 export default Groups;
+

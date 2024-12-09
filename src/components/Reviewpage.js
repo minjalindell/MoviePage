@@ -12,6 +12,7 @@ const ReviewPage = () => {
   // Kyttäjätietojen hakeminen
   const { user } = useContext(UserContext);
   const userEmail = user?.email; 
+  const userId = user?.user_id;
 
 
   useEffect(() => {
@@ -26,12 +27,26 @@ const ReviewPage = () => {
       .catch((error) => console.error("Error fetching movie details:", error));
   }, [movieId]);
 
-  // Arvostelut tietokannasta
+
+  const [error, setError] = useState(null);
+
   useEffect(() => {
-    fetch(`http://localhost:3001/reviews`)
-      .then((res) => res.json())
-      .then((data) => setReviews(data.filter((review) => review.movie_id === parseInt(movieId))))
-      .catch((error) => console.error("Error fetching reviews:", error));
+    // API-kutsu arvostelujen hakemiseksi
+    fetch(`http://localhost:3001/reviews/${movieId}`) 
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`); // Virhe käsittely
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log('Arvostelut haettu:', data);
+        setReviews(data); // Aseta arvostelut tilaan
+      })
+      .catch((error) => {
+        console.error('Virhe arvostelujen haussa:', error);
+        setError(error.message); // Aseta virhetilaan, jotta voidaan näyttää se käyttöliittymässä
+      });
   }, [movieId]);
 
   const handleSubmit = (e) => {
@@ -116,6 +131,12 @@ const ReviewPage = () => {
 };
 
 export default ReviewPage;
+
+
+
+
+
+
 
 
 
