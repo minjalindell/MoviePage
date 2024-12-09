@@ -1,43 +1,52 @@
-import React, { useEffect, useState, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
 import { UserContext } from "./context/userContext.js";
-import './Reviewpage.css'; // Tuodaan tyylitiedosto
 
 const ReviewPage = () => {
-  const { movieId } = useParams();
-  const navigate = useNavigate();
-  const [movie, setMovie] = useState(null);
-  const [rating, setRating] = useState(1);
-  const [reviewText, setReviewText] = useState("");
+  const { movieId } = useParams(); 
+  const [movieTitle, setMovieTitle] = useState(""); 
+  const [rating, setRating] = useState(1); 
+  const [reviewText, setReviewText] = useState(""); 
   const [reviews, setReviews] = useState([]);
+
+  // Kyttäjätietojen hakeminen
   const { user } = useContext(UserContext);
+  const userEmail = user?.email; 
+  const userId = user?.user_id;
 
-  const userEmail = user?.email;
 
-  // Haetaan elokuvan tiedot API:sta
   useEffect(() => {
-    fetch(`https://api.themoviedb.org/3/movie/${movieId}`, {
+    fetch(`https://api.themoviedb.org/3/movie/${movieId}?language=en-US`, {
       headers: {
-        Authorization: "Bearer YOUR_API_KEY",
+        Authorization: "Bearer <YOUR-TMDB-API-KEY>",
         "Content-Type": "application/json",
       },
     })
       .then((res) => res.json())
-      .then((json) => setMovie(json))
-      .catch((error) => console.log("Error fetching movie details:", error));
+      .then((data) => setMovieTitle(data.title))
+      .catch((error) => console.error("Error fetching movie details:", error));
   }, [movieId]);
 
-  // Haetaan arvostelut tietokannasta
+
+  const [error, setError] = useState(null);
+
   useEffect(() => {
-    fetch(`/reviews/${movieId}`)
+    // API-kutsu arvostelujen hakemiseksi
+    fetch(`http://localhost:3001/reviews/${movieId}`) // Käytä palvelimen URL-osoitetta ja elokuvan ID:tä
       .then((res) => {
         if (!res.ok) {
-          throw new Error('Failed to fetch reviews');
+          throw new Error(`HTTP error! Status: ${res.status}`); // Virhe käsittely
         }
         return res.json();
       })
-      .then((data) => setReviews(data))
-      .catch((error) => console.error("Error fetching reviews:", error));
+      .then((data) => {
+        console.log('Arvostelut haettu:', data);
+        setReviews(data); // Aseta arvostelut tilaan
+      })
+      .catch((error) => {
+        console.error('Virhe arvostelujen haussa:', error);
+        setError(error.message); // Aseta virhetilaan, jotta voidaan näyttää se käyttöliittymässä
+      });
   }, [movieId]);
 
   const handleSubmit = (e) => {
@@ -48,63 +57,35 @@ const ReviewPage = () => {
       return;
     }
 
-    const newReview = {
-      user_email: userEmail,
+    const reviewData = {
+      user_id: user.user_id, 
       movie_id: movieId,
-      movie_title: movie?.title,
+      movie_title: movieTitle,
       rating,
       review_text: reviewText,
+      user_email: userEmail,
     };
 
-    // Lähetetään arvostelu backendille
-    fetch('/reviews', {
-      method: 'POST',
+    fetch("http://localhost:3001/reviews", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(newReview),
+      body: JSON.stringify(reviewData),
     })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Failed to submit review");
-        }
-        return res.json();
-      })
-      .then(() => {
-        // Päivitetään arvostelut komponentissa ja tyhjennetään lomake
-        setReviews((prevReviews) => [...prevReviews, newReview]);
-        setRating(1);
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Review added:", data);
+        setReviews((prev) => [...prev, data.review]);
+        setRating(1); 
         setReviewText("");
       })
-      .catch((error) => {
-        console.error("Error submitting review:", error);
-        alert("There was an error submitting your review. Please try again later.");
-      });
+      .catch((error) => console.error("Error adding review:", error));
   };
 
-  if (!movie) {
-    return <p>Loading...</p>;
-  }
-
   return (
-    <div style={{ textAlign: "center", padding: "20px" }}>
-      <h1>{movie.title}</h1>
-
-      <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
-        <img
-          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-          alt={movie.title}
-          style={{ maxWidth: "300px", borderRadius: "8px" }}
-        />
-      </div>
-
-      {/* Movie details button */}
-      <button
-        className="movie-details-button"
-        onClick={() => navigate(`/movie/${movieId}`)}
-      >
-        Movie Details
-      </button>
+    <div>
+      <h1>{movieTitle} - Reviews</h1>
 
       <h3>Add a Review</h3>
       {userEmail ? (
@@ -116,7 +97,7 @@ const ReviewPage = () => {
               value={rating}
               min="1"
               max="5"
-              onChange={(e) => setRating(Number(e.target.value))}
+              onChange={(e) => setRating(e.target.value)}
             />
           </div>
           <div>
@@ -135,8 +116,8 @@ const ReviewPage = () => {
       <h3>User Reviews</h3>
       {reviews.length > 0 ? (
         <ul>
-          {reviews.map((review, index) => (
-            <li key={index}>
+          {reviews.map((review) => (
+            <li key={review.review_id}>
               <p><strong>{review.user_email}</strong> ({review.rating}/5):</p>
               <p>{review.review_text}</p>
             </li>
