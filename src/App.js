@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom'; // Tuodaan BrowserRouter oikein
+import { BrowserRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import { UserContext } from './components/context/userContext'; 
 import Authentication from './components/authentication';
 import Search from './components/search';
@@ -10,6 +10,7 @@ import ReviewPage from './components/Reviewpage';
 import TopMovies from './components/topMovies';
 import TopMoviesFull from './components/TopMoviesFull';
 import UserProvider from './components/context/userProvider';
+import Groups from './components/groups';
 import './App.css'
 
 function App() {
@@ -95,16 +96,16 @@ function AppRoutes() {
         />
         <Route path="/authentication" element={<Authentication />} />
         <Route path="/search" element={<Search />} />
-        <Route
-          path="/profile"
-          element={<ProtectedRoute element={<Profile />} />}
-           />
-        <Route path="/movie/:id" element={<MovieDetails />}/> 
+        <Route path="/profile"element={<ProtectedRoute element={<Profile />} />}/>
+        <Route path="/movie/:id" element={<MovieDetails />} />
         <Route path="/shows" element={<Shows />} />
         <Route path="/top-movies" element={<TopMoviesFull />} />
-        <Route path="/reviews/:movieId" element={<ReviewPage />}/>
-        <Route path="/MovieDetails/:id" element={<MovieDetails />}/>
+        <Route path="/reviews/:movieId" element={<ReviewPage />} />
+        <Route path="/MovieDetails/:id" element={<MovieDetails />} />
 
+
+        <Route path="/groups" element={<ProtectedRoute element={<Groups />} />}
+        />
       </Routes>
     </>
   );

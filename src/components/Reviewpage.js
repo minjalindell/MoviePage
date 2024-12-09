@@ -32,7 +32,7 @@ const ReviewPage = () => {
 
   useEffect(() => {
     // API-kutsu arvostelujen hakemiseksi
-    fetch(`http://localhost:3001/reviews/${movieId}`) // Käytä palvelimen URL-osoitetta ja elokuvan ID:tä
+    fetch(`http://localhost:3001/reviews/${movieId}`) 
       .then((res) => {
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`); // Virhe käsittely

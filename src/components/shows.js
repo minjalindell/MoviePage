@@ -1,37 +1,65 @@
 import React, { useEffect, useState, useContext } from "react";
 import './shows.css';
-import { Link, useNavigate, useLocation } from "react-router-dom"; 
+import { Link, useNavigate } from "react-router-dom"; 
 import { UserContext } from './context/userContext'; 
 
 function Shows() {
   const [areas, setAreas] = useState([]);
   const [selectedArea, setSelectedArea] = useState("");
+  const [dates, setDates] = useState([]);
+  const [selectedDate, setSelectedDate] = useState("");
   const [showings, setShowings] = useState([]);
   const navigate = useNavigate();
-  const location = useLocation(); 
   const { user } = useContext(UserContext);
 
   const getFinnkinoTheaters = (xml) => {
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xml, "application/xml");
-    const root = xmlDoc.children;
-    const theatres = root[0].children;
+    const theatres = xmlDoc.getElementsByTagName("TheatreArea");
     const tempAreas = [];
 
     for (let i = 0; i < theatres.length; i++) {
       tempAreas.push({
-        id: theatres[i].children[0].innerHTML,
-        name: theatres[i].children[1].innerHTML,
+        id: theatres[i].getElementsByTagName("ID")[0].textContent,
+        name: theatres[i].getElementsByTagName("Name")[0].textContent,
       });
     }
 
     setAreas(tempAreas);
   };
 
-  const getShowings = (areaId) => {
-    if (!areaId) return;
+  const getScheduleDates = () => {
+    fetch("https://www.finnkino.fi/xml/ScheduleDates/")
+      .then((response) => response.text())
+      .then((xml) => {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xml, "application/xml");
+        const dateElements = xmlDoc.getElementsByTagName("dateTime");
 
-    fetch(`https://www.finnkino.fi/xml/Schedule/?area=${areaId}`)
+        const tempDates = [];
+        for (let i = 0; i < dateElements.length; i++) {
+          const rawDate = dateElements[i].textContent;
+          tempDates.push({
+            raw: rawDate,
+            formatted: formatDate(rawDate),
+          });
+        }
+
+        setDates(tempDates);
+      })
+      .catch((error) => {
+        console.error("Error fetching schedule dates:", error);
+      });
+  };
+
+  const getShowings = () => {
+    setShowings([]); // Clear existing showings before fetching new ones
+
+    const areaParam = selectedArea ? `area=${selectedArea}` : "";
+    const dateParam = selectedDate ? `dt=${selectedDate}` : "";
+    const query = [areaParam, dateParam].filter(Boolean).join("&");
+
+    fetch(`https://www.finnkino.fi/xml/Schedule/${query ? `?${query}` : ""}`)
       .then((response) => response.text())
       .then((xml) => {
         const parser = new DOMParser();
@@ -41,31 +69,42 @@ function Shows() {
         const showingsArray = [];
         for (let i = 0; i < showingsList.length; i++) {
           const startTime = showingsList[i].getElementsByTagName("dttmShowStart")[0].textContent;
-
           const formattedTime = formatDateTime(startTime);
+
+          const theatre = showingsList[i].getElementsByTagName("Theatre")[0].textContent;
 
           showingsArray.push({
             movieTitle: showingsList[i].getElementsByTagName("Title")[0].textContent,
             startTime: formattedTime,
+            theatre: theatre,
           });
         }
 
         setShowings(showingsArray);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
+  };
+
+  const formatDate = (isoDate) => {
+    const date = new Date(isoDate);
+    return date.toLocaleDateString("en-US", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
   };
 
   const formatDateTime = (isoString) => {
     const date = new Date(isoString);
-    return new Intl.DateTimeFormat('fi-FI', {
+    return new Intl.DateTimeFormat('en-US', {
       day: '2-digit',
-      month: '2-digit',
+      month: 'short',
       year: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
-    }).format(date).replace(' ', ' klo ');  
+    }).format(date).replace(' ', ' at ');  
   };
 
   const handleProfileNavigation = () => {
@@ -84,17 +123,11 @@ function Shows() {
         getFinnkinoTheaters(xml);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
-  }, []);
 
-  useEffect(() => {
-    if (selectedArea) {
-      getShowings(selectedArea);
-    } else {
-      setShowings([]);
-    }
-  }, [selectedArea]);
+    getScheduleDates(); // Fetch the schedule dates
+  }, []);
 
   return (
     <div>
@@ -121,14 +154,28 @@ function Shows() {
         ))}
       </select>
 
-      {selectedArea && showings.length > 0 && (
+      <h3>Select a Date</h3>
+      <select onChange={(e) => setSelectedDate(e.target.value)} value={selectedDate}>
+        <option value="">-- Select Date --</option>
+        {dates.map((date, index) => (
+          <option key={index} value={date.raw}>
+            {date.formatted}
+          </option>
+        ))}
+      </select>
+
+      <button className="search-button" onClick={getShowings}>
+        Search
+      </button>
+
+      {showings.length > 0 && (
         <div>
-          <section className="ajat">
-            <h3>Showings in selected theatre:</h3>
+          <section className="showings">
+            <h3>Shows:</h3>
             <ul>
               {showings.map((show, index) => (
                 <li key={index}>
-                  {show.movieTitle} - {show.startTime}
+                  {show.movieTitle} - {show.startTime} ({show.theatre})
                 </li>
               ))}
             </ul>
@@ -136,11 +183,12 @@ function Shows() {
         </div>
       )}
 
-      {selectedArea && showings.length === 0 && (
-        <p>No showings available for this area.</p>
+      {showings.length === 0 && (
+        <p>No shows available.</p>
       )}
     </div>
   );
 }
 
 export default Shows;
+

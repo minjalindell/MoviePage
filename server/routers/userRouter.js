@@ -1,3 +1,4 @@
+// userRouter.js
 import express from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -5,11 +6,10 @@ import { pool } from '../helpers/db.js';
 
 const router = express.Router();
 
-
+// Rekisteröinti
 router.post('/register', async (req, res) => {
   try {
     const { email, password } = req.body;
-
 
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
     if (!passwordRegex.test(password)) {
@@ -20,21 +20,18 @@ router.post('/register', async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-
     const result = await pool.query(
       'INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *',
       [email, hashedPassword]
     );
     console.log("Received email:", email);
 
-
     res.status(201).json({
-      id: result.rows[0].id,
+      user_id: result.rows[0].user_id,
       email: result.rows[0].email,
     });
   } catch (error) {
     console.error('Error in registration:', error);
-
 
     if (error.code === '23505') {
       return res.status(409).json({ message: 'Email already exists' });
@@ -44,34 +41,27 @@ router.post('/register', async (req, res) => {
   }
 });
 
-
+// Kirjautuminen
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Käyttäjä tietokannasta
-    console.log('Received login request...');
     const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
-    console.log('Query result:', result);
-
     if (result.rowCount === 0) {
       return res.status(401).json({ message: 'Käyttäjää ei löydy' });
     }
 
     const user = result.rows[0];
 
-    console.log('User fetched from database:', user);
-
-    // Salasanan vertailu
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
       return res.status(401).json({ message: 'Virheellinen salasana' });
     }
 
-    const token = jwt.sign({ id: user.user_id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ user_id: user.user_id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
     
     return res.status(200).json({
-      id: user.user_id, 
+      user_id: user.user_id, 
       email: user.email,
       token: token,
     });
@@ -81,5 +71,40 @@ router.post('/login', async (req, res) => {
     return res.status(500).json({ message: 'Sisäinen virhe palvelimella' });
   }
 });
+
+const deleteUser = async (user_id) => {
+  try {
+    // Käytetään user_id:ta oikein
+    const result = await pool.query('DELETE FROM users WHERE user_id = $1 RETURNING *', [user_id]);
+    return result.rowCount > 0;  // Palauttaa true, jos käyttäjä poistettiin
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    throw error;  // Heittää virheen eteenpäin
+  }
+};
+
+// Poista käyttäjä (user_id ja email)
+router.delete('/delete', async (req, res, next) => {
+  const { user_id, email } = req.body;
+  
+  if (!user_id && !email) {
+    return res.status(400).json({ message: 'User ID or Email is required' });
+  }
+
+  try {
+    // Poistetaan käyttäjä ja tarkistetaan tulos
+    const result = await deleteUser(user_id, email);  // Käytetään apufunktiota, joka ottaa vastaan molemmat tiedot
+    if (result) {
+      return res.status(200).json({ message: 'Account deleted successfully' });
+    } else {
+      return res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    next(error);  // Lähetetään virhe eteenpäin error-handling middlewarelle
+  }
+});
+
+
+
 
 export default router;
