@@ -67,18 +67,19 @@ export const authenticateToken = (req, res, next) => {
   if (!token) {
     return res.status(401).json({ message: 'Token is missing' });
   }
-
-  // Poista "Bearer " osa
   const tokenValue = token.replace('Bearer ', '');
   try {
-    jwt.verify(tokenValue, process.env.JWT_SECRET_KEY);
-    console.log("auth ok")
+    // Dekoodaataan token ja tallennetaan se req.user-objektiin
+    const decoded = jwt.verify(tokenValue, process.env.JWT_SECRET_KEY);
+    req.user = { userId: decoded.user_id }; // userId req.useriin
+    console.log("auth ok", req.user);
     next();
   } catch (error) {
     console.error('Invalid token:', error.message);
     return res.status(401).json({ message: 'Invalid Token' });
   }
 };
+
 
 export const deleteUser = async (req, res) => {
   const { user_id, email } = req.body;

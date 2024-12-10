@@ -39,21 +39,23 @@ router.post('/new', authenticateToken, async (req, res) => {
 });
 
 router.get('/', authenticateToken, async (req, res) => {
-  console.log(req.user)
   try {
+    const userId = req.user.userId; 
     const result = await pool.query(
-      'SELECT g.id, g.name FROM groups g ' +
-      'JOIN group_members gm ON g.id = gm.group_id ' +
-      'WHERE gm.user_id = $1',
-      [req.user.userId] 
+      `SELECT g.group_id, g.name FROM groups g 
+       JOIN group_members gm ON g.group_id = gm.group_id 
+       WHERE gm.user_id = $1`,
+      [userId] 
     );
 
-    res.json(result.rows);
+    res.status(200).json(result.rows);
   } catch (error) {
     console.error('Error fetching groups:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+
 
 export default router;
 
