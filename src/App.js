@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
-import { UserContext } from './components/context/userContext'; 
+import { UserContext } from './components/context/userContext';
 import Authentication from './components/authentication';
 import Search from './components/search';
 import Profile from './components/profile';
@@ -11,8 +11,9 @@ import TopMovies from './components/topMovies';
 import TopMoviesFull from './components/TopMoviesFull';
 import UserProvider from './components/context/userProvider';
 import Groups from './components/groups';
+import GroupPage from './components/GroupPage';
 import './App.css'
-
+ 
 function App() {
   return (
     <UserProvider>
@@ -24,13 +25,13 @@ function App() {
     </UserProvider>
   );
 }
-
+ 
 function AppRoutes() {
   const { user } = useContext(UserContext);
   const [logoutMessage, setLogoutMessage] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
-
+ 
   useEffect(() => {
     if (location.state?.fromLogout) {
       setLogoutMessage("You have successfully logged out.");
@@ -38,7 +39,7 @@ function AppRoutes() {
       navigate(newLocation, { replace: true });
     }
   }, [location, navigate]);
-
+ 
   useEffect(() => {
     if (logoutMessage) {
       const timer = setTimeout(() => {
@@ -47,17 +48,18 @@ function AppRoutes() {
       return () => clearTimeout(timer);
     }
   }, [logoutMessage]);
+ 
   const ProtectedRoute = ({ element }) => {
     if (!user.token) {
       return navigate("/authentication", { replace: true });
     }
     return element;
   };
-
+ 
   return (
     <>
       {logoutMessage && <div className="logout-message">{logoutMessage}</div>}
-
+ 
       <Routes>
         <Route
           path="/"
@@ -89,6 +91,18 @@ function AppRoutes() {
                     <button className="section-button">Search movies</button>
                   </Link>
                 </div>
+              </section>
+ 
+              {/* Lisää "Browse Groups" -nappi vain etusivulle */}
+              <section className="App-section">
+                <h2>Browse Groups</h2>
+                <Link to="/groups">
+                  <button className="section-button">Browse Groups</button>
+                </Link>
+              </section>
+ 
+              {/* Lisää TopMovies osio */}
+              <section className="App-section">
                 <TopMovies />
               </section>
             </div>
@@ -96,19 +110,17 @@ function AppRoutes() {
         />
         <Route path="/authentication" element={<Authentication />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/profile"element={<ProtectedRoute element={<Profile />} />}/>
+        <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
         <Route path="/movie/:id" element={<MovieDetails />} />
         <Route path="/shows" element={<Shows />} />
         <Route path="/top-movies" element={<TopMoviesFull />} />
         <Route path="/reviews/:movieId" element={<ReviewPage />} />
         <Route path="/MovieDetails/:id" element={<MovieDetails />} />
-
-
-        <Route path="/groups" element={<ProtectedRoute element={<Groups />} />}
-        />
+        <Route path="/groups" element={<Groups />} />
+        <Route path="/groups/:groupId" element={<GroupPage />} />
       </Routes>
     </>
   );
 }
-
+ 
 export default App;
