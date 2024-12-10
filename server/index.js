@@ -21,7 +21,7 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/',(req,res)=> {
+app.get('/',(req, res)=> {
   return res.status(200).json({test: "test"})
 })
 
@@ -30,7 +30,9 @@ app.post('/register', register);
 
 app.use('/reviews', reviewRouter); 
 app.use('/user', userRouter);
-app.use('/groups', groupsRouter);
+app.post('/groups', groupsRouter);
+
+app.get('/groups', groupsRouter);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
@@ -43,5 +45,3 @@ app.listen(port, () => {
 });
 
 export default app;
-
-

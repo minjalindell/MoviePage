@@ -10,7 +10,7 @@ export default function UserProvider({ children }) {
     return storedUser ? JSON.parse(storedUser) : { email: '', token: '' };
   });
 
-
+  // signIn-metodi, joka hoitaa käyttäjän kirjautumisen
   const signIn = async (email, password) => {
     try {
       console.log('Attempting to sign in with:', { email, password });  
@@ -18,44 +18,47 @@ export default function UserProvider({ children }) {
         headers: { 'Content-Type': 'application/json' }
       });
       console.log('Sign-in response:', response);
-      
-      const { token } = response.data;
+      const { token, userData } = response.data;
+
       if (token) {
-        sessionStorage.setItem('user', JSON.stringify(response.data));
-        setUser(response.data);
-        console.log('User signed in:', response.data);
+        sessionStorage.setItem('user', JSON.stringify({ token, ...userData }));
+        setUser({ token, ...userData });
+        console.log('User signed in:', { token, ...userData });
       } else {
         throw new Error('No token received');
       }
     } catch (error) {
       console.error('Sign-in error:', error);
-      throw error.response?.data?.message || 'Sign-in failed';
+      const errorMessage = error.response?.data?.message || error.message || 'Sign-in failed';
+      throw errorMessage;
     }
   };
-  
 
-
+  // signUp-metodi, joka hoitaa käyttäjän rekisteröinnin
   const signUp = async (email, password) => {
     try {
-      await axios.post(`${url}/user/register`, { email, password }, {
+      const response = await axios.post(`${url}/user/register`, { email, password }, {
         headers: { 'Content-Type': 'application/json' }
       });
-      console.log('User signed up successfully');
+      console.log('User signed up successfully', response.data);
     } catch (error) {
       console.error('Sign-up error:', error);
-      throw error.response?.data?.message || 'Sign-up failed';
+      const errorMessage = error.response?.data?.message || error.message || 'Sign-up failed';
+      throw errorMessage;
     }
   };
 
+  // signOut-metodi, joka hoitaa käyttäjän uloskirjautumisen
   const signOut = () => {
-    sessionStorage.removeItem('user');
-    setUser({ email: '', token: '' });
+    sessionStorage.removeItem('user'); // Poistaa käyttäjän tiedot sessionStorage:sta
+    setUser({ email: '', token: '' }); // Nollaa käyttäjän tilan
   };
 
+  // Päivitetään käyttäjän tila, jos käyttäjän tiedot löytyvät sessionStorage:sta
   useEffect(() => {
     const storedUser = sessionStorage.getItem('user');
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      setUser(JSON.parse(storedUser)); // Ladataan käyttäjän tiedot sessionStorage:sta
     }
   }, []);
 

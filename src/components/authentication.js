@@ -27,7 +27,9 @@ function Authentication() {
       }
     } catch (error) {
       console.error('Virhe kirjautumisessa/rekisteröinnissä:', error);
-      setErrorMessage(error.message || 'An unexpected error occurred');
+      // Tarkista, onko palvelin palauttanut virheviestin
+      const message = error.response?.data?.message || error.message || 'An unexpected error occurred';
+      setErrorMessage(message);
     }
   };
   
@@ -75,11 +77,3 @@ function Authentication() {
 
 
 export default Authentication;
-
-
-
-
-
-
-
-

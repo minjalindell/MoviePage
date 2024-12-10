@@ -1,45 +1,82 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import "./groups.css";
+import { UserContext } from "./context/userContext";
  
 function Groups() {
-  const [groups, setGroups] = useState([]); // Tila ryhmien tallentamiseen
-  const [groupName, setGroupName] = useState(""); // Tila ryhmän nimen tallentamiseen
+  const [groups, setGroups] = useState([]);
+  const [groupName, setGroupName] = useState("");
+  const [error, setError] = useState(null); 
+  const { user } = useContext(UserContext);
+  const { userId } = user?.user_id;
+
+  const getToken = () => {
+    const token = sessionStorage.getItem("user");
+    if (token) {
+      return JSON.parse(token).token;
+    }
+    return null;
+  };
  
-  // Haetaan kaikki kirjautuneen käyttäjän ryhmät palvelimelta
+  // näytä kaikki ryhmät
   useEffect(() => {
+    const token = getToken();
+    if (!token) {
+      console.error("Token missing, unable to fetch groups.");
+      return;
+    }
+
     axios
-      .get("http://localhost:3001/user/groups") // Päivitetty endpoint
+      .get("http://localhost:3001/groups", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
-        setGroups(response.data); // Tallennetaan ryhmät tilaan
+        setGroups(response.data);
       })
       .catch((error) => {
         console.error("Error fetching groups:", error);
       });
-  }, []); // Haetaan ryhmät vain kerran komponentin latauksen jälkeen
+  }, []);
  
-  // Uuden ryhmän luominen
+  // uuden ryhmän luominen
   const handleCreateGroup = () => {
+    const token = getToken();
+    if (!token) {
+      console.error("Token missing, unable to create group.");
+      return;
+    }
+
     if (groupName.trim()) {
       console.log('Creating group with name:', groupName);
-      axios.post("http://localhost:3001/groups", { name: groupName })
+      axios
+      .post("http://localhost:3001/groups/new",
+         { name: groupName },
+        { headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
         .then((response) => {
-          console.log('Sent data', { name: groupName}); // Tarkista lähetetty data
-          console.log('Server response:', response.data); // tarkista vastaus
-          setGroups([...groups, response.data]); // Lisää uusi ryhmä listalle
-          setGroupName(""); // Tyhjennä syöttökenttä ryhmän luomisen jälkeen
+          console.log('Server response:', response.data);
+          setGroups((prevGroups) => [...prevGroups, response.data]);
+          setGroupName("");
         })
         .catch((error) => {
-          console.error("Error creating group:", error.response?.data || error.message); // Virheen käsittely
+          console.error("Error creating group:", error.response?.data || error.message);
+          setError("Failed to create group. Please try again later.");
         });
     } else {
-      alert("Please enter a group name."); // Virheilmoitus jos nimi on tyhjä
+      alert("Please enter a group name.");
     }
   };
  
   return (
     <div className="groups-container">
       <h1>Groups</h1>
+
+      {error && <p className="error-message">{error}</p>} {/* Näytetään virheilmoitus */}
  
       <div className="groups-wrapper">
         {/* Käyttäjän omat ryhmät */}
@@ -50,7 +87,7 @@ function Groups() {
           ) : (
             <ul>
               {groups.map((group) => (
-                <li key={group.id}>{group.name}</li>
+                <li key={group.group_id}>{group.name}</li>
               ))}
             </ul>
           )}
@@ -64,7 +101,7 @@ function Groups() {
           ) : (
             <ul>
               {groups.map((group) => (
-                <li key={group.id}>{group.name}</li>
+                <li key={group.group_id}>{group.name}</li>
               ))}
             </ul>
           )}
