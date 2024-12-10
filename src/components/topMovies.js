@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './topMovies.css';  // Tuo CSS-tiedosto
- 
+
 const TopMovies = () => {
   const [movies, setMovies] = useState([]);
   const navigate = useNavigate();
- 
+
   useEffect(() => {
     fetch("https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1", {
       headers: {
@@ -16,11 +16,11 @@ const TopMovies = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setMovies(data.results.slice(0, 3));
+        setMovies(data.results.slice(0, 3)); 
       })
       .catch((error) => console.error("Error fetching top movies:", error));
   }, []);
- 
+
   return (
     <div className="top-movies">
       <h3>Top 3 Movies</h3>
@@ -39,7 +39,7 @@ const TopMovies = () => {
           </div>
         ))}
       </div>
- 
+
       {/* "Show More" Button */}
       <button className = "showMoreButton"
         onClick={() => navigate("/top-movies")}
@@ -49,7 +49,5 @@ const TopMovies = () => {
     </div>
   );
 };
- 
+
 export default TopMovies;
- 
- 

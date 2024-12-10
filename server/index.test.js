@@ -6,7 +6,6 @@ import { before, after } from 'mocha';
 import { pool } from './helpers/db.js'
 
 
-//lisätään testikäyttäjä
 before(async () => {
     const email = 'login@foo.com';
     const password = 'login123';
@@ -14,14 +13,14 @@ before(async () => {
 });
 
 
-// poistetaan testikäyttäjä
+
 after(async () => {
     await pool.query('DELETE FROM users WHERE email = $1', ['login@foo.com']);  // Poistetaan testikäyttäjä
 });
 
-// rekisteröinti
+
 describe('POST register', () => {
-    // uniikki email joka testille
+
     const email = 'register' + Date.now() + '@foo.com';
     const password = 'Register123'; 
 
@@ -37,11 +36,11 @@ describe('POST register', () => {
         const data = await response.json();
         expect(response.status).to.equal(201, data.error);
         expect(data).to.be.an('object');
-        expect(data).to.include.all.keys('id', 'email');
+        expect(data).to.include.all.keys('user_id', 'email');
     });
 });
 
-// kirjautuminen
+
 describe('POST login', () => {
     const email = 'login@foo.com';  
     const password = 'login123';  
@@ -58,7 +57,7 @@ describe('POST login', () => {
         const data = await response.json();
         expect(response.status).to.equal(200, data.error); 
         expect(data).to.be.an('object');
-        expect(data).to.include.all.keys('id', 'email', 'token'); 
+        expect(data).to.include.all.keys('user_id', 'email', 'token'); 
     });
 });
 

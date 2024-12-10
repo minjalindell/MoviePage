@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
- 
- 
+
+
 const MovieDetails = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
- 
+
   const navigate = useNavigate();
- 
- 
+
+
   useEffect(() => {
     fetch(`https://api.themoviedb.org/3/movie/${id}`, {
       headers: {
@@ -29,9 +29,9 @@ const MovieDetails = () => {
  
   return (
     <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
- 
+
       <h2>{movie.title}</h2>
- 
+
       <div style={{ display: "flex", gap: "20px" }}>
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -46,9 +46,9 @@ const MovieDetails = () => {
           />
         )}
       </div>
- 
+
       <p style={{ marginTop: "20px" }}>{movie.overview}</p>
- 
+
       <div>
         <h4>Details</h4>
         <p><strong>Original Title:</strong> {movie.original_title}</p>
@@ -63,7 +63,7 @@ const MovieDetails = () => {
         <p><strong>Average Rating:</strong> {movie.vote_average} / 10</p>
         <p><strong>Total Votes:</strong> {movie.vote_count}</p>
       </div>
- 
+
       <div>
         <h4>Production Companies</h4>
         <ul>
@@ -82,7 +82,7 @@ const MovieDetails = () => {
         </ul>
       </div>
       <button
-        onClick={() => navigate(`/reviews/${id}`)}
+        onClick={() => navigate(`/reviews/${id}`)} 
         style={{
           marginTop: "20px",
           padding: "10px 20px",
@@ -100,4 +100,3 @@ const MovieDetails = () => {
 };
  
 export default MovieDetails;
- 

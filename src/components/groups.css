@@ -1,0 +1,106 @@
+/* Pääkontti */
+.groups-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #222;
+    color: white;
+    padding: 20px;
+}
+ 
+/* Ryhmien kontti (kaksi saraketta vierekkäin) */
+.groups-wrapper {
+    display: flex;
+    flex-direction: row; /* Asetetaan sarakkeet vierekkäin */
+    justify-content: space-between; /* Välit sarakkeiden väliin */
+    width: 100%; /* Täyttää käytettävän tilan */
+    max-width: 1200px; /* Maksimileveys */
+    gap: 20px; /* Välit sarakkeiden väliin */
+}
+ 
+/* Kaikkien ryhmien osio ja käyttäjän omat ryhmät */
+.group-list {
+    flex: 1; /* Joustava leveys */
+    padding: 20px; /* Sisäiset marginaalit */
+    background-color: #333; /* Tumma tausta sarakkeille */
+    border-radius: 10px; /* Kulmien pyöristys */
+    color: white; /* Tekstin väri */
+}
+ 
+/* Ryhmien otsikot */
+.group-list h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: #ffffff;
+}
+ 
+/* Ryhmien lista */
+.group-list ul {
+    list-style-type: none; /* Poistaa bullet points */
+    padding: 0;
+    margin: 0;
+}
+ 
+/* Yksittäinen ryhmä */
+.group-list li {
+    margin: 5px 0;
+    padding: 10px 15px;
+    border-radius: 5px; /* Kulmien pyöristys */
+    background-color: #ff69b4; /* Deep pink tausta */
+    color: white; /* Valkoinen teksti */
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center; /* Keskitetään teksti */
+    transition: transform 0.2s, box-shadow 0.2s; /* Animaatio hover-efektille */
+}
+ 
+/* Hover-efekti ryhmille */
+.group-list li:hover {
+    transform: scale(1.05); /* Pieni suurennus */
+}
+ 
+/* Syöttökenttä */
+.input-container {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+ 
+/* Syöttökenttä ja painike */
+.input-container input {
+    display: block;
+    margin: 10px auto;
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #555; /* Ohut reuna */
+    border-radius: 5px; /* Kulmien pyöristys */
+    background-color: #333; /* Tummanharmaa tausta */
+    color: white;
+    outline: none;
+}
+ 
+.input-container input:focus {
+    border-color: #ff69b4; /* Korostettu väri fokuksessa */
+}
+ 
+/* Luo ryhmä -painike */
+.create-group-button {
+    display: block;
+    margin: 10px auto;
+    width: 80%;
+    padding: 10px;
+    background-color: #ff69b4; /* Korostettu väri */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+ 
+.create-group-button:hover {
+    background-color: #ff85c2; /* Hieman vaaleampi väri hover-tilassa */
+}

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import './search.css';
 import { UserContext } from './context/userContext';
- 
+
 const Search = () => {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
@@ -13,7 +13,7 @@ const Search = () => {
   const [year, setYear] = useState("");
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
- 
+
   const genres = [
     { id: 28, name: "Action" },
     { id: 12, name: "Adventure" },
@@ -55,16 +55,16 @@ const Search = () => {
       })
       .catch((error) => console.log(error));
   };
- 
+
   const handleProfileNavigation = () => {
     if (!user || !user.token) {
       alert("You need to be logged in to access the profile page.");
-      navigate("/");
+      navigate("/"); 
     } else {
       navigate("/profile");
     }
   };
- 
+
   return (
     <div>
       <header className="search-header">
@@ -78,9 +78,9 @@ const Search = () => {
           Profile
         </button>
       </nav>
- 
+
       <h3>Search Movies</h3>
- 
+
       <div>
         <input
           value={query}
@@ -110,7 +110,7 @@ const Search = () => {
       </div>
  
       <button onClick={search}>Search</button>
- 
+
       <ReactPaginate
         breakLabel="..."
         nextLabel=" >"
@@ -126,7 +126,7 @@ const Search = () => {
         nextClassName="next"
         activeClassName="selected"
       />
- 
+
       <table>
         {movies.map((movie) => (
           <tr key={movie.id}>
@@ -157,5 +157,3 @@ const Search = () => {
 };
  
 export default Search;
- 
- 

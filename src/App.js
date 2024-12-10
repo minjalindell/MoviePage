@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';  
+import React, { useState, useEffect, useContext } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
+import { UserContext } from './components/context/userContext'; 
 import Authentication from './components/authentication';
 import Search from './components/search';
 import Profile from './components/profile';
@@ -9,8 +9,10 @@ import Shows from './components/shows';
 import ReviewPage from './components/Reviewpage';
 import TopMovies from './components/topMovies';
 import TopMoviesFull from './components/TopMoviesFull';
-import UserProvider from './components/context/userProvider.js';
- 
+import UserProvider from './components/context/userProvider';
+import Groups from './components/groups';
+import './App.css'
+
 function App() {
   return (
     <UserProvider>
@@ -22,20 +24,21 @@ function App() {
     </UserProvider>
   );
 }
- 
+
 function AppRoutes() {
+  const { user } = useContext(UserContext);
   const [logoutMessage, setLogoutMessage] = useState("");
   const location = useLocation();
- 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    // Tarkistetaan onko käyttäjä kirjautunut ja logout-viestiä ei pitäisi näkyä
-    if (location.state && location.state.fromLogout) {
+    if (location.state?.fromLogout) {
       setLogoutMessage("You have successfully logged out.");
-    } else {
-      setLogoutMessage("");
+      const newLocation = { ...location, state: {} };
+      navigate(newLocation, { replace: true });
     }
-  }, [location]);
- 
+  }, [location, navigate]);
+
   useEffect(() => {
     if (logoutMessage) {
       const timer = setTimeout(() => {
@@ -44,12 +47,17 @@ function AppRoutes() {
       return () => clearTimeout(timer);
     }
   }, [logoutMessage]);
- 
- 
+  const ProtectedRoute = ({ element }) => {
+    if (!user.token) {
+      return navigate("/authentication", { replace: true });
+    }
+    return element;
+  };
+
   return (
     <>
       {logoutMessage && <div className="logout-message">{logoutMessage}</div>}
- 
+
       <Routes>
         <Route
           path="/"
@@ -59,9 +67,17 @@ function AppRoutes() {
                 <h1>The best movie page</h1>
               </header>
               <nav className="App-nav">
-                <Link to="/authentication" className="nav-link">
-                  <button className="nav-button">Log in / Register</button>
-                </Link>
+                {user.token ? (
+                  <>
+                    <Link to="/profile" className="nav-link">
+                      <button className="nav-button">Profile</button>
+                    </Link>
+                  </>
+                ) : (
+                  <Link to="/authentication" className="nav-link">
+                    <button className="nav-button">Log in / Register</button>
+                  </Link>
+                )}
               </nav>
               <section className="App-section">
                 <h2>Check out the selection</h2>
@@ -78,21 +94,21 @@ function AppRoutes() {
             </div>
           }
         />
-       
-       
         <Route path="/authentication" element={<Authentication />} />
-        <Route path="/search" element={<Search/>} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/profile"element={<ProtectedRoute element={<Profile />} />}/>
         <Route path="/movie/:id" element={<MovieDetails />} />
         <Route path="/shows" element={<Shows />} />
- 
         <Route path="/top-movies" element={<TopMoviesFull />} />
         <Route path="/reviews/:movieId" element={<ReviewPage />} />
         <Route path="/MovieDetails/:id" element={<MovieDetails />} />
+
+
+        <Route path="/groups" element={<ProtectedRoute element={<Groups />} />}
+        />
       </Routes>
     </>
   );
 }
  
 export default App;
- 

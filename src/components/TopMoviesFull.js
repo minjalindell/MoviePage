@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './TopMoviesFull.css';  
- 
+
 const TopMoviesFull = () => {
   const [movies, setMovies] = useState([]);
   const navigate = useNavigate();
- 
+
   useEffect(() => {
     const fetchMovies = async () => {
       try {
@@ -19,19 +19,19 @@ const TopMoviesFull = () => {
             },
           }).then((response) => response.json())
         );
- 
+
         const movieData = await Promise.all(moviePromises);
- 
+
         const allMovies = movieData.flatMap((data) => data.results).slice(0, 100);
         setMovies(allMovies);
       } catch (error) {
         console.error("Error fetching top movies:", error);
       }
     };
- 
+
     fetchMovies();
   }, []);
- 
+
   return (
     <div className="top-movies-container">
       <h2 className="top-movies-title">Top 100 Movies</h2>
@@ -55,5 +55,5 @@ const TopMoviesFull = () => {
     </div>
   );
 };
- 
+
 export default TopMoviesFull;

@@ -3,8 +3,8 @@ import pkg from 'pg';
 const { Pool } = pkg;
  
 dotenv.config();  
- 
- 
+
+
 const openDb = () => {
   return new Pool({
     user: process.env.DB_USER,              
