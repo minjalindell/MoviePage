@@ -74,12 +74,11 @@ router.post('/login', async (req, res) => {
 
 const deleteUser = async (user_id) => {
   try {
-    // Käytetään user_id:ta oikein
     const result = await pool.query('DELETE FROM users WHERE user_id = $1 RETURNING *', [user_id]);
-    return result.rowCount > 0;  // Palauttaa true, jos käyttäjä poistettiin
+    return result.rowCount > 0;  
   } catch (error) {
     console.error('Error deleting user:', error);
-    throw error;  // Heittää virheen eteenpäin
+    throw error;  
   }
 };
 
@@ -93,14 +92,14 @@ router.delete('/delete', async (req, res, next) => {
 
   try {
     // Poistetaan käyttäjä ja tarkistetaan tulos
-    const result = await deleteUser(user_id, email);  // Käytetään apufunktiota, joka ottaa vastaan molemmat tiedot
+    const result = await deleteUser(user_id, email);  
     if (result) {
       return res.status(200).json({ message: 'Account deleted successfully' });
     } else {
       return res.status(404).json({ message: 'User not found' });
     }
   } catch (error) {
-    next(error);  // Lähetetään virhe eteenpäin error-handling middlewarelle
+    next(error);  
   }
 });
 

@@ -30,11 +30,10 @@ function Groups() {
     fetchGroups();
   }, [user.token]);
 
-
   const handleCreateGroup = () => {
     if (groupName.trim()) {
       console.log('Creating group with name:', groupName);
-      axios.post("http://localhost:3001/groups/new", { name: groupName,id:user.user_id }, {
+      axios.post("http://localhost:3001/groups/new", { name: groupName, id: user.user_id }, {
         headers: {
           Authorization: `Bearer ${user.token}` 
         }
@@ -64,10 +63,11 @@ function Groups() {
             <p>No groups found.</p>
           ) : (
             <ul>
-              {groups.map((group) => (
-                <li key={group.id}>{group.name}</li>
-              ))}
+                {groups.map((group) => (
+                   <li key={group.group_id}>{group.name}</li> 
+                    ))}
             </ul>
+
           )}
         </div>
       </div>
@@ -90,4 +90,5 @@ function Groups() {
 }
 
 export default Groups;
+
 
