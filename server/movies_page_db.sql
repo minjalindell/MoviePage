@@ -11,6 +11,6 @@ CREATE TABLE reviews (
   rating INTEGER NOT NULL,
   review_text TEXT,
   review_date TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-  user_email VARCHAR(255),
+  email VARCHAR(255),
   FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
 );

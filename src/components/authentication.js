@@ -7,6 +7,7 @@ function Authentication() {
   const { signIn, signUp } = useContext(UserContext); 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState(''); // Uusi kenttä
   const [isLogin, setIsLogin] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
@@ -15,6 +16,17 @@ function Authentication() {
     e.preventDefault();
     const authData = { email, password };
   
+    // Tarkistetaan, että salasanat täsmäävät rekisteröinnissä
+    if (!isLogin && password !== confirmPassword) {
+      setErrorMessage('Passwords do not match!');
+      
+      // Virheilmoitus poistetaan 3 sekunnin kuluttua
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 3000);
+      return;
+    }
+
     console.log('Submitting:', authData); 
   
     try {
@@ -25,13 +37,15 @@ function Authentication() {
         await signUp(email, password);
         setIsLogin(true);
       }
+      setEmail('');
+      setPassword('');
+      setIsLogin(true);
+      
     } catch (error) {
       console.error('Virhe kirjautumisessa/rekisteröinnissä:', error);
       setErrorMessage(error.message || 'An unexpected error occurred');
     }
   };
-  
-      
 
   return (
     <div className="authentication-container">
@@ -52,6 +66,17 @@ function Authentication() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          {!isLogin && ( // Näytetään vain rekisteröinnissä
+            <>
+              <label>Confirm Password:</label>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+            </>
+          )}
           <button type="submit">{isLogin ? 'Log in' : 'Register'}</button>
         </form>
 
@@ -72,7 +97,6 @@ function Authentication() {
     </div>
   );
 }
-
 
 export default Authentication;
 

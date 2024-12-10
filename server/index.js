@@ -37,15 +37,13 @@ app.delete('/delete', (req, res) => {
   console.log('Request body:', req.body);
   deleteUser(req, res);
 });
-
 app.use('/reviews', reviewRouter);
 app.use('/user', userRouter);
 
 // Virheidenkäsittely
 app.use((err, req, res, next) => {
-  const statusCode = err.statusCode || 500;
   console.error('Error details:', err);
-  res.status(statusCode).json({ error: err.message });
+  res.status(err.status || 500).json({ message: 'Internal Server Error', error: err.message });
 });
 
 app.listen(port, () => {

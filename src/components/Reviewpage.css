@@ -91,4 +91,36 @@
   h3 {
 color: deeppink;
   }
+
+  .star-rating {
+    display: flex;
+    justify-content: center; 
+    cursor: pointer;
+  }
+  
+  .star {
+    font-size: 2rem;
+    color: #d3d3d3; 
+    margin: 0 5px;
+    transition: color 0.2s ease; 
+  }
+  
+  .star.filled {
+    color: gold; 
+  }
+  .star-rating-rewiev {
+    display: flex;
+    justify-content: center; 
+    cursor: pointer;
+  }
+  .star-rewiev {
+    font-size: 20px; 
+    cursor: pointer;
+    color: gray;
+  }
+  
+  .star-filled-rewiev {
+    color: rgb(255, 255, 255);
+  }
+  
   
