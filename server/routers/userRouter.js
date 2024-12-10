@@ -3,7 +3,6 @@ import express from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { pool } from '../helpers/db.js';
-import { deleteUser } from '../helpers/auth.js';
 
 const router = express.Router();
 
@@ -25,6 +24,7 @@ router.post('/register', async (req, res) => {
       'INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *',
       [email, hashedPassword]
     );
+    console.log("Received email:", email);
 
     res.status(201).json({
       user_id: result.rows[0].user_id,
@@ -36,6 +36,7 @@ router.post('/register', async (req, res) => {
     if (error.code === '23505') {
       return res.status(409).json({ message: 'Email already exists' });
     }
+
     res.status(500).json({ message: 'Internal server error' });
   }
 });
@@ -50,7 +51,7 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Käyttäjää ei löydy' });
     }
 
-    const user = user.user_id;
+    const user = result.rows[0];
 
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
@@ -64,6 +65,7 @@ router.post('/login', async (req, res) => {
       email: user.email,
       token: token,
     });
+
   } catch (error) {
     console.error('Error in login:', error);
     return res.status(500).json({ message: 'Sisäinen virhe palvelimella' });

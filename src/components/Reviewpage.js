@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from "./context/userContext.js";
 import "./Reviewpage.css";
-
+ 
 const ReviewPage = () => {
   const { movieId } = useParams();
   const [movieTitle, setMovieTitle] = useState("");
@@ -10,10 +10,10 @@ const ReviewPage = () => {
   const [reviewText, setReviewText] = useState("");
   const [reviews, setReviews] = useState([]);
   const navigate = useNavigate();
-
+ 
   const { user } = useContext(UserContext);
   const userEmail = user.email;
-
+ 
   // Haetaan elokuvan tiedot
   useEffect(() => {
     fetch(`https://api.themoviedb.org/3/movie/${movieId}?language=en-US`, {
@@ -26,7 +26,7 @@ const ReviewPage = () => {
       .then((data) => setMovieTitle(data?.title || "Unknown Movie"))
       .catch((error) => console.error("Error fetching movie details:", error));
   }, [movieId]);
-
+ 
   // Haetaan arvostelut
   useEffect(() => {
     fetch(`http://localhost:3001/reviews`)
@@ -43,16 +43,16 @@ const ReviewPage = () => {
       )
       .catch((error) => console.error("Error fetching reviews:", error));
   }, [movieId]);
-
+ 
   // Lähetetään arvostelu
   const handleSubmit = (e) => {
     e.preventDefault();
-
+ 
     if (!userEmail) {
       alert("Please log in to submit a review.");
       return;
     }
-
+ 
     const reviewData = {
       user_id: user.user_id,
       movie_id: movieId,
@@ -62,7 +62,7 @@ const ReviewPage = () => {
       email: userEmail,
       timestamp: new Date().toISOString(),
     };
-
+ 
     fetch("http://localhost:3001/reviews", {
       method: "POST",
       headers: {
@@ -84,11 +84,11 @@ const ReviewPage = () => {
         alert("Failed to add the review. Please try again later.");
       });
   };
-
+ 
   const handleRatingChange = (value) => {
     setRating(value);
   };
-
+ 
   return (
     <div>
       <h1>{movieTitle} - Reviews</h1>
@@ -124,7 +124,7 @@ const ReviewPage = () => {
       ) : (
         <p>Please log in to add a review.</p>
       )}
-
+ 
       <h3>User Reviews</h3>
       {reviews.length > 0 ? (
         <ul>
@@ -152,5 +152,7 @@ const ReviewPage = () => {
     </div>
   );
 };
-
+ 
 export default ReviewPage;
+ 
+ 

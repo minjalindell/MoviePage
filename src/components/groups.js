@@ -72,7 +72,6 @@ function Groups() {
         </div>
       </div>
 
-      {/* Uuden ryhmän luominen */}
       <div className="input-container">
         <h2>Create New Group</h2>
         <input
@@ -90,5 +89,3 @@ function Groups() {
 }
 
 export default Groups;
-
-
