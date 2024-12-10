@@ -5,13 +5,13 @@ CREATE TABLE users (
 );
 
 CREATE TABLE reviews (
-    review_id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL,
-    movie_id INT NOT NULL,
-    movie_title VARCHAR(255) NOT NULL,
-    rating INT CHECK (rating >= 1 AND rating <= 5),
-    review_text TEXT,
-    review_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
+  review_id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL,
+  movie_id INTEGER NOT NULL,
+  rating INTEGER NOT NULL,
+  review_text TEXT,
+  review_date TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  email VARCHAR(255),
+  FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
 );
 

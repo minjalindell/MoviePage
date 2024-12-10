@@ -1,54 +1,50 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from "./context/userContext.js";
+import "./Reviewpage.css";
 
 const ReviewPage = () => {
-  const { movieId } = useParams(); 
-  const [movieTitle, setMovieTitle] = useState(""); 
-  const [rating, setRating] = useState(1); 
-  const [reviewText, setReviewText] = useState(""); 
+  const { movieId } = useParams();
+  const [movieTitle, setMovieTitle] = useState("");
+  const [rating, setRating] = useState(1);
+  const [reviewText, setReviewText] = useState("");
   const [reviews, setReviews] = useState([]);
+  const navigate = useNavigate();
 
-  // Kyttäjätietojen hakeminen
   const { user } = useContext(UserContext);
-  const userEmail = user?.email; 
-  const userId = user?.user_id;
+  const userEmail = user.email;
 
-
+  // Haetaan elokuvan tiedot
   useEffect(() => {
     fetch(`https://api.themoviedb.org/3/movie/${movieId}?language=en-US`, {
       headers: {
-        Authorization: "Bearer <YOUR-TMDB-API-KEY>",
+        Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMWY5YjZiNmIyY2M4YjQwOTk2YWE1MzY2NmIwMDJkNSIsIm5iZiI6MTczMTY1OTg4NC44OTM1NSwic3ViIjoiNjczNDUzZjgwNTgxNjRjNDA1MjNmYTBkIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.xiEsZpA1oJhq910VPdQAqPrZmnktqGJMj58imsF0RtI",
         "Content-Type": "application/json",
       },
     })
       .then((res) => res.json())
-      .then((data) => setMovieTitle(data.title))
+      .then((data) => setMovieTitle(data?.title || "Unknown Movie"))
       .catch((error) => console.error("Error fetching movie details:", error));
   }, [movieId]);
 
-
-  const [error, setError] = useState(null);
-
+  // Haetaan arvostelut
   useEffect(() => {
-    // API-kutsu arvostelujen hakemiseksi
-    fetch(`http://localhost:3001/reviews/${movieId}`) 
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! Status: ${res.status}`); // Virhe käsittely
-        }
-        return res.json();
-      })
-      .then((data) => {
-        console.log('Arvostelut haettu:', data);
-        setReviews(data); // Aseta arvostelut tilaan
-      })
-      .catch((error) => {
-        console.error('Virhe arvostelujen haussa:', error);
-        setError(error.message); // Aseta virhetilaan, jotta voidaan näyttää se käyttöliittymässä
-      });
+    fetch(`http://localhost:3001/reviews`)
+      .then((res) => res.json())
+      .then((data) =>
+        setReviews(
+          data
+            .filter((review) => review.movie_id === parseInt(movieId))
+            .map((review) => ({
+              ...review,
+              date: review.date || new Date().toISOString(),
+            }))
+        )
+      )
+      .catch((error) => console.error("Error fetching reviews:", error));
   }, [movieId]);
 
+  // Lähetetään arvostelu
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -58,12 +54,13 @@ const ReviewPage = () => {
     }
 
     const reviewData = {
-      user_id: user.user_id, 
+      user_id: user.user_id,
       movie_id: movieId,
       movie_title: movieTitle,
       rating,
       review_text: reviewText,
-      user_email: userEmail,
+      email: userEmail,
+      timestamp: new Date().toISOString(),
     };
 
     fetch("http://localhost:3001/reviews", {
@@ -75,33 +72,48 @@ const ReviewPage = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("Review added:", data);
-        setReviews((prev) => [...prev, data.review]);
-        setRating(1); 
+        setReviews((prev) => [
+          ...prev,
+          { ...data.review, date: data.review.date || new Date().toISOString() },
+        ]);
+        setRating(1);
         setReviewText("");
       })
-      .catch((error) => console.error("Error adding review:", error));
+      .catch((error) => {
+        console.error("Error adding review:", error);
+        alert("Failed to add the review. Please try again later.");
+      });
+  };
+
+  const handleRatingChange = (value) => {
+    setRating(value);
   };
 
   return (
     <div>
       <h1>{movieTitle} - Reviews</h1>
-
+      <button
+                onClick={() => navigate(`/movie/${movieId}`)}
+              >Movie details</button>
       <h3>Add a Review</h3>
       {userEmail ? (
         <form onSubmit={handleSubmit}>
           <div>
-            <label>Rating (1-5):</label>
-            <input
-              type="number"
-              value={rating}
-              min="1"
-              max="5"
-              onChange={(e) => setRating(e.target.value)}
-            />
+            <label>Rating:</label>
+            <div className="star-rating">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <span
+                  key={star}
+                  className={`star ${rating >= star ? "filled" : ""}`}
+                  onClick={() => handleRatingChange(star)}
+                >
+                  &#9733;
+                </span>
+              ))}
+            </div>
           </div>
           <div>
-            <label>Review:</label>
+            <p><label>Review:</label></p>
             <textarea
               value={reviewText}
               onChange={(e) => setReviewText(e.target.value)}
@@ -118,8 +130,19 @@ const ReviewPage = () => {
         <ul>
           {reviews.map((review) => (
             <li key={review.review_id}>
-              <p><strong>{review.user_email}</strong> ({review.rating}/5):</p>
+              <p><strong>{review.email}</strong>:</p>
+              <div className="star-rating-review">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <span
+                    key={star}
+                    className={`star-rewiev ${review.rating >= star ? "star-filled-rewiev" : ""}`}
+                  >
+                    &#9733;
+                  </span>
+                ))}
+              </div>
               <p>{review.review_text}</p>
+              <p><small>Reviewed on: {new Date(review.review_date).toLocaleDateString()}</small></p>
             </li>
           ))}
         </ul>
@@ -131,13 +154,3 @@ const ReviewPage = () => {
 };
 
 export default ReviewPage;
-
-
-
-
-
-
-
-
-
-

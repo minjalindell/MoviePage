@@ -1,112 +1,126 @@
 /* ReviewPage.css */
 
 .review-page-container {
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  background-color: #000;
-  text-align: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #000;
+  }
+  
+  .review-page-header {
+    color: deeppink;
+    font-size: 36px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+ 
+  
+  .review-page-image {
+    max-width: 200px;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 8px;
+    border: 4px solid #ddd; 
 }
+.review-page-button {
+    cursor: pointer;
+    border: none;
+    background-color: deeppink;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .review-page-button:hover {
+    background-color: #ff69b4;
+  }
+  .review-page-overview {
+    font-size: 18px;
+    color: deeppink;
+    margin-bottom: 30px;
+    line-height: 1.6;
+  }
+  
+  .review-page-reviews {
+    margin-top: 40px;
+  }
+  
+  .review-page-reviews ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .review-page-reviews li {
+    background-color: deeppink;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .review-page-reviews h4 {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+  }
+  
+  .review-page-reviews p {
+    font-size: 16px;
+    color: white;
+  }
+  
+  .review-page-reviews p strong {
+    font-weight: bold;
+  }
+  
+  .review-page-reviews .rating {
+    font-size: 14px;
+    color: black;
+  }
+  
+  .review-page-reviews .no-reviews {
+    font-size: 18px;
+    color: white;
+    text-align: center;
+  }
+  h3 {
+color: deeppink;
+  }
 
-.review-page-header {
-  color: deeppink;
-  font-size: 36px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-bottom: 20px;
-}
-
-.review-page-image {
-  max-width: 300px;
-  margin-bottom: 20px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 8px;
-  border: 4px solid #ddd;
-}
-
-.review-page-form {
-  margin-bottom: 30px;
-}
-
-.review-page-form label {
-  display: block;
-  color: deeppink;
-  margin-bottom: 5px;
-}
-
-.review-page-form input,
-.review-page-form textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
-.review-page-form button {
-  padding: 10px 20px;
-  background-color: deeppink;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.review-page-form button:hover {
-  background-color: #ff69b4;
-}
-
-.review-page-reviews {
-  margin-top: 40px;
-}
-
-.review-page-reviews ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.review-page-reviews li {
-  background-color: deeppink;
-  padding: 15px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.review-page-reviews h4 {
-  font-size: 20px;
-  font-weight: bold;
-  color: white;
-}
-
-.review-page-reviews p {
-  font-size: 16px;
-  color: white;
-}
-
-.review-page-reviews p strong {
-  font-weight: bold;
-}
-
-.review-page-reviews .rating {
-  font-size: 14px;
-  color: black;
-}
-
-.review-page-reviews .no-reviews {
-  font-size: 18px;
-  color: white;
-  text-align: center;
-}
-
-h3 {
-  color: deeppink;
-}
-
-
+  .star-rating {
+    display: flex;
+    justify-content: center; 
+    cursor: pointer;
+  }
+  
+  .star {
+    font-size: 2rem;
+    color: #d3d3d3; 
+    margin: 0 5px;
+    transition: color 0.2s ease; 
+  }
+  
+  .star.filled {
+    color: gold; 
+  }
+  .star-rating-rewiev {
+    display: flex;
+    justify-content: center; 
+    cursor: pointer;
+  }
+  .star-rewiev {
+    font-size: 20px; 
+    cursor: pointer;
+    color: gray;
+  }
+  
+  .star-filled-rewiev {
+    color: rgb(255, 255, 255);
+  }
+  
   
