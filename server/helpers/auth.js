@@ -1,12 +1,13 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { pool } from './db.js'; 
+import { pool } from './db.js';
 
 // Rekisteröinti
 const register = async (req, res) => {
   const { email, password } = req.body;
 
   const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
   if (!passwordRegex.test(password)) {
     return res.status(400).json({
       message: 'Password must be at least 8 characters long, include at least one uppercase letter and one number.',
@@ -20,6 +21,7 @@ const register = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+
     const newUser = await pool.query(
       'INSERT INTO users (email, password) VALUES ($1, $2) RETURNING id, email',
       [email, hashedPassword]
@@ -43,42 +45,64 @@ const login = async (req, res) => {
     }
 
     const user = userResult.rows[0];
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    // Luo ja palauta JWT-token
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET_KEY, { expiresIn: '10h' });
-
-    res.status(200).json({
-      message: 'Login successful',
-      token,
-      userData: { id: user.id, email: user.email },
-    });
+    res.status(200).json({ message: 'Login successful', token });
   } catch (err) {
     console.error('Error while logging in:', err);
     res.status(500).json({ message: 'Error while logging in', error: err.message });
   }
 };
 
-// Middleware tokenin tarkistukseen
-const authenticateToken = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
 
+export const authenticateToken = (req, res, next) => {
+  const token = req.headers['authorization'];
   if (!token) {
-    return res.status(401).json({ message: 'Token missing or invalid' });
+    return res.status(401).json({ message: 'Token is missing' });
   }
-
-  jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
-    if (err) {
-      return res.status(403).json({ message: 'Token invalid or expired' });
-    }
-
-    req.userId = decoded.userId;
+  const tokenValue = token.replace('Bearer ', '');
+  try {
+    // Dekoodaataan token ja tallennetaan se req.user-objektiin
+    const decoded = jwt.verify(tokenValue, process.env.JWT_SECRET_KEY);
+    req.user = { userId: decoded.user_id }; // userId req.useriin
+    console.log("auth ok", req.user);
     next();
-  });
+  } catch (error) {
+    console.error('Invalid token:', error.message);
+    return res.status(401).json({ message: 'Invalid Token' });
+  }
 };
 
-export { register, login, authenticateToken };
+
+export const deleteUser = async (req, res) => {
+  const { user_id, email } = req.body;
+
+  if (!user_id || !email) {
+    return res.status(400).json({ message: 'User ID and Email are required' });
+  }
+
+  try {
+    const query = 'DELETE FROM users WHERE user_id = $1 AND email = $2';
+    const values = [user_id, email];
+    const result = await pool.query(query, values);
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    return res.status(200).json({ message: 'User deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+export { register, login };
+
+
+

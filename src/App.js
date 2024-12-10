@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom'; // Tuodaan BrowserRouter oikein
-import { UserContext } from './components/context/userContext'; // Varmista, että UserContext on tuotu oikein
+import { BrowserRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
+import { UserContext } from './components/context/userContext'; 
 import Authentication from './components/authentication';
 import Search from './components/search';
 import Profile from './components/profile';
@@ -26,17 +26,14 @@ function App() {
 }
 
 function AppRoutes() {
-  const { user, signOut } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [logoutMessage, setLogoutMessage] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Tarkistetaan, onko käyttäjä juuri kirjautunut ulos
     if (location.state?.fromLogout) {
       setLogoutMessage("You have successfully logged out.");
-
-      // Tyhjennetään location.state
       const newLocation = { ...location, state: {} };
       navigate(newLocation, { replace: true });
     }
@@ -50,11 +47,8 @@ function AppRoutes() {
       return () => clearTimeout(timer);
     }
   }, [logoutMessage]);
-
-  // Suojatut reitit
   const ProtectedRoute = ({ element }) => {
     if (!user.token) {
-      // Jos käyttäjä ei ole kirjautunut, ohjataan kirjautumissivulle
       return navigate("/authentication", { replace: true });
     }
     return element;
@@ -102,31 +96,19 @@ function AppRoutes() {
         />
         <Route path="/authentication" element={<Authentication />} />
         <Route path="/search" element={<Search />} />
-        <Route
-          path="/profile"
-          element={<ProtectedRoute element={<Profile />} />}
-        />
-        <Route
-          path="/movie/:id"
-          element={<ProtectedRoute element={<MovieDetails />} />}
-        />
+        <Route path="/profile"element={<ProtectedRoute element={<Profile />} />}/>
+        <Route path="/movie/:id" element={<MovieDetails />} />
         <Route path="/shows" element={<Shows />} />
         <Route path="/top-movies" element={<TopMoviesFull />} />
-        <Route
-          path="/reviews/:movieId"
-          element={<ProtectedRoute element={<ReviewPage />} />}
-        />
-        <Route
-          path="/MovieDetails/:id"
-          element={<ProtectedRoute element={<MovieDetails />} />}
-        />
+        <Route path="/reviews/:movieId" element={<ReviewPage />} />
+        <Route path="/MovieDetails/:id" element={<MovieDetails />} />
+
+
         <Route path="/groups" element={<ProtectedRoute element={<Groups />} />}
         />
       </Routes>
     </>
   );
 }
-
-
 
 export default App;
