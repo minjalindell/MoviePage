@@ -3,20 +3,20 @@
     padding: 20px;
     text-align: center;
   }
-  
+ 
   .top-movies-title {
     font-size: 28px;
     font-weight: bold;
     margin-bottom: 20px;
     color: deeppink;
   }
-  
+ 
   .top-movies-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 20px;
   }
-  
+ 
   .top-movie-card {
     display: flex;
     flex-direction: column;
@@ -32,30 +32,30 @@
     height: 300px; /* Kiinteä korkeus kortille */
     display: flex;
   }
-  
+ 
   .top-movie-index {
     font-size: 18px;
     font-weight: bold;
     color: white;
     margin: 0 0 10px;
   }
-  
+ 
   .top-movie-poster {
     border-radius: 4px;
     width: 100%;
     height: 200px; /* Kiinteä korkeus kuvalle */
     object-fit: cover; /* Varmistaa, että kuva täyttää laatikon säilyttäen mittasuhteensa */
     margin-bottom: 10px;
-    transition: transform 0.3s ease-in-out; 
+    transition: transform 0.3s ease-in-out;
     display: block;
     margin-left: auto;
     margin-right: auto; /* Keskittää kuvan vaakasuunnassa */
   }
-  
+ 
   .top-movie-poster:hover {
-    transform: scale(1.1); 
+    transform: scale(1.1);
   }
-  
+ 
   .top-movie-title {
     font-size: 10.5px;
     font-weight: bold;
@@ -68,7 +68,7 @@
     margin-bottom: 10px;
     flex-grow: 1; /* Sallii nimelle joustavan tilan */
   }
-  
+ 
   .top-movie-subtitle {
     font-size: 14px;
     font-weight: normal;
@@ -77,4 +77,5 @@
     height: 20px; /* Varmistaa, että tämä rivi on aina olemassa */
     flex-shrink: 0; /* Estää tämän rivin kutistumisen */
   }
-  
+ 
+ 

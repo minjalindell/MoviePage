@@ -13,7 +13,7 @@ const MovieDetails = () => {
   useEffect(() => {
     fetch(`https://api.themoviedb.org/3/movie/${id}`, {
       headers: {
-        Authorization: 
+        Authorization:
         "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMWY5YjZiNmIyY2M4YjQwOTk2YWE1MzY2NmIwMDJkNSIsIm5iZiI6MTczMTY1OTg4NC44OTM1NSwic3ViIjoiNjczNDUzZjgwNTgxNjRjNDA1MjNmYTBkIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.xiEsZpA1oJhq910VPdQAqPrZmnktqGJMj58imsF0RtI",
         "Content-Type": "application/json",
       },
@@ -22,11 +22,11 @@ const MovieDetails = () => {
       .then((json) => setMovie(json))
       .catch((error) => console.log(error));
   }, [id]);
-
+ 
   if (!movie) {
     return <p>Loading...</p>;
   }
-
+ 
   return (
     <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
 
@@ -98,5 +98,5 @@ const MovieDetails = () => {
     </div>
   );
 };
-
+ 
 export default MovieDetails;

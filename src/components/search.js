@@ -35,13 +35,13 @@ const Search = () => {
     { id: 10752, name: "War" },
     { id: 37, name: "Western" },
   ];
-
+ 
   const search = () => {
     let url = `https://api.themoviedb.org/3/${query ? "search/movie" : "discover/movie"}?page=${page}`;
     if (query) url += `&query=${query}`;
     if (genre) url += `&with_genres=${genre}`;
     if (year) url += `&primary_release_year=${year}`;
-
+ 
     fetch(url, {
       headers: {
         Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMWY5YjZiNmIyY2M4YjQwOTk2YWE1MzY2NmIwMDJkNSIsIm5iZiI6MTczMTY1OTg4NC44OTM1NSwic3ViIjoiNjczNDUzZjgwNTgxNjRjNDA1MjNmYTBkIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.xiEsZpA1oJhq910VPdQAqPrZmnktqGJMj58imsF0RtI",
@@ -88,7 +88,7 @@ const Search = () => {
           placeholder="Search by title"
         />
       </div>
-
+ 
       <div>
         <select value={genre} onChange={(e) => setGenre(e.target.value)}>
           <option value="">-- Select Genre --</option>
@@ -99,7 +99,7 @@ const Search = () => {
           ))}
         </select>
       </div>
-
+ 
       <div>
         <input
           type="number"
@@ -108,7 +108,7 @@ const Search = () => {
           placeholder="Search by release year"
         />
       </div>
-
+ 
       <button onClick={search}>Search</button>
 
       <ReactPaginate
@@ -155,5 +155,5 @@ const Search = () => {
     </div>
   );
 };
-
+ 
 export default Search;

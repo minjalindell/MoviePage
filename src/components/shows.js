@@ -17,14 +17,14 @@ function Shows() {
     const xmlDoc = parser.parseFromString(xml, "application/xml");
     const theatres = xmlDoc.getElementsByTagName("TheatreArea");
     const tempAreas = [];
-
+ 
     for (let i = 0; i < theatres.length; i++) {
       tempAreas.push({
         id: theatres[i].getElementsByTagName("ID")[0].textContent,
         name: theatres[i].getElementsByTagName("Name")[0].textContent,
       });
     }
-
+ 
     setAreas(tempAreas);
   };
 
@@ -65,7 +65,7 @@ function Shows() {
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(xml, "application/xml");
         const showingsList = xmlDoc.getElementsByTagName("Show");
-
+ 
         const showingsArray = [];
         for (let i = 0; i < showingsList.length; i++) {
           const startTime = showingsList[i].getElementsByTagName("dttmShowStart")[0].textContent;
@@ -189,6 +189,6 @@ function Shows() {
     </div>
   );
 }
-
+ 
 export default Shows;
 

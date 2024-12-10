@@ -13,10 +13,10 @@ const register = async (req, res) => {
       message: 'Password must be at least 8 characters long, include at least one uppercase letter and one number.',
     });
   }
-
+ 
   try {
     const existingUser = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
-
+ 
     if (existingUser.rows.length > 0) {
       return res.status(400).json({ message: 'Email is already taken' });
     }
@@ -27,7 +27,7 @@ const register = async (req, res) => {
       'INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *',
       [email, hashedPassword]
     );
-
+ 
     res.status(201).json({ message: 'User registered successfully', user: newUser.rows[0] });
   } catch (err) {
     console.error('Registration error:', err);
@@ -38,14 +38,14 @@ const register = async (req, res) => {
 // Kirjautuminen
 const login = async (req, res) => {
   const { email, password } = req.body;
-
+ 
   try {
     const userResult = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
-
+ 
     if (userResult.rows.length === 0) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
-
+ 
     const user = userResult.rows[0];
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
