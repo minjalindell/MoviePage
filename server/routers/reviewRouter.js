@@ -1,3 +1,4 @@
+// reviewRouter.js
 import express from 'express';
 import { pool } from '../helpers/db.js'; // Käytetään tietokannan yhteyttä
 
@@ -27,10 +28,14 @@ router.get('/', async (req, res, next) => {
       `SELECT * FROM reviews ORDER BY review_date DESC`
     );
     res.status(200).json(result.rows);
+
   } catch (error) {
-    console.error("Error fetching reviews:", error);
-    next(error);
+      console.error('Virhe tietokantakyselyssä:', error);
+      res.status(500).json({ message: 'Jotain meni pieleen.' });
   }
 });
 
 export default router;
+
+
+

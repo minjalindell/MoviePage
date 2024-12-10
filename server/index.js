@@ -12,16 +12,14 @@ const port = 3001;
 
 const app = express();
 
-// Päivitetyt CORS-asetukset
 app.use(cors({
-  origin: 'http://localhost:3000', // Frontendin URL
-  methods: ['GET', 'POST', 'DELETE', 'OPTIONS'], // Sallitaan myös OPTIONS
-  allowedHeaders: ['Content-Type', 'Authorization'], // Otsikot joita käytetään
+  origin: 'http://localhost:3000', 
+  methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'], 
   credentials: true
 }));
 
-// Esikyselyiden käsittely
-app.options('*', cors()); // Varmista, että kaikki esikyselyt hyväksytään
+app.options('*', cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
