@@ -36,7 +36,8 @@ app.delete('/delete', (req, res) => {
   console.log('Request body:', req.body);
   deleteUser(req, res);
 });
-app.use('/reviews', reviewRouter);
+app.post('/reviews', reviewRouter);
+app.get('/reviews', reviewRouter);
 app.use('/user', userRouter);
 app.use('/groups', groupsRouter);
 
