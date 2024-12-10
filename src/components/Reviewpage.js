@@ -27,22 +27,20 @@ const ReviewPage = () => {
       .catch((error) => console.error("Error fetching movie details:", error));
   }, [movieId]);
 
-  // Haetaan arvostelut
+  // Haetaan arvostelut (vain kerran komponentin latauksessa)
   useEffect(() => {
-    fetch(`http://localhost:3001/reviews`)
+    fetch(`http://localhost:3001/reviews?movie_id=${movieId}`)
       .then((res) => res.json())
       .then((data) =>
         setReviews(
-          data
-            .filter((review) => review.movie_id === parseInt(movieId))
-            .map((review) => ({
-              ...review,
-              date: review.date || new Date().toISOString(),
-            }))
+          data.map((review) => ({
+            ...review,
+            date: review.date || new Date().toISOString(),
+          }))
         )
       )
       .catch((error) => console.error("Error fetching reviews:", error));
-  }, [movieId]);
+  }, [movieId]); // Hae vain kerran elokuvan id:n perusteella
 
   // Lähetetään arvostelu
   const handleSubmit = (e) => {
@@ -72,6 +70,7 @@ const ReviewPage = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        // Lisää uusi arvostelu suoraan reviews-tilaan
         setReviews((prev) => [
           ...prev,
           { ...data.review, date: data.review.date || new Date().toISOString() },
@@ -92,9 +91,7 @@ const ReviewPage = () => {
   return (
     <div>
       <h1>{movieTitle} - Reviews</h1>
-      <button
-                onClick={() => navigate(`/movie/${movieId}`)}
-              >Movie details</button>
+      <button onClick={() => navigate(`/movie/${movieId}`)}>Movie details</button>
       <h3>Add a Review</h3>
       {userEmail ? (
         <form onSubmit={handleSubmit}>
@@ -128,24 +125,24 @@ const ReviewPage = () => {
       <h3>User Reviews</h3>
       {reviews.length > 0 ? (
         <ul>
-          {reviews.map((review) => (
-            <li key={review.review_id}>
-              <p><strong>{review.email}</strong>:</p>
-              <div className="star-rating-review">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <span
-                    key={star}
-                    className={`star-rewiev ${review.rating >= star ? "star-filled-rewiev" : ""}`}
-                  >
-                    &#9733;
-                  </span>
-                ))}
-              </div>
-              <p>{review.review_text}</p>
-              <p><small>Reviewed on: {new Date(review.review_date).toLocaleDateString()}</small></p>
-            </li>
-          ))}
-        </ul>
+        {reviews.map((review) => (
+          <li key={review.review_id}>
+            <p><strong>{review.email}</strong>:</p>
+            <div className="star-rating-review">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <span
+                  key={star}
+                  className={`star-rewiev ${review.rating >= star ? "star-filled-rewiev" : ""}`}
+                >
+                  &#9733;
+                </span>
+              ))}
+            </div>
+            <p>{review.review_text}</p>
+            <p><small>Reviewed on: {new Date(review.review_date).toLocaleDateString()}</small></p>
+          </li>
+        ))}
+      </ul>
       ) : (
         <p>No reviews yet.</p>
       )}
