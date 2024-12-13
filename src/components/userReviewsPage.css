@@ -1,0 +1,71 @@
+/* Käytetään user-reviews-page luokkaa, jotta tyylit koskevat vain tätä komponenttia */
+.user-reviews-page {
+    background-color: #111;
+    color: #fff;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    max-width: 900px; /* Rajoitetaan kokonaistilaa */
+    margin: 0 auto;  /* Keskitetään kontaineri */
+  }
+ 
+  h1 {
+    color: #ff1493;
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+ 
+  .reviews-list {
+    list-style-type: none;
+    padding: 0;
+  }
+ 
+  .review-item {
+    display: flex;
+    gap: 20px;
+    background-color: #222;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    align-items: flex-start; /* Asetetaan elementit vasemmalle */
+    max-width: 800px; /* Rajoitetaan arvostelun leveys */
+    margin: 0 auto;  /* Keskitetään yksittäinen arvostelu */
+  }
+ 
+  .movie-poster-container {
+    max-width: 120px; /* Pienennetään posterin kokoa */
+    flex-shrink: 0;    /* Estetään posteriä kutistumasta */
+  }
+ 
+  .movie-poster-container img {
+    width: 100%;       /* Kuvan täytettävä containerin leveys */
+    border-radius: 8px; /* Pyöristetyt kulmat posterille */
+  }
+ 
+  .review-details {
+    display: flex;
+    flex-direction: column; /* Asetetaan arvostelut pystysuoraan */
+    justify-content: space-between; /* Varmistetaan, että tila täyttyy */
+    gap: 10px;
+  }
+ 
+  .movie-title {
+    font-size: 1.2rem; /* Pienennetään elokuvan nimeä */
+    color: #ff1493;
+    margin: 0;
+  }
+ 
+  .review-text,
+  .review-rating,
+  .review-date {
+    font-size: 0.9rem; /* Pienennetään fonttikokoa */
+    color: #ccc;
+    margin: 5px 0;
+  }
+ 
+  .no-reviews-message {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #ff1493;
+    margin-top: 20px;
+  }

@@ -109,7 +109,7 @@ const Search = () => {
         />
       </div>
 
-      <button onClick={search}>Search</button>
+      <button  onClick={search}>Search</button>
 
       <ReactPaginate
         breakLabel="..."

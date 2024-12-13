@@ -12,6 +12,7 @@ import TopMoviesFull from './components/TopMoviesFull';
 import UserProvider from './components/context/userProvider';
 import Groups from './components/groups';
 import GroupPage from './components/GroupPage';
+import UserReviewsPage from './components/userReviewsPage';
 import './App.css'
  
 function App() {
@@ -117,7 +118,8 @@ function AppRoutes() {
         <Route path="/reviews/:movieId" element={<ReviewPage />} />
         <Route path="/MovieDetails/:id" element={<MovieDetails />} />
         <Route path="/groups" element={<Groups />} />
-        <Route path="/groups/:groupId" element={<GroupPage />} />
+        <Route path="/groups/:groupId" element={<ProtectedRoute element={<GroupPage />} />} />
+        <Route path="/user-reviews" element={<UserReviewsPage />} />
       </Routes>
     </>
   );

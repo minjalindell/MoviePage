@@ -103,7 +103,27 @@ router.delete('/delete', async (req, res, next) => {
   }
 });
 
-
-
+// Reitti käyttäjän arvostelujen hakemiseen
+router.get('/user-reviews', async (req, res) => {
+  const userId = req.query.user_id;  // Haetaan user_id query-parametrina
+ 
+  if (!userId) {
+    return res.status(400).json({ message: 'User ID is required' });  // Jos user_id puuttuu, virhe
+  }
+ 
+  try {
+    // Hae käyttäjän arvostelut tietokannasta
+    const result = await pool.query('SELECT * FROM reviews WHERE user_id = $1', [userId]);
+ 
+    if (!result.rows.length) {
+      return res.status(404).json({ message: 'No reviews found for this user' });
+    }
+ 
+    res.json(result.rows);  // Palautetaan arvostelut
+  } catch (error) {
+    console.error('Error fetching user reviews:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
 export default router;
