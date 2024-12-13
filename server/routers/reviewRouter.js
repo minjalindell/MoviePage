@@ -12,7 +12,8 @@ router.post("/reviews", async (req, res) => {
       [user_id, movie_id, movie_title, rating, review_text, email]
     );
     
-    res.status(201).json({ review: result.rows[0] });  
+    res.status(201).json({ review: result.rows[0] }); 
+
   } catch (error) {
     console.error("Error adding review:", error);
     res.status(500).send("Failed to add the review.");
@@ -38,6 +39,15 @@ router.get('/reviews', async (req, res, next) => {
   }
 });
 
+router.get('/reviews/all', async ( res) => {
+  try {
+    const result = await pool.query('SELECT * FROM reviews');
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error('Error fetching all reviews:', error);
+    res.status(500).json({ message: 'Failed to fetch reviews' });
+  }
+});
 
 export default router;
 

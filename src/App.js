@@ -14,7 +14,8 @@ import Groups from './components/groups';
 import GroupPage from './components/GroupPage.js';
 import UserReviewsPage from './components/userReviewsPage';
 import './App.css'
- 
+import FavoritePage from './components/favoritePage';
+
 function App() {
   return (
     <UserProvider>
@@ -126,9 +127,13 @@ function AppRoutes() {
         <Route path="/top-movies" element={<TopMoviesFull />} />
         <Route path="/reviews/:movieId" element={<ReviewPage />} />
         <Route path="/MovieDetails/:id" element={<MovieDetails />} />
+        <Route path="/favorites" element={<ProtectedRoute element={<FavoritePage />} />} />
+        <Route path="/movie/:movieId" component={FavoritePage} />
+        <Route path="/groups" element={<ProtectedRoute element={<Groups />} />} />
         <Route path="/groups" element={<Groups />} />
         <Route path="/groups/:groupId" element={<ProtectedRoute element={<GroupPage />} />} />
         <Route path="/user-reviews" element={<UserReviewsPage />} />
+
       </Routes>
     </>
   );

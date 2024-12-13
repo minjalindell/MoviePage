@@ -124,7 +124,7 @@ function Groups() {
 </nav>
  
       <div className="groups-wrapper">
-        {/* Näytetään käyttäjän omat ryhmät, jos käyttäjä on kirjautunut */}
+
         {user.token && (
           <div className="group-list">
             <h2>Your Groups</h2>
@@ -144,7 +144,7 @@ function Groups() {
           </div>
         )}
  
-        {/* Kaikki ryhmät näytetään aina */}
+
         <div className="group-list">
           <h2>All Groups</h2>
           {allGroups.length === 0 ? (

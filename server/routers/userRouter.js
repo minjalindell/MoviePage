@@ -80,7 +80,6 @@ const deleteUser = async (user_id) => {
   }
 };
 
-
 router.delete('/delete', async (req, res, next) => {
   const { user_id, email } = req.body;
   
@@ -100,6 +99,8 @@ router.delete('/delete', async (req, res, next) => {
   }
 });
 
+
+    
 router.get('/user-reviews', async (req, res) => {
   const userId = req.query.user_id;  
  
@@ -120,7 +121,5 @@ router.get('/user-reviews', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
-
-
 
 export default router;
