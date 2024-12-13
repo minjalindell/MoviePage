@@ -7,6 +7,7 @@ function Authentication() {
   const { signIn, signUp } = useContext(UserContext); 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState(''); 
   const [isLogin, setIsLogin] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
@@ -14,7 +15,16 @@ function Authentication() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const authData = { email, password };
-  
+
+    if (!isLogin && password !== confirmPassword) {
+      setErrorMessage('Passwords do not match!');
+
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 3000);
+      return;
+    }
+
     console.log('Submitting:', authData); 
   
     try {
@@ -25,6 +35,10 @@ function Authentication() {
         await signUp(email, password);
         setIsLogin(true);
       }
+      setEmail('');
+      setPassword('');
+      setIsLogin(true);
+      
     } catch (error) {
       console.error('Virhe kirjautumisessa/rekisteröinnissä:', error);
       // Tarkista, onko palvelin palauttanut virheviestin
@@ -32,8 +46,6 @@ function Authentication() {
       setErrorMessage(message);
     }
   };
-  
-      
 
   return (
     <div className="authentication-container">
@@ -54,6 +66,17 @@ function Authentication() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          {!isLogin && ( 
+            <>
+              <label>Confirm Password:</label>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+            </>
+          )}
           <button type="submit">{isLogin ? 'Log in' : 'Register'}</button>
         </form>
 
@@ -75,5 +98,12 @@ function Authentication() {
   );
 }
 
-
 export default Authentication;
+
+
+
+
+
+
+
+

@@ -23,7 +23,6 @@ function Profile() {
       }
   
       try {
-        // Lähetetään id ja email deleteAccount-funktiolle
         await deleteAccount(user.user_id, user.email);
         alert('Your account has been deleted.');
         signOut();
@@ -38,21 +37,21 @@ function Profile() {
   
   
   return (
-    <div className="Profile">
+    <div className="profile">
       <header className="profile-header">
         <h1>The best movie page</h1>
       </header>
-      <nav className="Profile-nav">
+      <nav className="profile-nav">
         <Link to="/">
-          <button className="nav-button">Home</button>
+          <button className="profile-nav-button">Home</button>
         </Link>
         <Link to="/search">
-          <button className="nav-button">Search movies</button>
+          <button className="profile-nav-button">Search movies</button>
         </Link>
         <Link to="/shows">
-          <button className="nav-button">Search shows</button>
+          <button className="profile-nav-button">Search shows</button>
         </Link>
-        <button className="nav-button" onClick={handleLogout}>
+        <button className="profile-nav-button" onClick={handleLogout}>
           Log out
         </button>
       </nav>
@@ -67,11 +66,27 @@ function Profile() {
         <button className="profile-button">Favourites</button>
         <button className="profile-button" onClick={() => navigate('/groups')}>Groups</button>
         <button className="profile-button" onClick={() => navigate('/user-reviews')}>Reviews</button>
-      </div>
+    
 
-      <button className="delete-button" onClick={handleDelete}>Delete Account</button>
+      <button className="profile-button" onClick={handleDelete}>Delete Account</button>
+      </div>
+ 
+<footer className="profile-footer">
+  <p>© Copyright 2024</p>
+  <p>
+    Usage of{' '}
+    <a href="https://www.finnkino.fi/xml/" target="_blank" rel="noopener noreferrer">
+      Finnkino API
+    </a>{' '}
+    and{' '}
+    <a href="https://developer.themoviedb.org/reference/intro/getting-started" target="_blank" rel="noopener noreferrer">
+      Moviedatabase API
+    </a>
+  </p>
+</footer>
     </div>
   );
 }
-
+ 
 export default Profile;
+ 

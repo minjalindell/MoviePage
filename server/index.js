@@ -30,22 +30,21 @@ app.get('/', (req, res) => {
  
 app.post('/login', login);
 app.post('/register', register);
- 
-// Päivitetty DELETE-reitti
+
+
 app.delete('/delete', (req, res) => {
   console.log('Request body:', req.body);
   deleteUser(req, res);
 });
- 
-app.use('/reviews', reviewRouter);
+app.post('/reviews', reviewRouter);
+app.get('/reviews', reviewRouter);
 app.use('/user', userRouter);
 app.use('/groups', groupsRouter);
- 
-// Virheidenkäsittely
+
+
 app.use((err, req, res, next) => {
-  const statusCode = err.statusCode || 500;
   console.error('Error details:', err);
-  res.status(statusCode).json({ error: err.message });
+  res.status(err.status || 500).json({ message: 'Internal Server Error', error: err.message });
 });
  
 app.listen(port, () => {

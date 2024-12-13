@@ -1,12 +1,61 @@
-/* Käytetään user-reviews-page luokkaa, jotta tyylit koskevat vain tätä komponenttia */
+
 .user-reviews-page {
     background-color: #111;
     color: #fff;
     padding: 20px;
     font-family: Arial, sans-serif;
-    max-width: 900px; /* Rajoitetaan kokonaistilaa */
-    margin: 0 auto;  /* Keskitetään kontaineri */
+    max-width: 900px; 
+    margin: 0 auto;  
   }
+  
+.userReviewsPage-header {
+	font-family: 'Bangers', cursive;
+	color: #fff;
+	text-align: center;
+	padding: 30px 0;
+	background-color: #000;
+	color: #ff1493;
+}
+.userReviewsPage-header h1 {
+	font-size: 3rem;
+	margin: 0;
+	font-weight: bold;
+	color: #ff1493;
+}
+.userReviewsPage-nav {
+	font-family: 'Bangers', cursive;
+	font-size: 2rem;
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+	background-color: #222;
+	padding: 15px 0;
+	border: 2px solid deeppink
+}
+.userReviewsPage-nav > * {
+    margin: 0; 
+    flex-shrink: 0; 
+}
+
+.userReviewsPage-nav-button {
+	background-color: #ff1493;
+	color: #fff;
+	border: none;
+	padding: 15px 30px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 20px;
+	transition: background-color 0.3s ease, transform 0.2s ease;
+	text-align: center;
+	flex: 1;
+	max-width: 200px;
+
+}
+
+.userReviewsPage-nav-button:hover {
+	background-color: #ff69b4;
+	transform: scale(1.05);
+}
  
   h1 {
     color: #ff1493;
@@ -14,54 +63,47 @@
     font-size: 1.5rem;
     margin-bottom: 20px;
   }
- 
-  .reviews-list {
-    list-style-type: none;
-    padding: 0;
-  }
- 
-  .review-item {
+ .reviews-list {
+  list-style-type: none;
+  padding: 0;
+}
+.review-item {
     display: flex;
     gap: 20px;
     background-color: #222;
     margin-bottom: 20px;
     padding: 15px;
     border-radius: 8px;
-    align-items: flex-start; /* Asetetaan elementit vasemmalle */
-    max-width: 800px; /* Rajoitetaan arvostelun leveys */
-    margin: 0 auto;  /* Keskitetään yksittäinen arvostelu */
-  }
- 
-  .movie-poster-container {
-    max-width: 120px; /* Pienennetään posterin kokoa */
-    flex-shrink: 0;    /* Estetään posteriä kutistumasta */
-  }
- 
-  .movie-poster-container img {
-    width: 100%;       /* Kuvan täytettävä containerin leveys */
-    border-radius: 8px; /* Pyöristetyt kulmat posterille */
-  }
- 
-  .review-details {
+    align-items: center;
+    justify-content: center; 
+    max-width: 800px;
+    margin: 0 auto; 
+    margin-top: 20px;
+    border: 2px solid deeppink;
+    text-align: left;
+}
+
+.movie-poster-container {
+    max-width: 150px; 
+    flex-shrink: 0; 
+}
+
+.movie-poster-container img {
+    width: 100%; 
+    border-radius: 8px; 
+}
+
+.review-details {
     display: flex;
-    flex-direction: column; /* Asetetaan arvostelut pystysuoraan */
-    justify-content: space-between; /* Varmistetaan, että tila täyttyy */
-    gap: 10px;
-  }
- 
-  .movie-title {
-    font-size: 1.2rem; /* Pienennetään elokuvan nimeä */
-    color: #ff1493;
-    margin: 0;
-  }
- 
-  .review-text,
-  .review-rating,
-  .review-date {
-    font-size: 0.9rem; /* Pienennetään fonttikokoa */
-    color: #ccc;
-    margin: 5px 0;
-  }
+    flex-direction: column; 
+    justify-content: center; 
+    text-align: left; 
+}
+.review-details h3 {
+color: deeppink;
+font-size: 20px;
+}
+
  
   .no-reviews-message {
     text-align: center;
@@ -69,3 +111,106 @@
     color: #ff1493;
     margin-top: 20px;
   }
+
+  .userReviewsPage-footer {
+	background-color: #222; 
+	color: white;           
+	text-align: center;     
+	padding: 20px;          
+	font-size: 20px;        
+	position: relative;
+	width: 100%;
+	bottom: 0;
+	display: block;
+	max-width: 1220px; 
+    margin: 0 auto;
+  }
+  
+  .userReviewsPage-footer p {
+	margin: 10px 0; 
+	color: deeppink;
+	font-family: 'Bangers'
+  }
+  
+  .userReviewsPage-footer a {
+	color: rgb(207, 4, 112); 
+	text-decoration: underline;
+	font-family: 'Bangers';
+  }
+  
+  .userReviewsPage-footer a:hover {
+	color: #ff69b4;
+	text-decoration: underline;
+  }
+  
+  /* Responsiivisuus */
+@media (max-width: 768px) {
+    .userReviewsPage-header h1 {
+        font-size: 2.5rem;
+    }
+
+    .userReviewsPage-nav {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 0;
+    }
+
+    .userReviewsPage-nav-button {
+        font-size: 18px;
+        padding: 10px 20px;
+        max-width: 100%;
+    }
+
+    .review-item {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+        padding: 15px;
+    }
+
+    .movie-poster-container {
+        max-width: 120px;
+    }
+
+    .review-details h3 {
+        font-size: 1.5rem;
+    }
+
+    .userReviewsPage-footer {
+        font-size: 16px;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .userReviewsPage-header h1 {
+        font-size: 2rem;
+    }
+
+    .userReviewsPage-nav {
+        font-size: 1.5rem;
+    }
+
+    .userReviewsPage-nav-button {
+        font-size: 16px;
+        padding: 8px 15px;
+    }
+
+    .review-item {
+        padding: 10px;
+        gap: 5px;
+    }
+
+    .movie-poster-container {
+        max-width: 100px;
+    }
+
+    .review-details h3 {
+        font-size: 1.2rem;
+    }
+
+    .userReviewsPage-footer {
+        font-size: 14px;
+        padding: 10px;
+    }
+}

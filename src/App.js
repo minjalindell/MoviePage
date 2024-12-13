@@ -11,7 +11,7 @@ import TopMovies from './components/topMovies';
 import TopMoviesFull from './components/TopMoviesFull';
 import UserProvider from './components/context/userProvider';
 import Groups from './components/groups';
-import GroupPage from './components/GroupPage';
+import GroupPage from './components/GroupPage.js';
 import UserReviewsPage from './components/userReviewsPage';
 import './App.css'
  
@@ -73,12 +73,12 @@ function AppRoutes() {
                 {user.token ? (
                   <>
                     <Link to="/profile" className="nav-link">
-                      <button className="nav-button">Profile</button>
+                      <button className="App-nav-button">Profile</button>
                     </Link>
                   </>
                 ) : (
                   <Link to="/authentication" className="nav-link">
-                    <button className="nav-button">Log in / Register</button>
+                    <button className="App-nav-button">Log in / Register</button>
                   </Link>
                 )}
               </nav>
@@ -92,21 +92,30 @@ function AppRoutes() {
                     <button className="section-button">Search movies</button>
                   </Link>
                 </div>
-              </section>
- 
-              {/* Lisää "Browse Groups" -nappi vain etusivulle */}
-              <section className="App-section">
+                <section className="App-section-groups">
                 <h2>Browse Groups</h2>
                 <Link to="/groups">
                   <button className="section-button">Browse Groups</button>
                 </Link>
               </section>
- 
-              {/* Lisää TopMovies osio */}
-              <section className="App-section">
                 <TopMovies />
               </section>
-            </div>
+              
+
+<footer className="App-footer">
+  <p>© Copyright 2024</p>
+  <p>
+    Usage of{' '}
+    <a href="https://www.finnkino.fi/xml/" target="_blank" rel="noopener noreferrer">
+      Finnkino API
+    </a>{' '}
+    and{' '}
+    <a href="https://developer.themoviedb.org/reference/intro/getting-started" target="_blank" rel="noopener noreferrer">
+      Moviedatabase API
+    </a>
+  </p>
+</footer>
+</div>
           }
         />
         <Route path="/authentication" element={<Authentication />} />

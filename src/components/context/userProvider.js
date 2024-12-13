@@ -17,7 +17,6 @@ export default function UserProvider({ children }) {
         headers: { 'Content-Type': 'application/json' }
       });
       console.log('Sign-in response:', response);
-
       const { token } = response.data;
       if (token) {
         sessionStorage.setItem('user', JSON.stringify(response.data));
@@ -31,7 +30,6 @@ export default function UserProvider({ children }) {
       throw error.response?.data?.message || 'Sign-in failed';
     }
   };
-
   const signUp = async (email, password) => {
     try {
       await axios.post(`${url}/user/register`, { email, password }, {
@@ -43,7 +41,6 @@ export default function UserProvider({ children }) {
       throw error.response?.data?.message || 'Sign-up failed';
     }
   };
-
   const signOut = () => {
     sessionStorage.removeItem('user');
     setUser({ email: '', token: '' });

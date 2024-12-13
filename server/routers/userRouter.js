@@ -1,4 +1,3 @@
-// userRouter.js
 import express from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -6,7 +5,7 @@ import { pool } from '../helpers/db.js';
 
 const router = express.Router();
 
-// Rekisteröinti
+
 router.post('/register', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -41,7 +40,6 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// Kirjautuminen
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -82,7 +80,7 @@ const deleteUser = async (user_id) => {
   }
 };
 
-// Poista käyttäjä (user_id ja email)
+
 router.delete('/delete', async (req, res, next) => {
   const { user_id, email } = req.body;
   
@@ -91,7 +89,6 @@ router.delete('/delete', async (req, res, next) => {
   }
 
   try {
-    // Poistetaan käyttäjä ja tarkistetaan tulos
     const result = await deleteUser(user_id, email);  
     if (result) {
       return res.status(200).json({ message: 'Account deleted successfully' });
@@ -103,27 +100,27 @@ router.delete('/delete', async (req, res, next) => {
   }
 });
 
-// Reitti käyttäjän arvostelujen hakemiseen
 router.get('/user-reviews', async (req, res) => {
-  const userId = req.query.user_id;  // Haetaan user_id query-parametrina
+  const userId = req.query.user_id;  
  
   if (!userId) {
-    return res.status(400).json({ message: 'User ID is required' });  // Jos user_id puuttuu, virhe
+    return res.status(400).json({ message: 'User ID is required' });  
   }
  
   try {
-    // Hae käyttäjän arvostelut tietokannasta
     const result = await pool.query('SELECT * FROM reviews WHERE user_id = $1', [userId]);
  
     if (!result.rows.length) {
       return res.status(404).json({ message: 'No reviews found for this user' });
     }
  
-    res.json(result.rows);  // Palautetaan arvostelut
+    res.json(result.rows); 
   } catch (error) {
     console.error('Error fetching user reviews:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+
 
 export default router;

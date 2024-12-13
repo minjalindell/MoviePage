@@ -1,22 +1,190 @@
-/* ReviewPage.css */
 
 .review-page-container {
   padding: 20px;
   font-family: Arial, sans-serif;
   background-color: #000;
-  text-align: center;
+}
+.review-page-container h1{
+  color: deeppink
 }
 
-.review-page-header {
-  color: deeppink;
-  font-size: 36px;
-  font-weight: bold;
+.review-header {
+  font-family: 'Bangers', cursive;
+  color: #ff1493;
+  text-align: center;
+  padding: 30px 0;
+  background-color: #000;
+}
+.review-header h1 {
+	font-size: 3rem;
+	margin: 0;
+	font-weight: bold;
+	color: #ff1493;
+}
+
+.review-nav {
+  font-family: 'Bangers', cursive;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background-color: #222;
+  padding: 15px 0;
+  border: 2px solid deeppink;
+}
+
+.review-nav-button {
+  background-color: #ff1493;
+  color: #fff;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 5px;
   cursor: pointer;
-  margin-bottom: 20px;
+  font-size: 20px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.review-nav-button:hover {
+  background-color: #ff69b4;
+  transform: scale(1.05);
+}
+
+.moretitails-button {
+  background-color: #ff1493;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.moretitails-button:hover {
+  background-color: #ff69b4;
+  transform: scale(1.05);
+}
+
+.review-container {
+  background-color: #222;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px auto;
+  max-width: 600px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 2px solid deeppink;
+  text-align: center;
+}
+.review-container:hover {
+  background-color: #2b2b2b;
+}
+
+.review-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-container label {
+  color: deeppink;
+  font-weight: bold;
+}
+
+textarea {
+  width: 100%;
+  max-width: 500px;
+  height: 50px;
+  padding: 10px;
+  border: 1px solid #555;
+  border-radius: 5px;
+  background-color: #222;
+  color: white;
+  outline: none;
+}
+
+textarea:focus {
+  border-color: deeppink;
+}
+
+button[type="submit"] {
+  background-color: deeppink;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+button[type="submit"]:hover {
+  background-color: rgb(253, 90, 177);
+}
+.review-movie-poster {
+  width: 200px; 
+  height: auto; 
+  border-radius: 4px;
+  margin-bottom: 10px;
+  transition: transform 0.3s ease;
+  border: 1px solid deeppink;
+}
+
+.All-reviews {
+  background-color: #000000;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.All-reviews ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.All-reviews li {
+  list-style-type: none;
+}
+
+.All-reviews h3 {
+  color: deeppink;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.review-box {
+  background-color: #222;
+  border-radius: 8px;
+  margin: 15px 0;
+  padding: 15px;
+  border: 1px solid #ff1493;
+}
+
+.review-box:hover {
+  background-color: #2b2b2b;
+}
+
+.star-rating-review {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+
+
+.review-content p {
+  margin: 10px 0;
+  color: #ff1493;
+}
+
+.review-content small {
+  color: #bbb;
 }
 
 .review-page-image {
-  max-width: 300px;
+  max-width: 200px;
   margin-bottom: 20px;
   display: block;
   margin-left: auto;
@@ -25,39 +193,24 @@
   border: 4px solid #ddd;
 }
 
-.review-page-form {
-  margin-bottom: 30px;
-}
-
-.review-page-form label {
-  display: block;
-  color: deeppink;
-  margin-bottom: 5px;
-}
-
-.review-page-form input,
-.review-page-form textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
-.review-page-form button {
-  padding: 10px 20px;
+.review-page-button {
+  cursor: pointer;
+  border: none;
   background-color: deeppink;
   color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
   font-weight: bold;
   transition: background-color 0.3s ease;
 }
 
-.review-page-form button:hover {
+.review-page-button:hover {
   background-color: #ff69b4;
+}
+
+.review-page-overview {
+  font-size: 18px;
+  color: deeppink;
+  margin-bottom: 30px;
+  line-height: 1.6;
 }
 
 .review-page-reviews {
@@ -104,9 +257,249 @@
   text-align: center;
 }
 
-h3 {
-  color: deeppink;
+.star-rating {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
 }
 
+.star {
+  font-size: 2rem;
+  color: #d3d3d3;
+  margin: 0 5px;
+  transition: color 0.2s ease;
+}
 
+.star.filled {
+  color: gold;
+}
+
+.star-rating-rewiev {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.star-rewiev {
+  font-size: 20px;
+  cursor: pointer;
+  color: gray;
+}
+
+.star-filled-rewiev {
+  color: rgb(255, 255, 255);
+}
+.review-footer {
+	background-color: #222; 
+	color: white;
+	text-align: center;   
+	padding: 20px;  
+	font-size: 20px;       
+	position: relative;
+	width: 100%;
+	bottom: 0;
+	display: block;
+	max-width: 1220px; 
+    margin: 0 auto;
+  }
+  
+  .review-footer p {
+	margin: 10px 0; 
+	color: deeppink;
+	font-family: 'Bangers'
+  }
+  
+  .review-footer a {
+	color: rgb(207, 4, 112); 
+	text-decoration: underline;
+	font-family: 'Bangers';
+  }
+  
+  .review-footer a:hover {
+	color: #ff69b4;
+	text-decoration: underline;
+  }
+  
+ /* Responsiivisuus */
+  @media (max-width: 768px) {
+    .review-header h1 {
+      font-size: 2.5rem;
+    }
+  
+    .review-nav {
+      font-size: 1.8rem;
+      gap: 15px;
+    }
+  
+    .review-nav-button {
+      font-size: 18px;
+      padding: 12px 24px;
+      width: 150px;
+    }
+  
+    .review-container {
+      max-width: 90%;
+      padding: 15px;
+    }
+  
+    .review-container form {
+      gap: 8px;
+    }
+  
+    textarea {
+      max-width: 100%;
+    }
+  
+    .review-movie-poster {
+      width: 150px;
+    }
+  
+    .All-reviews h3 {
+      font-size: 1.5rem;
+    }
+  
+    .review-box {
+      padding: 12px;
+    }
+  
+    .star-rating-review {
+      gap: 4px;
+    }
+  
+    .review-content p {
+      font-size: 14px;
+    }
+  
+    .review-page-image {
+      max-width: 150px;
+    }
+  
+    .review-page-button {
+      font-size: 16px;
+    }
+  
+    .review-page-overview {
+      font-size: 16px;
+    }
+  
+    .review-page-reviews li {
+      padding: 10px;
+    }
+  
+    .review-page-reviews h4 {
+      font-size: 18px;
+    }
+  
+    .review-page-reviews p {
+      font-size: 14px;
+    }
+  
+    .star-rating .star {
+      font-size: 1.5rem;
+    }
+  
+    .review-footer {
+      font-size: 18px;
+      padding: 15px;
+    }
+  
+    .review-footer p {
+      font-size: 16px;
+    }
+  
+    .review-footer a {
+      font-size: 16px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .review-header h1 {
+      font-size: 2rem;
+    }
+  
+    .review-nav {
+      font-size: 1.5rem;
+      gap: 10px;
+    }
+  
+    .review-nav-button {
+      font-size: 16px;
+      padding: 10px 20px;
+      width: 120px;
+    }
+  
+    .review-container {
+      max-width: 100%;
+      padding: 12px;
+    }
+  
+    .review-container form {
+      gap: 6px;
+    }
+  
+    textarea {
+      width: 100%;
+    }
+  
+    .review-movie-poster {
+      width: 120px;
+    }
+  
+    .All-reviews h3 {
+      font-size: 1.2rem;
+    }
+  
+    .review-box {
+      padding: 10px;
+    }
+  
+    .star-rating-review {
+      gap: 3px;
+    }
+  
+    .review-content p {
+      font-size: 12px;
+    }
+  
+    .review-page-image {
+      max-width: 120px;
+    }
+  
+    .review-page-button {
+      font-size: 14px;
+    }
+  
+    .review-page-overview {
+      font-size: 14px;
+    }
+  
+    .review-page-reviews li {
+      padding: 8px;
+    }
+  
+    .review-page-reviews h4 {
+      font-size: 16px;
+    }
+  
+    .review-page-reviews p {
+      font-size: 12px;
+    }
+  
+    .star-rating .star {
+      font-size: 1.2rem;
+    }
+  
+    .review-footer {
+      font-size: 14px;
+      padding: 10px;
+    }
+  
+    .review-footer p {
+      font-size: 12px;
+    }
+  
+    .review-footer a {
+      font-size: 12px;
+    }
+  }
   

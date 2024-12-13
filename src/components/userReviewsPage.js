@@ -1,18 +1,20 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { UserContext } from './context/userContext.js';
+import { useNavigate, Link} from "react-router-dom";
 import './userReviewsPage.css';
  
+ 
 const UserReviewsPage = () => {
-  const { user } = useContext(UserContext);  // Käytetään UserContextin tietoja
   const [reviews, setReviews] = useState([]);
-  const [movieData, setMovieData] = useState({}); // Tallennetaan elokuvan tiedot ID:n perusteella
-  const [loading, setLoading] = useState(true); // Lisää tilan hallinta latausta varten
-  const [error, setError] = useState(null); // Virheiden käsittely
+  const [movieData, setMovieData] = useState({}); 
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null); 
+  const { user, signOut } = useContext(UserContext);  
+  const navigate = useNavigate();
  
   useEffect(() => {
-    if (!user || !user.user_id) return; // Varmista, että käyttäjä on kirjautunut ja user_id on saatavilla
- 
-    // Hae käyttäjän arvostelut backendistä
+    if (!user || !user.user_id) return; 
+  
     const fetchReviews = async () => {
       try {
         const response = await fetch(`http://localhost:3001/user/user-reviews?user_id=${user.user_id}`, {
@@ -27,21 +29,21 @@ const UserReviewsPage = () => {
         }
  
         const data = await response.json();
-        setReviews(data);  // Asetetaan arvostelut tilaan
+        setReviews(data);  
       } catch (error) {
-        setError('Error fetching user reviews');  // Virhetilanteen asettaminen tilaan
+        setError('Error fetching user reviews'); 
         console.error("Error fetching user reviews:", error);
       } finally {
-        setLoading(false); // Lataaminen loppui
+        setLoading(false); 
       }
     };
  
     fetchReviews();
-  }, [user]);  // Riippuvuus: vain jos käyttäjä muuttuu
- 
+  }, [user]); 
+
   useEffect(() => {
     const fetchMovieDetails = async (movieId) => {
-      if (movieData[movieId]) return; // Vältetään uusintahaku, jos tiedot on jo haettu
+      if (movieData[movieId]) return; 
  
       try {
         const response = await fetch(
@@ -75,23 +77,62 @@ const UserReviewsPage = () => {
     });
   }, [reviews, movieData]);
  
-  // Jos käyttäjä ei ole kirjautunut
+  
   if (!user || !user.user_id) {
     return <p>Please log in to see your reviews.</p>;
   }
  
-  // Jos dataa ladataan
   if (loading) {
     return <p>Loading your reviews...</p>;
   }
  
-  // Jos tapahtui virhe
   if (error) {
     return <p>{error}</p>;
   }
+  const handleLogout = () => {
+    signOut();
+    console.log('Logged out. sessionStorage cleared.');
+    navigate("/", { state: { fromLogout: true } });
+  };
+  
+  const handleProfileNavigation = () => {
+    if (!user || !user.token) {
+      alert("You need to be logged in to access the profile page.");
+      navigate("/authentication"); 
+    } else {
+      navigate("/profile"); 
+    }
+  };
  
   return (
-    <div className="user-reviews-page">
+    <div className="user-reviews">
+      <header className="userReviewsPage-header">
+        <h1>The best movie page</h1>
+      </header>
+
+      <nav className="userReviewsPage-nav">
+        <Link to="/">
+          <button className="userReviewsPage-nav-button">Home</button>
+        </Link>
+        <Link to="/search">
+          <button className="userReviewsPage-nav-button">Search movies</button>
+        </Link>
+        <Link to="/shows">
+          <button className="userReviewsPage-nav-button">Search shows</button>
+        </Link>
+        <button className="userReviewsPage-nav-button" onClick={handleProfileNavigation}>
+          Profile
+        </button>
+        {user.token ? (
+          <button className="userReviewsPage-nav-button" onClick={handleLogout}>
+            Log out
+          </button>
+        ) : (
+          <Link to="/authentication">
+            <button className="userReviewsPage-nav-button">Log in / Register</button>
+          </Link>
+        )}
+      </nav>
       <h1>Your Reviews</h1>
       {reviews.length > 0 ? (
         <ul className="reviews-list">
@@ -120,7 +161,21 @@ const UserReviewsPage = () => {
       ) : (
         <p className="no-reviews-message">No reviews found.</p>
       )}
+      <footer className="userReviewsPage-footer">
+  <p>© Copyright 2024</p>
+  <p>
+    Usage of{' '}
+    <a href="https://www.finnkino.fi/xml/" target="_blank" rel="noopener noreferrer">
+      Finnkino API
+    </a>{' '}
+    and{' '}
+    <a href="https://developer.themoviedb.org/reference/intro/getting-started" target="_blank" rel="noopener noreferrer">
+      Moviedatabase API
+    </a>
+  </p>
+</footer>
     </div>
+    
   );
  
 };
