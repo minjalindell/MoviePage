@@ -129,6 +129,35 @@ router.post('/:id/join', authenticateToken, async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+// Poistu ryhmästä
+router.delete('/:id/leave', authenticateToken, async (req, res) => {
+  const groupId = req.params.id;
+  const userId = req.user.userId;
+
+  try {
+    // Tarkista, onko käyttäjä jäsen ryhmässä
+    const result = await pool.query(
+      'SELECT * FROM group_members WHERE group_id = $1 AND user_id = $2',
+      [groupId, userId]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(400).json({ message: 'User is not a member of this group' });
+    }
+
+    // Poista jäsen ryhmästä
+    await pool.query(
+      'DELETE FROM group_members WHERE group_id = $1 AND user_id = $2',
+      [groupId, userId]
+    );
+
+    res.status(200).json({ message: 'User successfully left the group' });
+  } catch (error) {
+    console.error('Error leaving group:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
  
  
 export default router;
