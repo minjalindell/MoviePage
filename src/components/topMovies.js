@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import './topMovies.css';  // Tuo CSS-tiedosto
+import './topMovies.css'; 
 
 const TopMovies = () => {
   const [movies, setMovies] = useState([]);
@@ -40,7 +40,6 @@ const TopMovies = () => {
         ))}
       </div>
 
-      {/* "Show More" Button */}
       <button className = "showMoreButton"
         onClick={() => navigate("/top-movies")}
       >

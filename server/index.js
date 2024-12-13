@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 app.post('/login', login);
 app.post('/register', register);
 
-// Päivitetty DELETE-reitti
+
 app.delete('/delete', (req, res) => {
   console.log('Request body:', req.body);
   deleteUser(req, res);
@@ -41,7 +41,7 @@ app.get('/reviews', reviewRouter);
 app.use('/user', userRouter);
 app.use('/groups', groupsRouter);
 
-// Virheidenkäsittely
+
 app.use((err, req, res, next) => {
   console.error('Error details:', err);
   res.status(err.status || 500).json({ message: 'Internal Server Error', error: err.message });

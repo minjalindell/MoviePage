@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { pool } from './db.js';
 
-// Rekisteröinti
+
 const register = async (req, res) => {
   const { email, password } = req.body;
 
@@ -35,7 +35,6 @@ const register = async (req, res) => {
   }
 };
 
-// Kirjautuminen
 const login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -69,9 +68,9 @@ export const authenticateToken = (req, res, next) => {
   }
   const tokenValue = token.replace('Bearer ', '');
   try {
-    // Dekoodaataan token ja tallennetaan se req.user-objektiin
+
     const decoded = jwt.verify(tokenValue, process.env.JWT_SECRET_KEY);
-    req.user = { userId: decoded.user_id }; // userId req.useriin
+    req.user = { userId: decoded.user_id }; 
     console.log("auth ok", req.user);
     next();
   } catch (error) {

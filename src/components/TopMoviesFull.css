@@ -1,8 +1,73 @@
-/* TopMoviesFull.css */
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%; 
+  height: 100%;
+}
 .top-movies-container {
     padding: 20px;
     text-align: center;
+
+      margin: 0;
+      padding: 0;
+      width: 100%; 
+      height: 100%;
+
   }
+  
+  .top-movies-header {
+    font-family: 'Bangers', cursive;
+    color: #fff;
+    text-align: center;
+    padding: 30px 0;
+    background-color: #000;
+    color: #ff1493;
+  }
+  .top-movies-header h1 {
+    font-size: 3rem;
+    margin: 0;
+    font-weight: bold;
+    color: #ff1493;
+  }
+  .top-movies-nav {
+    font-family: 'Bangers', cursive;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    background-color: #222;
+    padding: 15px 0;
+    border: 2px solid deeppink;
+    margin: 0; 
+    height: 100%;
+    max-width: 1260px;
+  }
+  .top-movies-nav > * {
+      margin: 0; 
+      flex-shrink: 0; 
+  }
+  
+  .top-movies-nav-button {
+    background-color: #ff1493;
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-align: center;
+    flex: 1;
+    max-width: 200px;
+  
+  }
+  
+  .top-movies-nav-button:hover {
+    background-color: #ff69b4;
+    transform: scale(1.05);
+  }
+  
   
   .top-movies-title {
     font-size: 28px;
@@ -13,25 +78,37 @@
   
   .top-movies-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 20px;
-  }
+    grid-template-columns: repeat(5, 1fr);
+    gap: 30px;
+    padding: 20px; 
+}
+  
   
   .top-movie-card {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Tämä tasaa sisällön ylhäältä ja alhaalta */
+    justify-content: space-between; 
     text-align: center;
     border: 1px solid white;
     border-radius: 8px;
     padding: 10px;
+    width: 100%;
     max-width: 200px;
-    margin: auto;
+    margin: 5px;
     background-color: deeppink;
     cursor: pointer;
-    height: 300px; /* Kiinteä korkeus kortille */
+    height: 400px; 
     display: flex;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
+  .top-movie-card:hover {
+    transform: scale(1.1); 
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); 
+    background-color: rgb(253, 90, 177); 
+    text-decoration: underline;
+  }
+  
+  
   
   .top-movie-index {
     font-size: 18px;
@@ -43,17 +120,13 @@
   .top-movie-poster {
     border-radius: 4px;
     width: 100%;
-    height: 200px; /* Kiinteä korkeus kuvalle */
-    object-fit: cover; /* Varmistaa, että kuva täyttää laatikon säilyttäen mittasuhteensa */
+    height: 300px; 
+    object-fit: cover;
     margin-bottom: 10px;
-    transition: transform 0.3s ease-in-out; 
+    transition: transform 0.3s ease-in-out;
     display: block;
     margin-left: auto;
-    margin-right: auto; /* Keskittää kuvan vaakasuunnassa */
-  }
-  
-  .top-movie-poster:hover {
-    transform: scale(1.1); 
+    margin-right: auto;
   }
   
   .top-movie-title {
@@ -61,12 +134,14 @@
     font-weight: bold;
     color: white;
     margin: 0;
-    white-space: normal; /* Sallii tekstin siirtyä usealle riville */
-    word-wrap: break-word; /* Estää tekstin ylivuodon */
-    overflow: hidden; /* Piilottaa ylivuotoa, jos nimi on liian pitkä */
-    text-overflow: ellipsis; /* Lisää kolmoispisteet pitkässä tekstissä */
+    white-space: normal; 
+    word-wrap: break-word; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
     margin-bottom: 10px;
-    flex-grow: 1; /* Sallii nimelle joustavan tilan */
+    flex-grow: 1; 
+    transition: color 0.3s ease, text-decoration 0.3s all;
+
   }
   
   .top-movie-subtitle {
@@ -74,7 +149,122 @@
     font-weight: normal;
     color: white;
     margin: 0;
-    height: 20px; /* Varmistaa, että tämä rivi on aina olemassa */
-    flex-shrink: 0; /* Estää tämän rivin kutistumisen */
+    height: 20px; 
+    flex-shrink: 0; 
   }
-  
+  .TopMovies-footer {
+    background-color: #222; 
+    color: white; 
+    text-align: center;
+    padding: 20px;
+    font-size: 20px;
+    position: relative;
+    bottom: 0;
+    display: block;
+    margin: 0;
+    margin-top: 30px; 
+    max-width: 1260px;
+  }
+    .TopMovies-footer p {
+    margin: 10px 0;
+    color: deeppink;
+    font-family: 'Bangers'
+    }
+    
+    .TopMovies-footer a {
+    color: rgb(207, 4, 112); 
+    text-decoration: underline;
+    font-family: 'Bangers';
+    }
+    
+    .TopMovies-footer a:hover {
+    color: #ff69b4;
+    text-decoration: underline;
+    }
+
+
+
+    /* Responsiivisuus */
+@media (max-width: 768px) {
+  .top-movies-header h1 {
+      font-size: 2.5rem;
+  }
+
+  .top-movies-nav {
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px 0;
+  }
+
+  .top-movies-nav-button {
+      font-size: 18px;
+      padding: 10px 20px;
+      max-width: 100%;
+  }
+
+  .top-movies-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+  }
+
+  .top-movie-card {
+      max-width: 150px;
+      height: 300px;
+  }
+
+  .top-movie-poster {
+      height: 200px;
+  }
+
+  .top-movie-title {
+      font-size: 12px;
+  }
+
+  .TopMovies-footer {
+      font-size: 18px;
+      padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .top-movies-header h1 {
+      font-size: 2rem;
+  }
+
+  .top-movies-nav {
+      font-size: 1.5rem;
+  }
+
+  .top-movies-nav-button {
+      font-size: 16px;
+      padding: 8px 15px;
+  }
+
+  .top-movies-grid {
+      grid-template-columns: 1fr;
+      gap: 15px;
+  }
+
+  .top-movie-card {
+      max-width: 120px;
+      height: 250px;
+      padding: 8px;
+  }
+
+  .top-movie-poster {
+      height: 150px;
+  }
+
+  .top-movie-title {
+      font-size: 10px;
+  }
+
+  .top-movie-subtitle {
+      font-size: 12px;
+  }
+
+  .TopMovies-footer {
+      font-size: 16px;
+      padding: 10px;
+  }
+}

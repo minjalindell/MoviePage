@@ -10,7 +10,7 @@ function Shows() {
   const [selectedDate, setSelectedDate] = useState("");
   const [showings, setShowings] = useState([]);
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
+  const { user, signOut } = useContext(UserContext);  
 
   const getFinnkinoTheaters = (xml) => {
     const parser = new DOMParser();
@@ -51,9 +51,8 @@ function Shows() {
         console.error("Error fetching schedule dates:", error);
       });
   };
-
   const getShowings = () => {
-    setShowings([]); // Clear existing showings before fetching new ones
+    setShowings([]); 
 
     const areaParam = selectedArea ? `area=${selectedArea}` : "";
     const dateParam = selectedDate ? `dt=${selectedDate}` : "";
@@ -70,13 +69,19 @@ function Shows() {
         for (let i = 0; i < showingsList.length; i++) {
           const startTime = showingsList[i].getElementsByTagName("dttmShowStart")[0].textContent;
           const formattedTime = formatDateTime(startTime);
-
           const theatre = showingsList[i].getElementsByTagName("Theatre")[0].textContent;
+
+          const theatreId = showingsList[i].getElementsByTagName("TheatreID")[0]?.textContent; 
+          const eventId = showingsList[i].getElementsByTagName("EventID")[0]?.textContent; 
+          const date = startTime.split("T")[0];
 
           showingsArray.push({
             movieTitle: showingsList[i].getElementsByTagName("Title")[0].textContent,
             startTime: formattedTime,
             theatre: theatre,
+            theatreId: theatreId,
+            eventId: eventId,
+            date: date,
           });
         }
 
@@ -85,7 +90,8 @@ function Shows() {
       .catch((error) => {
         console.error(error);
       });
-  };
+};
+
 
   const formatDate = (isoDate) => {
     const date = new Date(isoDate);
@@ -106,11 +112,16 @@ function Shows() {
       minute: '2-digit',
     }).format(date).replace(' ', ' at ');  
   };
-
+  const handleLogout = () => {
+    signOut();
+    console.log('Logged out. sessionStorage cleared.');
+    navigate("/", { state: { fromLogout: true } });
+  };
+  
   const handleProfileNavigation = () => {
     if (!user || !user.token) {
       alert("You need to be logged in to access the profile page.");
-      navigate("/"); 
+      navigate("/authentication"); 
     } else {
       navigate("/profile"); 
     }
@@ -126,67 +137,119 @@ function Shows() {
         console.error(error);
       });
 
-    getScheduleDates(); // Fetch the schedule dates
+    getScheduleDates(); 
   }, []);
 
   return (
     <div>
-      <header className="shows-header">
+   <header className="shows-header">
         <h1>The best movie page</h1>
       </header>
 
-      <nav className="Profile-nav">
-        <Link to="/search">
-          <button className="nav-button">Search movies</button>
+      <nav className="shows-nav">
+        <Link to="/">
+          <button className="shows-nav-button">Home</button>
         </Link>
-        <button className="nav-button" onClick={handleProfileNavigation}>
+        <Link to="/search">
+          <button className="shows-nav-button">Search movies</button>
+        </Link>
+        <button className="shows-nav-button" onClick={handleProfileNavigation}>
           Profile
         </button>
+        {user.token ? (
+          <button className="shows-nav-button" onClick={handleLogout}>
+            Log out
+          </button>
+        ) : (
+          <Link to="/authentication">
+            <button className="shows-nav-button">Log in / Register</button>
+          </Link>
+        )}
       </nav>
+      <div className="filter-box">
+  <h3>Select a Theatre Area</h3>
+  <select onChange={(e) => setSelectedArea(e.target.value)} value={selectedArea}>
+    <option value="">-- Select Theatre Area --</option>
+    {areas.map((area) => (
+      <option key={area.id} value={area.id}>
+        {area.name}
+      </option>
+    ))}
+  </select>
 
-      <h3>Select a Theatre Area</h3>
-      <select onChange={(e) => setSelectedArea(e.target.value)} value={selectedArea}>
-        <option value="">-- Select Theatre Area --</option>
-        {areas.map((area) => (
-          <option key={area.id} value={area.id}>
-            {area.name}
-          </option>
-        ))}
-      </select>
+  <h3>Select a Date</h3>
+  <select onChange={(e) => setSelectedDate(e.target.value)} value={selectedDate}>
+    <option value="">-- Select Date --</option>
+    {dates.map((date, index) => (
+      <option key={index} value={date.raw}>
+        {date.formatted}
+      </option>
+    ))}
+  </select>
 
-      <h3>Select a Date</h3>
-      <select onChange={(e) => setSelectedDate(e.target.value)} value={selectedDate}>
-        <option value="">-- Select Date --</option>
-        {dates.map((date, index) => (
-          <option key={index} value={date.raw}>
-            {date.formatted}
-          </option>
-        ))}
-      </select>
+  <button className="shows-button" onClick={getShowings}>
+    Search
+  </button>
+</div>
+<div>
+  {showings.length > 0 ? (
+    <div className="showings-container">
+      <section className="showings">
+        <h3>Shows:</h3>
+        <ul>
+          {showings.map((show, index) => (
+            <li key={index} className="shows-show-item">
 
-      <button className="search-button" onClick={getShowings}>
-        Search
-      </button>
-
-      {showings.length > 0 && (
-        <div>
-          <section className="showings">
-            <h3>Shows:</h3>
-            <ul>
-              {showings.map((show, index) => (
-                <li key={index}>
-                  {show.movieTitle} - {show.startTime} ({show.theatre})
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
-      )}
-
-      {showings.length === 0 && (
-        <p>No shows available.</p>
-      )}
+              <div className="movie-title">
+                <h2><strong>{show.movieTitle}</strong></h2>
+              </div>
+              <div className="show-details">
+                <p>
+                  Theatre: <span className="theatre">{show.theatre}</span>
+                  <span className="separator">|</span>
+                  Showtime: <span className="showtime">{show.startTime}</span>
+                </p>
+              </div>
+              <div className="booking-link-container">
+                <a 
+                  href={`https://www.finnkino.fi/en/event/${show.eventId}/title/${encodeURIComponent(show.movieTitle.toLowerCase().replace(/\s+/g, '_'))}/?dt=${show.date}`}
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="booking-link"
+                >
+                  Buy tickets on Finnkino's website here!
+                </a>
+              </div>
+            </li> 
+          ))}
+        </ul>
+      </section>
     </div>
+  ) : (
+    <div className="showings">
+    <p>No shows available.</p>
+    </div>
+  )}
+</div>
+
+
+
+
+<footer className="shows-footer">
+  <p>© Copyright 2024</p>
+  <p>
+    Usage of{' '}
+    <a href="https://www.finnkino.fi/xml/" target="_blank" rel="noopener noreferrer">
+      Finnkino API
+    </a>{' '}
+    and{' '}
+    <a href="https://developer.themoviedb.org/reference/intro/getting-started" target="_blank" rel="noopener noreferrer">
+      Moviedatabase API
+    </a>
+  </p>
+</footer>
+    </div>
+    
   );
 }
 
