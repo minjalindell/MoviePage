@@ -7,9 +7,9 @@ import reviewRouter from './routers/reviewRouter.js';
 import groupsRouter from './routers/groupsRouter.js';
 
 dotenv.config();
-
+ 
 const port = 3001;
-
+ 
 const app = express();
 
 app.use(cors({
@@ -46,9 +46,9 @@ app.use((err, req, res, next) => {
   console.error('Error details:', err);
   res.status(err.status || 500).json({ message: 'Internal Server Error', error: err.message });
 });
-
+ 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
-
+ 
 export default app;
