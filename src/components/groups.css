@@ -1,14 +1,4 @@
-.groups-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background-color: black;
-    color: white;
-    padding: 20px;
-    margin-top: 20px; 
-}
+
 .groups-header {
     font-family: 'Bangers', cursive;
     color: #fff;

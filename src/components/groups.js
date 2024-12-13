@@ -2,126 +2,129 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "./context/userContext";
 import "./groups.css";
-import { Link, useNavigate } from "react-router-dom"; 
+import { Link, useNavigate } from "react-router-dom";
  
 function Groups() {
-  const [userGroups, setUserGroups] = useState([]); 
-  const [allGroups, setAllGroups] = useState([]); 
-  const [groupName, setGroupName] = useState(""); 
-  const { user, signOut, } = useContext(UserContext); 
+  const [userGroups, setUserGroups] = useState([]);  // Käyttäjän omat ryhmät
+  const [allGroups, setAllGroups] = useState([]);    // Kaikki ryhmät
+  const [groupName, setGroupName] = useState("");     // Uuden ryhmän nimi
   const navigate = useNavigate();
+  const { user, signOut, } = useContext(UserContext); 
+
 
  
-    const fetchUserGroups = async () => {
-      if (!user.token) {
-        return; 
-      }
-   
-      try {
-        const response = await axios.get("http://localhost:3001/groups", {
-          headers: {
-            Authorization: `Bearer ${user.token}`
-          }
-        });
-        setUserGroups(response.data); 
-      } catch (error) {
-        console.error("Error fetching user groups:", error.response?.data || error.message);
-      }
-    };
-   
-
-    const fetchAllGroups = async () => {
-      try {
-        const response = await axios.get("http://localhost:3001/groups/all"); 
-        setAllGroups(response.data); 
-      } catch (error) {
-        console.error("Error fetching all groups:", error.response?.data || error.message);
-      }
-    };
-   
-    useEffect(() => {
-      fetchAllGroups(); 
-      if (user.token) {
-        fetchUserGroups(); 
-      }
-    }, [user.token]);
-   
-    const handleCreateGroup = () => {
-      if (groupName.trim()) {
-        console.log("Creating group with name:", groupName);
-        axios
-          .post(
-            "http://localhost:3001/groups/new",
-            { name: groupName, id: user.user_id },
-            {
-              headers: {
-                Authorization: `Bearer ${user.token}`
-              }
-            }
-          )
-          .then((response) => {
-            console.log("Server response:", response.data);
-            setUserGroups([...userGroups, response.data]);
-            setGroupName("");
-          })
-          .catch((error) => {
-            console.error("Error creating group:", error.response?.data || error.message);
-          });
-      } else {
-        alert("Please enter a group name.");
-      }
-    };
+  // Haetaan käyttäjän omat ryhmät
+  const fetchUserGroups = async () => {
+    if (!user.token) {
+      return; // Ei haeta käyttäjän omia ryhmiä, jos ei ole kirjautunut
+    }
  
-  const handleGroupClick = (groupId) => {
-    navigate(`/groups/${groupId}`); 
-  };
-  const handleProfileNavigation = () => {
-    if (!user || !user.token) {
-      alert("You need to be logged in to access the profile page.");
-      navigate("/authentication"); 
-    } else {
-      navigate("/profile"); 
+    try {
+      const response = await axios.get("http://localhost:3001/groups", {
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
+      });
+      setUserGroups(response.data); // Asetetaan omat ryhmät tilaan
+    } catch (error) {
+      console.error("Error fetching user groups:", error.response?.data || error.message);
     }
   };
+ 
+  // Haetaan kaikki ryhmät (koko tietokannan ryhmät)
+  const fetchAllGroups = async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/groups/all");  // Tämä reitti on lisättävä palvelimelle
+      setAllGroups(response.data); // Asetetaan kaikki ryhmät tilaan
+    } catch (error) {
+      console.error("Error fetching all groups:", error.response?.data || error.message);
+    }
+  };
+ 
+  useEffect(() => {
+    fetchAllGroups(); // Haetaan kaikki ryhmät aina, riippumatta kirjautumisesta
+    if (user.token) {
+      fetchUserGroups(); // Haetaan käyttäjän omat ryhmät vain, jos käyttäjä on kirjautunut
+    }
+  }, [user.token]);
+ 
+  const handleCreateGroup = () => {
+    if (groupName.trim()) {
+      console.log("Creating group with name:", groupName);
+      axios
+        .post(
+          "http://localhost:3001/groups/new",
+          { name: groupName, id: user.user_id },
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`
+            }
+          }
+        )
+        .then((response) => {
+          console.log("Server response:", response.data);
+          setUserGroups([...userGroups, response.data]);
+          setGroupName("");
+        })
+        .catch((error) => {
+          console.error("Error creating group:", error.response?.data || error.message);
+        });
+    } else {
+      alert("Please enter a group name.");
+    }
+  };
+
   const handleLogout = () => {
     signOut();
     console.log('Logged out. sessionStorage cleared.');
     navigate("/", { state: { fromLogout: true } });
   };
-  
+ 
+  const handleGroupClick = (groupId) => {
+    navigate(`/groups/${groupId}`); // Navigoi ryhmän sivulle
+  };
+  const handleProfileNavigation = () => {
+    if (!user || !user.token) {
+      alert("You need to be logged in to access the profile page.");
+      navigate("/authentication");
+    } else {
+      navigate("/profile");
+    }
+  };
  
   return (
-    <div className="groups-containe">
+ <div className="groups-container">
 
-          <header className="groups-header">
-           <h1>The best movie page</h1>
-         </header>
-   
-         <nav className="groups-nav">
-           <Link to="/">
-             <button className="groups-nav-button">Home</button>
-           </Link>
-           <Link to="/search">
-             <button className="groups-nav-button">Search movies</button>
-           </Link>
-           <Link to="/shows">
-             <button className="groups-nav-button">Search shows</button>
-           </Link>
-           <button className="groups-nav-button" onClick={handleProfileNavigation}>
-             Profile
-           </button>
-           {user.token ? (
-             <button className="groups-nav-button" onClick={handleLogout}>
-               Log out
-             </button>
-           ) : (
-             <Link to="/authentication">
-               <button className="groups-nav-button">Log in / Register</button>
-             </Link>
-           )}
-         </nav>
+<header className="groups-header">
+ <h1>The best movie page</h1>
+</header>
+
+<nav className="groups-nav">
+ <Link to="/">
+   <button className="groups-nav-button">Home</button>
+ </Link>
+ <Link to="/search">
+   <button className="groups-nav-button">Search movies</button>
+ </Link>
+ <Link to="/shows">
+   <button className="groups-nav-button">Search shows</button>
+ </Link>
+ <button className="groups-nav-button" onClick={handleProfileNavigation}>
+   Profile
+ </button>
+ {user.token ? (
+   <button className="groups-nav-button" onClick={handleLogout}>
+     Log out
+   </button>
+ ) : (
+   <Link to="/authentication">
+     <button className="groups-nav-button">Log in / Register</button>
+   </Link>
+ )}
+</nav>
  
       <div className="groups-wrapper">
+        {/* Näytetään käyttäjän omat ryhmät, jos käyttäjä on kirjautunut */}
         {user.token && (
           <div className="group-list">
             <h2>Your Groups</h2>
@@ -132,15 +135,16 @@ function Groups() {
                 {userGroups.map((group) => (
                   <li key={group.group_id}>
                     <button className="group-button" onClick={() => handleGroupClick(group.group_id)}>
-                      {group.name}
+                    {group.name}
                     </button>
-                  </li>
+                    </li>
                 ))}
               </ul>
             )}
           </div>
         )}
  
+        {/* Kaikki ryhmät näytetään aina */}
         <div className="group-list">
           <h2>All Groups</h2>
           {allGroups.length === 0 ? (
@@ -158,7 +162,6 @@ function Groups() {
           )}
         </div>
       </div>
-      <div>
       {user.token && (
         <div className="input-container">
           <h2>Create New Group</h2>
@@ -173,8 +176,7 @@ function Groups() {
           </button>
         </div>
       )}
-    </div>
-               <footer className="groups-footer">
+                     <footer className="groups-footer">
   <p>© Copyright 2024</p>
   <p>
     Usage of{' '}
