@@ -15,7 +15,6 @@ body {
       height: 100%;
 
   }
-  
   .top-movies-header {
     font-family: 'Bangers', cursive;
     color: #fff;
@@ -68,22 +67,20 @@ body {
     transform: scale(1.05);
   }
   
-  
+
   .top-movies-title {
     font-size: 28px;
     font-weight: bold;
     margin-bottom: 20px;
     color: deeppink;
   }
-  
+ 
   .top-movies-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 30px;
     padding: 20px; 
 }
-  
-  
   .top-movie-card {
     display: flex;
     flex-direction: column;
@@ -107,16 +104,13 @@ body {
     background-color: rgb(253, 90, 177); 
     text-decoration: underline;
   }
-  
-  
-  
   .top-movie-index {
     font-size: 18px;
     font-weight: bold;
     color: white;
     margin: 0 0 10px;
   }
-  
+ 
   .top-movie-poster {
     border-radius: 4px;
     width: 100%;
@@ -127,8 +121,9 @@ body {
     display: block;
     margin-left: auto;
     margin-right: auto;
+
   }
-  
+ 
   .top-movie-title {
     font-size: 10.5px;
     font-weight: bold;
@@ -143,7 +138,7 @@ body {
     transition: color 0.3s ease, text-decoration 0.3s all;
 
   }
-  
+ 
   .top-movie-subtitle {
     font-size: 14px;
     font-weight: normal;
@@ -268,3 +263,4 @@ body {
       padding: 10px;
   }
 }
+

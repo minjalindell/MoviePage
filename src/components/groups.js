@@ -158,7 +158,6 @@ function Groups() {
           )}
         </div>
       </div>
- 
       <div>
       {user.token && (
         <div className="input-container">
