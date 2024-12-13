@@ -13,6 +13,7 @@ router.post("/reviews", async (req, res) => {
     );
     
     res.status(201).json({ review: result.rows[0] }); 
+
   } catch (error) {
     console.error("Error adding review:", error);
     res.status(500).send("Failed to add the review.");

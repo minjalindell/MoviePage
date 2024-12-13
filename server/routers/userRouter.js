@@ -1,4 +1,3 @@
-// userRouter.js
 import express from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -6,7 +5,7 @@ import { pool } from '../helpers/db.js';
 
 const router = express.Router();
 
-// Rekisteröinti
+
 router.post('/register', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -41,7 +40,6 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// Kirjautuminen
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -101,12 +99,26 @@ router.delete('/delete', async (req, res, next) => {
   }
 });
 
-router.post('/logout', (req, res) => {
+
+    
+router.get('/user-reviews', async (req, res) => {
+  const userId = req.query.user_id;  
+ 
+  if (!userId) {
+    return res.status(400).json({ message: 'User ID is required' });  
+  }
+ 
   try {
-    res.status(200).json({ message: 'User logged out successfully' });
+    const result = await pool.query('SELECT * FROM reviews WHERE user_id = $1', [userId]);
+ 
+    if (!result.rows.length) {
+      return res.status(404).json({ message: 'No reviews found for this user' });
+    }
+ 
+    res.json(result.rows); 
   } catch (error) {
-    console.error('Error during logout:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    console.error('Error fetching user reviews:', error);
+    res.status(500).json({ message: 'Server error' });
   }
 });
 

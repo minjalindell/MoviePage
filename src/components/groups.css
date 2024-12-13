@@ -1,106 +1,284 @@
-/* Pääkontti */
-.groups-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background-color: #222;
-    color: white;
-    padding: 20px;
+
+.groups-header {
+    font-family: 'Bangers', cursive;
+    color: #fff;
+    text-align: center;
+    padding: 30px 0;
+    background-color: #000;
+
+  }
+  .groups-header h1 {
+    font-size: 3rem;
+    margin: 0;
+    font-weight: bold;
+    color: #ff1493;
+  }
+
+.groups-nav {
+	font-family: 'Bangers', cursive;
+	font-size: 2rem;
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+	background-color: #222;
+	padding: 15px 0;
+    border: 2px solid deeppink
 }
- 
-/* Ryhmien kontti (kaksi saraketta vierekkäin) */
+
+
+.groups-nav > * {
+    margin: 0; 
+    flex-shrink: 0; 
+}
+
+.groups-nav-button {
+	background-color: #ff1493;
+	color: #fff;
+	border: none;
+	padding: 15px 30px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 1.1rem;
+	transition: background-color 0.3s ease, transform 0.2s ease;
+	text-align: center;
+	flex: 1;
+	max-width: 200px;
+
+}
+
+.groups-nav-button:hover {
+    background-color: #ff69b4;
+}
+.group-button {
+    background-color: #ff1493; 
+    color: white; 
+    border: 2px solid #ff1493; 
+    border-radius: 5px; 
+    padding: 10px 20px; 
+    font-size: 1rem; 
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+    width: 100%; 
+    display: block; 
+    margin-bottom: 10px; 
+}
+
+.group-button:hover {
+    background-color: #ff69b4; 
+    border-color: #ff69b4; 
+}
+
 .groups-wrapper {
     display: flex;
-    flex-direction: row; /* Asetetaan sarakkeet vierekkäin */
-    justify-content: space-between; /* Välit sarakkeiden väliin */
-    width: 100%; /* Täyttää käytettävän tilan */
-    max-width: 1200px; /* Maksimileveys */
-    gap: 20px; /* Välit sarakkeiden väliin */
+    flex-direction: row;
+    justify-content: center; 
+    align-items: stretch;
+    width: 100%;
+    max-width: 1200px;
+    gap: 20px;
+    margin: 0 auto; 
+    padding: 20px; 
 }
- 
-/* Kaikkien ryhmien osio ja käyttäjän omat ryhmät */
+
 .group-list {
-    flex: 1; /* Joustava leveys */
-    padding: 20px; /* Sisäiset marginaalit */
-    background-color: #333; /* Tumma tausta sarakkeille */
-    border-radius: 10px; /* Kulmien pyöristys */
-    color: white; /* Tekstin väri */
+    flex: 1; 
+    padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    width: 100%; 
+    max-width: 400px; 
+    box-sizing: border-box; 
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    align-items: center;
+    gap: 10px; 
+    border: 2px solid deeppink;
 }
- 
-/* Ryhmien otsikot */
+
+.group-list p{
+    color: white;
+}
+
 .group-list h2 {
     text-align: center;
     margin-bottom: 15px;
     font-size: 1.5rem;
-    color: #ffffff;
+    color: deeppink;
 }
- 
-/* Ryhmien lista */
+
 .group-list ul {
-    list-style-type: none; /* Poistaa bullet points */
+    list-style-type: none;
     padding: 0;
     margin: 0;
-}
- 
-/* Yksittäinen ryhmä */
-.group-list li {
-    margin: 5px 0;
-    padding: 10px 15px;
-    border-radius: 5px; /* Kulmien pyöristys */
-    background-color: #ff69b4; /* Deep pink tausta */
-    color: white; /* Valkoinen teksti */
-    font-size: 1rem;
-    font-weight: bold;
-    text-align: center; /* Keskitetään teksti */
-    transition: transform 0.2s, box-shadow 0.2s; /* Animaatio hover-efektille */
-}
- 
-/* Hover-efekti ryhmille */
-.group-list li:hover {
-    transform: scale(1.05); /* Pieni suurennus */
-}
- 
-/* Syöttökenttä */
-.input-container {
+    
+}.input-container {
     margin-top: 20px;
     width: 100%;
     max-width: 600px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
 }
- 
-/* Syöttökenttä ja painike */
+
+.input-container h2 {
+    color: deeppink;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
 .input-container input {
     display: block;
     margin: 10px auto;
     width: 80%;
     padding: 10px;
-    border: 1px solid #555; /* Ohut reuna */
-    border-radius: 5px; /* Kulmien pyöristys */
-    background-color: #333; /* Tummanharmaa tausta */
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #333;
     color: white;
     outline: none;
 }
- 
+
 .input-container input:focus {
-    border-color: #ff69b4; /* Korostettu väri fokuksessa */
+    border-color: #ff69b4;
 }
- 
-/* Luo ryhmä -painike */
+
 .create-group-button {
     display: block;
     margin: 10px auto;
     width: 80%;
     padding: 10px;
-    background-color: #ff69b4; /* Korostettu väri */
+    background-color: #ff1493;
     color: white;
     border: none;
     border-radius: 5px;
     font-size: 1rem;
     cursor: pointer;
+    margin-bottom: 20px;
 }
- 
+
 .create-group-button:hover {
-    background-color: #ff85c2; /* Hieman vaaleampi väri hover-tilassa */
+    background-color: #ff69b4;
+}
+
+.groups-footer {
+    background-color: #222; 
+    color: white;           
+    text-align: center;   
+    padding: 20px;   
+    font-size: 20px; 
+    position: relative;
+    width: 100%;
+    bottom: 0;
+    display: block;
+    max-width: 1220px; 
+      margin: 0 auto;
+    }
+    
+    .groups-footer p {
+    margin: 10px 0; 
+    color: deeppink;
+    font-family: 'Bangers'
+    }
+    
+    .groups-footer a {
+    color: rgb(207, 4, 112); 
+    text-decoration: underline;
+    font-family: 'Bangers';
+    }
+    
+    .groups-footer a:hover {
+    color: #ff69b4;
+    text-decoration: underline;
+    }
+
+    /* Responsiivisuus */
+@media (max-width: 768px) {
+    .groups-nav {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 0;
+    }
+
+    .groups-nav-button {
+        font-size: 1rem;
+        padding: 12px 20px;
+        max-width: 300px;
+    }
+
+    .group-list {
+        max-width: 100%;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .group-list h2 {
+        font-size: 1.2rem;
+    }
+
+    .group-button {
+        width: 100%;
+        font-size: 1rem;
+        padding: 12px;
+    }
+
+    .input-container {
+        width: 90%;
+    }
+
+    .input-container h2 {
+        font-size: 1.2rem;
+    }
+
+    .input-container input {
+        width: 90%;
+    }
+
+    .create-group-button {
+        width: 90%;
+        font-size: 1rem;
+    }
+
+    .groups-footer {
+        font-size: 18px;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .groups-header h1 {
+        font-size: 2rem;
+    }
+
+    .groups-nav {
+        font-size: 1.5rem;
+    }
+
+    .groups-nav-button {
+        font-size: 1rem;
+        padding: 10px 15px;
+    }
+
+    .group-list h2 {
+        font-size: 1rem;
+    }
+
+    .input-container h2 {
+        font-size: 1rem;
+    }
+
+    .create-group-button {
+        font-size: 0.9rem;
+    }
+
+    .groups-footer {
+        font-size: 16px;
+        padding: 10px;
+    }
 }

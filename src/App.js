@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
-import { UserContext } from './components/context/userContext'; 
+import { UserContext } from './components/context/userContext';
 import Authentication from './components/authentication';
 import Search from './components/search';
 import Profile from './components/profile';
@@ -11,6 +11,8 @@ import TopMovies from './components/topMovies';
 import TopMoviesFull from './components/TopMoviesFull';
 import UserProvider from './components/context/userProvider';
 import Groups from './components/groups';
+import GroupPage from './components/GroupPage.js';
+import UserReviewsPage from './components/userReviewsPage';
 import './App.css'
 import FavoritePage from './components/favoritePage';
 
@@ -25,13 +27,13 @@ function App() {
     </UserProvider>
   );
 }
-
+ 
 function AppRoutes() {
   const { user } = useContext(UserContext);
   const [logoutMessage, setLogoutMessage] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
-
+ 
   useEffect(() => {
     if (location.state?.fromLogout) {
       setLogoutMessage("You have successfully logged out.");
@@ -39,7 +41,7 @@ function AppRoutes() {
       navigate(newLocation, { replace: true });
     }
   }, [location, navigate]);
-
+ 
   useEffect(() => {
     if (logoutMessage) {
       const timer = setTimeout(() => {
@@ -48,17 +50,18 @@ function AppRoutes() {
       return () => clearTimeout(timer);
     }
   }, [logoutMessage]);
+ 
   const ProtectedRoute = ({ element }) => {
     if (!user.token) {
       return navigate("/authentication", { replace: true });
     }
     return element;
   };
-
+ 
   return (
     <>
       {logoutMessage && <div className="logout-message">{logoutMessage}</div>}
-
+ 
       <Routes>
         <Route
           path="/"
@@ -71,12 +74,12 @@ function AppRoutes() {
                 {user.token ? (
                   <>
                     <Link to="/profile" className="nav-link">
-                      <button className="nav-button">Profile</button>
+                      <button className="App-nav-button">Profile</button>
                     </Link>
                   </>
                 ) : (
                   <Link to="/authentication" className="nav-link">
-                    <button className="nav-button">Log in / Register</button>
+                    <button className="App-nav-button">Log in / Register</button>
                   </Link>
                 )}
               </nav>
@@ -90,14 +93,35 @@ function AppRoutes() {
                     <button className="section-button">Search movies</button>
                   </Link>
                 </div>
+                <section className="App-section-groups">
+                <h2>Browse Groups</h2>
+                <Link to="/groups">
+                  <button className="section-button">Browse Groups</button>
+                </Link>
+              </section>
                 <TopMovies />
               </section>
-            </div>
+              
+
+<footer className="App-footer">
+  <p>© Copyright 2024</p>
+  <p>
+    Usage of{' '}
+    <a href="https://www.finnkino.fi/xml/" target="_blank" rel="noopener noreferrer">
+      Finnkino API
+    </a>{' '}
+    and{' '}
+    <a href="https://developer.themoviedb.org/reference/intro/getting-started" target="_blank" rel="noopener noreferrer">
+      Moviedatabase API
+    </a>
+  </p>
+</footer>
+</div>
           }
         />
         <Route path="/authentication" element={<Authentication />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/profile"element={<ProtectedRoute element={<Profile />} />}/>
+        <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
         <Route path="/movie/:id" element={<MovieDetails />} />
         <Route path="/shows" element={<Shows />} />
         <Route path="/top-movies" element={<TopMoviesFull />} />
@@ -105,9 +129,11 @@ function AppRoutes() {
         <Route path="/MovieDetails/:id" element={<MovieDetails />} />
         <Route path="/favorites" element={<ProtectedRoute element={<FavoritePage />} />} />
         <Route path="/movie/:movieId" component={FavoritePage} />
+        <Route path="/groups" element={<ProtectedRoute element={<Groups />} />} />
+        <Route path="/groups" element={<Groups />} />
+        <Route path="/groups/:groupId" element={<ProtectedRoute element={<GroupPage />} />} />
+        <Route path="/user-reviews" element={<UserReviewsPage />} />
 
-        <Route path="/groups" element={<ProtectedRoute element={<Groups />} />}
-        />
       </Routes>
     </>
   );

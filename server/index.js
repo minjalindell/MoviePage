@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import { login, register, deleteUser } from './helpers/auth.js';
-import userRouter from './routers/userRouter.js'; 
+import userRouter from './routers/userRouter.js';
 import reviewRouter from './routers/reviewRouter.js';
 import groupsRouter from './routers/groupsRouter.js';
 import favoriteRouter from './routers/favouriteRouter.js';
@@ -19,18 +19,18 @@ app.use(cors({
   methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
+
 }));
-
+ 
 app.options('*', cors());
-
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+ 
 app.get('/', (req, res) => {
   return res.status(200).json({ test: "test" });
 });
-
+ 
 app.post('/login', login);
 app.post('/register', register);
 
@@ -44,7 +44,6 @@ app.get('/reviews', reviewRouter);
 
 app.use('/user', userRouter);
 app.use('/groups', groupsRouter);
-
 app.post('/favorites', favoriteRouter);
 app.get('/favorites', favoriteRouter);
 app.use('/favorites', favoriteRouter);

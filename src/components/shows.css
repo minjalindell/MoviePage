@@ -11,7 +11,6 @@ body {
     text-align: center;
     padding: 30px 0;
     background-color: #000;
-    border-bottom: 2px solid #444;
     color: #ff1493;
   }
   .shows-header h1 {
@@ -24,53 +23,284 @@ body {
     color: deeppink;
     text-align: center;
   }
- 
-  a {
-    text-decoration: none;  
+
+  .shows-nav {
+    font-family: 'Bangers', cursive;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    background-color: #222;
+    padding: 15px 0;
+    border: 2px solid deeppink
   }
- 
-  select {
-    display: block;
-    margin: 20px auto;
-    padding: 10px;
-    background-color: #333;
+  .shows-nav > * {
+      margin: 0; 
+      flex-shrink: 0; 
+  }
+  
+  .shows-nav-button {
+    background-color: #ff1493;
     color: #fff;
-    border: 1px solid #555;
+    border: none;
+    padding: 15px 30px;
+
     border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-align: center;
+    flex: 1;
+    max-width: 200px;
+  
+  }
+
+  .shows-nav-button:hover {
+    background-color: #ff69b4;
+    transform: scale(1.05);
+  }
+  .filter-box {
+    background-color: #222;          
+    color: white;   
+    border: 2px solid deeppink;  
+    border-radius: 10px;    
+    padding: 30px;    
+    max-width: 400px;   
+    text-align: center;         
+    margin: auto; 
+    margin-top: 20px;   
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); 
+  }
+  
+  .filter-box h3 {
+
+    color: deeppink;               
+    margin-bottom: 20px;     
+  }
+  
+  .filter-box select {
+    width: 100%; 
+    padding: 10px;  
+    margin-bottom: 20px;  
+    border: 1px solid #555;  
+    border-radius: 5px; 
+    background-color: #333; 
+    color: white;  
     font-size: 16px;
   }
- 
-  option {
-    background-color: #000;
-    color: #fff;
+  
+  .filter-box .shows-button {
+    background-color: deeppink;
+    color: white;  
+    border: none;     
+    border-radius: 5px;  
+    padding: 10px 20px;  
+    cursor: pointer;              
+    font-weight: bold;      
+    transition: background-color 0.3s ease; 
   }
- 
-  ul {
-    list-style-type: none;
-    padding: 0;
+  
+  .filter-box .shows-button:hover {
+    background-color: #ff69b4;   
   }
- 
-  li {
-    margin: 10px 0;
-    padding: 10px;
-    background-color: #222;
-    color: #fff;
-    border: 1px solid #333;
-    border-radius: 5px;
-  }
- 
-  .ajat {
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #111;
+
+  .showings-container {
+    background-color: #222; 
+    padding: 20px;    
+    border: 2px solid deeppink; 
     border-radius: 10px;
-    max-width: 600px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  }
- 
-  p {
+    max-width: 900px;   
+    margin: 20px auto; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); 
+    color: white;   
     text-align: center;
-    font-style: italic;
-    color: #aaa;
+    margin-bottom: 10px;
   }
- 
+  
+  .showings h3 {
+    color: deeppink; 
+    margin-bottom: 20px;
+    font-size: 30px;            
+  }
+  
+  .showings ul {
+    list-style-type: none;  
+    padding: 0; 
+  }
+  .showings p {
+    color: deeppink;
+  }
+  
+  .shows-show-item {
+    background-color: deeppink; 
+    color: white; 
+    margin: 10px 0; 
+    padding: 10px; 
+    border-radius: 5px;  
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); 
+    margin-bottom: 1px;
+    border: 1px solid #ffffff;  
+  }
+  .shows-show-item h2{
+    font-size: 25px;
+    color: white; 
+  }
+  .show-details p {
+    color: white;
+    justify-content: center;
+    align-items: center;  
+    gap: 10px;   
+    margin-bottom: 1px;
+  }
+  
+  .show-details .theatre,
+  .show-details .showtime {
+    margin: 0 10px; 
+  }
+  
+  .show-details .separator {
+    margin: 0 10px; 
+  }
+  .show-time,
+  .theatre {
+    font-style: italic;
+  }
+  
+  .no-shows {
+    font-style: italic;
+    color: deeppink;  
+    text-align: center;
+    margin-top: 20px;  
+  }
+  
+  .booking-link {
+    display: inline-block;
+    margin-top: 10px;    
+    color: #ffffff;   
+    text-decoration: none;     
+    font-weight: bold;  
+    margin-bottom: 10px;
+  }
+  
+  .booking-link:hover {
+    color: #ffffff;    
+    text-decoration: underline; 
+  }
+  .shows-movie-poster {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border: 2px solid #ccc; 
+  }
+  
+  
+  .shows-movie-poster:hover {
+    transform: scale(1.1); 
+  }
+  .shows-footer {
+    background-color: #222;
+    color: white;      
+    text-align: center; 
+    padding: 20px; 
+    font-size: 20px; 
+    position: relative;
+    width: 100%;
+    bottom: 0;
+    display: block;
+    max-width: 1220px; 
+      margin: 0 auto;
+    }
+    
+    .shows-footer p {
+    margin: 10px 0; 
+    color: deeppink;
+    font-family: 'Bangers'
+    }
+    
+    .shows-footer a {
+    color: rgb(207, 4, 112); 
+    text-decoration: underline;
+    font-family: 'Bangers';
+    }
+    
+    .shows-footer a:hover {
+    color: #ff69b4;
+    text-decoration: underline;
+    }
+    
+
+ /* Responsiivisuus */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px; 
+  }
+
+  .shows-header h1 {
+    font-size: 2.5rem; 
+  }
+
+  .shows-nav {
+    font-size: 1.5rem; 
+  }
+
+  .shows-nav-button {
+    font-size: 18px; 
+    padding: 10px 20px; 
+  }
+
+  .filter-box {
+    max-width: 90%; 
+    padding: 20px; 
+  }
+
+  .showings-container {
+    max-width: 100%; 
+    margin: 10px; 
+  }
+
+  .shows-show-item {
+    padding: 8px; 
+  }
+
+  .shows-footer {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 12px; 
+  }
+
+  .shows-header h1 {
+    font-size: 2rem; 
+  }
+
+  .shows-nav {
+    font-size: 1.2rem; 
+  }
+
+  .shows-nav-button {
+    font-size: 16px; 
+    padding: 8px 16px; 
+  }
+
+  .filter-box {
+    max-width: 95%; 
+    padding: 15px; 
+  }
+
+  .showings-container {
+    max-width: 100%; 
+    margin: 5px;
+  }
+
+  .shows-show-item {
+    padding: 6px; 
+  }
+
+  .shows-footer {
+    font-size: 14px; 
+  }
+}
+

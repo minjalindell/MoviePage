@@ -7,7 +7,7 @@ function Authentication() {
   const { signIn, signUp } = useContext(UserContext); 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState(''); // Uusi kenttä
+  const [confirmPassword, setConfirmPassword] = useState(''); 
   const [isLogin, setIsLogin] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
@@ -15,12 +15,10 @@ function Authentication() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const authData = { email, password };
-  
-    // Tarkistetaan, että salasanat täsmäävät rekisteröinnissä
+
     if (!isLogin && password !== confirmPassword) {
       setErrorMessage('Passwords do not match!');
-      
-      // Virheilmoitus poistetaan 3 sekunnin kuluttua
+
       setTimeout(() => {
         setErrorMessage('');
       }, 3000);
@@ -43,7 +41,9 @@ function Authentication() {
       
     } catch (error) {
       console.error('Virhe kirjautumisessa/rekisteröinnissä:', error);
-      setErrorMessage(error.message || 'An unexpected error occurred');
+      // Tarkista, onko palvelin palauttanut virheviestin
+      const message = error.response?.data?.message || error.message || 'An unexpected error occurred';
+      setErrorMessage(message);
     }
   };
 
@@ -66,7 +66,7 @@ function Authentication() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          {!isLogin && ( // Näytetään vain rekisteröinnissä
+          {!isLogin && ( 
             <>
               <label>Confirm Password:</label>
               <input
