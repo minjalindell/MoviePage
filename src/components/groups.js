@@ -56,7 +56,6 @@ function Groups() {
       <h1>Groups</h1>
 
       <div className="groups-wrapper">
-        {/* Käyttäjän omat ryhmät */}
         <div className="group-list">
           <h2>Your Groups</h2>
           {groups.length === 0 ? (

@@ -12,6 +12,7 @@ import TopMoviesFull from './components/TopMoviesFull';
 import UserProvider from './components/context/userProvider';
 import Groups from './components/groups';
 import './App.css'
+import FavoritePage from './components/favoritePage';
 
 function App() {
   return (
@@ -102,7 +103,8 @@ function AppRoutes() {
         <Route path="/top-movies" element={<TopMoviesFull />} />
         <Route path="/reviews/:movieId" element={<ReviewPage />} />
         <Route path="/MovieDetails/:id" element={<MovieDetails />} />
-
+        <Route path="/favorites" element={<ProtectedRoute element={<FavoritePage />} />} />
+        <Route path="/movie/:movieId" component={FavoritePage} />
 
         <Route path="/groups" element={<ProtectedRoute element={<Groups />} />}
         />

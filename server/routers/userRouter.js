@@ -82,7 +82,6 @@ const deleteUser = async (user_id) => {
   }
 };
 
-// Poista käyttäjä (user_id ja email)
 router.delete('/delete', async (req, res, next) => {
   const { user_id, email } = req.body;
   
@@ -91,7 +90,6 @@ router.delete('/delete', async (req, res, next) => {
   }
 
   try {
-    // Poistetaan käyttäjä ja tarkistetaan tulos
     const result = await deleteUser(user_id, email);  
     if (result) {
       return res.status(200).json({ message: 'Account deleted successfully' });
@@ -103,7 +101,13 @@ router.delete('/delete', async (req, res, next) => {
   }
 });
 
-
-
+router.post('/logout', (req, res) => {
+  try {
+    res.status(200).json({ message: 'User logged out successfully' });
+  } catch (error) {
+    console.error('Error during logout:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 export default router;
