@@ -1,34 +1,39 @@
-/* authentication.css */
 
 .authentication-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: black; /* Vaalean harmaa tausta */
+    height: 100vh; 
+    background-color: black;
 }
 
 .authentication-form {
-    background-color: lightblue;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #222;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(252, 251, 251, 0.1);
     width: 100%;
-    max-width: 400px;
+    max-width: 400px; 
     text-align: center;
+    border: 2px solid deeppink;
 }
 
 .authentication-form h2 {
     margin-bottom: 20px;
     font-size: 1.5rem;
-    color: #333;
+    color: deeppink;
 }
 
 .authentication-form label {
     display: block;
     margin-bottom: 8px;
     font-size: 0.9rem;
-    color: #555;
+    color: deeppink;
+    font-weight: bold;
 }
 
 .authentication-form input {
@@ -38,6 +43,12 @@
     border: 1px solid #cccccc;
     border-radius: 4px;
     font-size: 1rem;
+    background-color: #222;
+    color: white;
+}
+
+.authentication-form input:focus {
+    border-color: deeppink;
 }
 
 .authentication-form button {
@@ -50,6 +61,7 @@
     font-size: 1.1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-top: 10px;
 }
 
 .authentication-form button:hover {
@@ -70,34 +82,63 @@
 
 /* Responsiivisuus */
 @media (max-width: 768px) {
+    .authentication-container {
+        padding: 20px;
+    }
+
     .authentication-form {
         padding: 20px;
-        max-width: 90%;
-    }
-
-    .authentication-form h2 {
-        font-size: 1.3rem;
-    }
-
-    .authentication-form input,
-    .authentication-form button {
-        font-size: 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .authentication-form {
-        padding: 15px;
-        max-width: 95%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .authentication-form h2 {
         font-size: 1.2rem;
     }
 
-    .authentication-form input,
-    .authentication-form button {
-        padding: 8px;
+    .authentication-form label {
         font-size: 0.9rem;
+    }
+
+    .authentication-form input {
+        padding: 12px;
+        font-size: 1rem;
+    }
+
+    .authentication-form button {
+        padding: 12px;
+        font-size: 1rem;
+    }
+
+    .error-message, .success-message {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .authentication-form {
+        padding: 15px;
+    }
+
+    .authentication-form h2 {
+        font-size: 1rem;
+    }
+
+    .authentication-form label {
+        font-size: 0.8rem;
+    }
+
+    .authentication-form input {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .authentication-form button {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .error-message, .success-message {
+        font-size: 0.7rem;
     }
 }

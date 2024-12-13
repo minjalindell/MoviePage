@@ -1,6 +1,5 @@
-// reviewRouter.js
 import express from 'express';
-import { pool } from '../helpers/db.js'; // Käytetään tietokannan yhteyttä
+import { pool } from '../helpers/db.js'; 
 
 const router = express.Router();
 
@@ -13,7 +12,7 @@ router.post("/reviews", async (req, res) => {
       [user_id, movie_id, movie_title, rating, review_text, email]
     );
     
-    res.status(201).json({ review: result.rows[0] });  // Palautetaan juuri lisätty arvostelu
+    res.status(201).json({ review: result.rows[0] });  
   } catch (error) {
     console.error("Error adding review:", error);
     res.status(500).send("Failed to add the review.");
@@ -21,7 +20,7 @@ router.post("/reviews", async (req, res) => {
 });
 
 router.get('/reviews', async (req, res, next) => {
-  const movieId = req.query.movie_id;  // Haetaan elokuvan ID kyselyparametrina
+  const movieId = req.query.movie_id; 
 
   if (!movieId) {
     return res.status(400).json({ message: "Movie ID is required" });
@@ -30,7 +29,7 @@ router.get('/reviews', async (req, res, next) => {
   try {
     const result = await pool.query(
       `SELECT * FROM reviews WHERE movie_id = $1 ORDER BY review_date DESC`,
-      [movieId]  // Käytetään kyselyparametria
+      [movieId] 
     );
     res.status(200).json(result.rows);
   } catch (error) {
