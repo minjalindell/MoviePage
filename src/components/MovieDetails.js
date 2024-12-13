@@ -1,22 +1,21 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { UserContext } from "./context/userContext";
 import { useNavigate, Link, useParams} from "react-router-dom";
+import { UserContext } from "./context/userContext.js";
 import "./MovieDetails.css";
+import axios from "axios";
 
 const MovieDetails = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
+
   const navigate = useNavigate();
   const { user, signOut } = useContext(UserContext);
 
   useEffect(() => {
     fetch(`https://api.themoviedb.org/3/movie/${id}`, {
       headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMWY5YjZiNmIyY2M4YjQwOTk2YWE1MzY2NmIwMDJkNSIsIm5iZiI6MTczMTY1OTg4NC44OTM1NSwic3ViIjoiNjczNDUzZjgwNTgxNjRjNDA1MjNmYTBkIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.xiEsZpA1oJhq910VPdQAqPrZmnktqGJMj58imsF0RtI",
+
+        Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMWY5YjZiNmIyY2M4YjQwOTk2YWE1MzY2NmIwMDJkNSIsIm5iZiI6MTczMTY1OTg4NC44OTM1NSwic3ViIjoiNjczNDUzZjgwNTgxNjRjNDA1MjNmYTBkIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.xiEsZpA1oJhq910VPdQAqPrZmnktqGJMj58imsF0RtI",
 
         "Content-Type": "application/json",
       },
@@ -25,9 +24,28 @@ const MovieDetails = () => {
       .then((json) => setMovie(json))
       .catch((error) => console.log(error));
   }, [id]);
+ 
+  if (!movie) {
+    return <p>Loading...</p>;
+  }
 
+  const handleLogout = () => {
+    signOut();
+    console.log("Logged out. sessionStorage cleared.");
+    navigate("/", { state: { fromLogout: true } });
+  };
+
+  const handleProfileNavigation = () => {
+    if (!user || !user.token) {
+      alert("You need to be logged in to access the profile page.");
+      navigate("/authentication");
+    } else {
+      navigate("/profile");
+    }
+  };
   const addToFavorites = async () => {
     if (!user || !user.user_id || !movie || !movie.id) {
+      alert("You must be logged in to add favorites.");
       console.error("Missing user or movie data");
       return;  
     }
@@ -47,69 +65,12 @@ const MovieDetails = () => {
       );
   
       if (response.status === 200) {
+        alert("Added to favorite list.");
         console.log("Movie added to favorites:", response.data);
       }
     } catch (error) {
       console.error("Error adding movie to favorites:", error.response ? error.response.data : error.message);
-    }
-  };
-
-  useEffect(() => {
-    const fetchMovie = async () => {
-      try {
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/${id}`,
-          {
-            headers: {
-              Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMWY5YjZiNmIyY2M4YjQwOTk2YWE1MzY2NmIwMDJkNSIsIm5iZiI6MTczMTY1OTg4NC44OTM1NSwic3ViIjoiNjczNDUzZjgwNTgxNjRjNDA1MjNmYTBkIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.xiEsZpA1oJhq910VPdQAqPrZmnktqGJMj58imsF0RtI",
-            },
-          }
-        );
-        setMovie(response.data);
-      } catch (error) {
-        console.error("Error fetching movie:", error);
-      }
-    };
-
-    fetchMovie();
-  }, [id]);
-
-  if (!movie) {
-    return <div>Loading...</div>; 
-  }
-
-  return (
-    <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
-      <h2>{movie.title}</h2>
-
-      <div style={{ display: "flex", gap: "20px" }}>
-        {movie.poster_path && (
-          <img
-            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-            alt={movie.title}
-            style={{ maxWidth: "200px", borderRadius: "8px" }}
-          />
-        )}
-        {movie.backdrop_path && (
-          <img
-            src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
-            alt={`${movie.title} Backdrop`}
-            style={{ maxWidth: "400px", borderRadius: "8px" }}
-          />
-
-  const handleLogout = () => {
-    signOut();
-    console.log("Logged out. sessionStorage cleared.");
-    navigate("/", { state: { fromLogout: true } });
-  };
-
-  const handleProfileNavigation = () => {
-    if (!user || !user.token) {
-      alert("You need to be logged in to access the profile page.");
-      navigate("/authentication");
-    } else {
-      navigate("/profile");
+      alert("Failed to add movie to favorites.");
     }
   };
 
@@ -161,6 +122,7 @@ const MovieDetails = () => {
     />
   )}
 </div>
+
 <div className="movie-details">
 
         <p>{movie.overview}</p>
@@ -172,7 +134,6 @@ const MovieDetails = () => {
         <p><strong>Genres:</strong> {movie.genres.map(genre => genre.name).join(", ")}</p>
         <p><strong>Budget:</strong> ${movie.budget.toLocaleString()}</p>
         <p><strong>Revenue:</strong> ${movie.revenue.toLocaleString()}</p>
-      </div>
         <p><strong>Popularity:</strong> {movie.popularity}</p>
         </div>
 
@@ -193,44 +154,18 @@ const MovieDetails = () => {
           ))}
 </ul>
 </div>
-
-        <button
-          onClick={() => navigate(`/reviews/${id}`)}
-          className="moviedetails-review-button"
-        >
-          Reviews
-        </button>
-      </div>
-
-      <button
-        onClick={addToFavorites}
-        style={{
-          marginTop: "20px",
-          padding: "10px 20px",
-          backgroundColor: "#28a745",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
-      >
-        Add to Favorites
-      </button>
-
-      <button
-        onClick={() => navigate(`/reviews/${id}`)} 
-        style={{
-          marginTop: "20px",
-          padding: "10px 20px",
-          backgroundColor: "#007BFF",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
-      >
-        Reviews
-      </button>
+<div className="moviedetails-buttons-container">
+  <button onClick={addToFavorites} className="moviedetails-review-button">
+    Add to Favorites
+  </button>
+  <button
+    onClick={() => navigate(`/reviews/${id}`)}
+    className="moviedetails-review-button"
+  >
+    Reviews
+  </button>
+</div>
+</div>
     <footer className="moviedetails-footer">
   <p>© Copyright 2024</p>
   <p>
@@ -245,8 +180,8 @@ const MovieDetails = () => {
   </p>
 </footer>
     </div>
+
   );
 };
-
+ 
 export default MovieDetails;
-

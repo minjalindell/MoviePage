@@ -129,7 +129,6 @@ function AppRoutes() {
         <Route path="/MovieDetails/:id" element={<MovieDetails />} />
         <Route path="/favorites" element={<ProtectedRoute element={<FavoritePage />} />} />
         <Route path="/movie/:movieId" component={FavoritePage} />
-        <Route path="/groups" element={<ProtectedRoute element={<Groups />} />} />
         <Route path="/groups" element={<Groups />} />
         <Route path="/groups/:groupId" element={<ProtectedRoute element={<GroupPage />} />} />
         <Route path="/user-reviews" element={<UserReviewsPage />} />

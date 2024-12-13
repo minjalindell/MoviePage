@@ -163,7 +163,12 @@
   font-size: 14px; 
   color: #333; 
 }
-
+.moviedetails-buttons-container {
+  display: flex;
+  flex-direction: column; /* Napit alekkain */
+  align-items: center; /* Kohdistus keskelle */
+  gap: 10px; /* Välit nappien väliin */
+}
 
 
 .moviedetails-review-button {

@@ -124,7 +124,6 @@ function Groups() {
 </nav>
  
       <div className="groups-wrapper">
-
         {user.token && (
           <div className="group-list">
             <h2>Your Groups</h2>
