@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
-import { UserContext } from './components/context/userContext'; 
+import { UserContext } from './components/context/userContext';
 import Authentication from './components/authentication';
 import Search from './components/search';
 import Profile from './components/profile';
@@ -14,7 +14,7 @@ import Groups from './components/groups';
 import GroupPage from './components/GroupPage.js';
 import UserReviewsPage from './components/userReviewsPage';
 import './App.css'
-
+ 
 function App() {
   return (
     <UserProvider>
@@ -26,13 +26,13 @@ function App() {
     </UserProvider>
   );
 }
-
+ 
 function AppRoutes() {
   const { user } = useContext(UserContext);
   const [logoutMessage, setLogoutMessage] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
-
+ 
   useEffect(() => {
     if (location.state?.fromLogout) {
       setLogoutMessage("You have successfully logged out.");
@@ -40,7 +40,7 @@ function AppRoutes() {
       navigate(newLocation, { replace: true });
     }
   }, [location, navigate]);
-
+ 
   useEffect(() => {
     if (logoutMessage) {
       const timer = setTimeout(() => {
@@ -49,17 +49,18 @@ function AppRoutes() {
       return () => clearTimeout(timer);
     }
   }, [logoutMessage]);
+ 
   const ProtectedRoute = ({ element }) => {
     if (!user.token) {
       return navigate("/authentication", { replace: true });
     }
     return element;
   };
-
+ 
   return (
     <>
       {logoutMessage && <div className="logout-message">{logoutMessage}</div>}
-
+ 
       <Routes>
         <Route
           path="/"
@@ -119,7 +120,7 @@ function AppRoutes() {
         />
         <Route path="/authentication" element={<Authentication />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/profile"element={<ProtectedRoute element={<Profile />} />}/>
+        <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
         <Route path="/movie/:id" element={<MovieDetails />} />
         <Route path="/shows" element={<Shows />} />
         <Route path="/top-movies" element={<TopMoviesFull />} />
