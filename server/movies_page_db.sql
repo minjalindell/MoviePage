@@ -27,6 +27,5 @@ CREATE TABLE group_members (
   user_id INT REFERENCES users(user_id) ON DELETE CASCADE,
   role VARCHAR(20) NOT NULL DEFAULT 'member',
   PRIMARY KEY (group_id, user_id)
-
 );
  
