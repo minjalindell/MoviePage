@@ -162,3 +162,59 @@
     color: #ff69b4;
     text-decoration: underline;
     }
+    /* Responsiivisuus */
+
+@media (max-width: 768px) {
+    .groupPage-header h1 {
+        font-size: 2rem;
+    }
+
+    .groupPage-nav {
+        flex-direction: column;
+        font-size: 1.5rem;
+    }
+
+    .groupPage-nav-button {
+        font-size: 1rem;
+        max-width: 100%;
+        padding: 12px 20px;
+    }
+
+    .members-list {
+        max-width: 90%;
+        padding: 10px;
+    }
+
+    .members-list li {
+        font-size: 0.9rem;
+    }
+
+    .groupPage-footer {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .groupPage-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .groupPage-nav {
+        font-size: 1.2rem;
+    }
+
+    .groupPage-nav-button {
+        font-size: 1rem;
+        max-width: 100%;
+        padding: 10px 15px;
+    }
+
+    .members-list li {
+        font-size: 0.8rem;
+        padding: 8px 10px;
+    }
+
+    .groupPage-footer {
+        font-size: 16px;
+    }
+}
