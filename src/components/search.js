@@ -35,14 +35,12 @@ const Search = () => {
     { id: 10752, name: "War" },
     { id: 37, name: "Western" },
   ];
-
+ 
   const search = () => {
     let url = `https://api.themoviedb.org/3/${query ? "search/movie" : "discover/movie"}?page=${page}`;
     if (query) url += `&query=${query}`;
     if (genre) url += `&with_genres=${genre}`;
     if (year) url += `&primary_release_year=${year}`;
-    
-
     fetch(url, {
       headers: {
         Authorization: 
@@ -113,7 +111,6 @@ const Search = () => {
             placeholder="Search by title"
           />
         </div>
-
         <div>
           <select value={genre} onChange={(e) => setGenre(e.target.value)}>
             <option value="">-- Select Genre --</option>
@@ -159,6 +156,7 @@ const Search = () => {
       </div>
 
       <div className="search-movies-list">
+
         {movies.map((movie) => (
           <div
             key={movie.id}
@@ -191,5 +189,5 @@ const Search = () => {
     </div>
   );
 };
-
+ 
 export default Search;

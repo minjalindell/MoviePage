@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { UserContext } from "./context/userContext.js";
 import "./Reviewpage.css";
-
+ 
 const ReviewPage = () => {
   const { movieId } = useParams();
   const [movieTitle, setMovieTitle] = useState("");
@@ -10,7 +10,6 @@ const ReviewPage = () => {
   const [reviewText, setReviewText] = useState("");
   const [reviews, setReviews] = useState([]);
   const navigate = useNavigate();
-
   const { user, signOut } = useContext(UserContext); 
   const userEmail = user.email;
 
@@ -56,12 +55,12 @@ const ReviewPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+ 
     if (!userEmail) {
       alert("Please log in to submit a review.");
       return;
     }
-
+ 
     const reviewData = {
       user_id: user.user_id,
       movie_id: movieId,
@@ -71,7 +70,7 @@ const ReviewPage = () => {
       email: userEmail,
       timestamp: new Date().toISOString(),
     };
-
+ 
     fetch("http://localhost:3001/reviews", {
       method: "POST",
       headers: {
@@ -94,10 +93,11 @@ const ReviewPage = () => {
         alert("Failed to add the review. Please try again later.");
       });
   };
-
+ 
   const handleRatingChange = (value) => {
     setRating(value);
   };
+
   const [moviePoster, setMoviePoster] = useState(""); 
 
   useEffect(() => {
@@ -243,5 +243,7 @@ const ReviewPage = () => {
     </div>
   );
 };
-
+ 
 export default ReviewPage;
+ 
+ 

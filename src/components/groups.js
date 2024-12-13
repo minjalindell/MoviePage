@@ -162,8 +162,6 @@ function Groups() {
           )}
         </div>
       </div>
- 
-      {/* Uuden ryhmän luominen */}
       {user.token && (
         <div className="input-container">
           <h2>Create New Group</h2>
