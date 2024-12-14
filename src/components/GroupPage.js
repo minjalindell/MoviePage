@@ -156,7 +156,7 @@ const GroupPage = () => {
         )}
       </nav>
 
-      <h1 className="groupPage-Name">Group - {groupInfo.name}</h1>
+      <h1 className="groupPage-Name">  {groupInfo.name}</h1>
       <ul className="members-list">
         <h1>Members:</h1>
         {groupInfo.members?.map((member) => (

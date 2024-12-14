@@ -109,6 +109,7 @@
 	text-align: center;
 	flex: 1;
 	max-width: 200px;
+    margin-right: 10px;
 }
  
 .leave-button:hover {
@@ -127,6 +128,7 @@
 	text-align: center;
 	flex: 1;
 	max-width: 200px;
+    margin-left: 10px;
 }
 .join-button:hover {
     background-color: #ff69b4;
@@ -141,7 +143,6 @@
     width: 100%;
     bottom: 0;
     display: block;
-    max-width: 1220px; 
       margin: 0 auto;
       margin-top: 20px;
     }
