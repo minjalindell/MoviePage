@@ -19,11 +19,12 @@ Projekti harjoittaa ryhmätyötaitoja, käyttöliittymän suunnittelua sekä dyn
 - Osallistuin tiedostojen hallintaan ja deleten-logiikan toteutukseen
 - Osallistuin projektin dokumentointiin ja esitelmän tekemiseen
 
-## Ohjelmointikielet
+## Käytetyt teknologiat
 
 - HTML  
 - CSS  
 - JavaScript
+- Finnkinon avoin API  
   
 ## Mitä opin
 
