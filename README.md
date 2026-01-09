@@ -34,4 +34,5 @@ Projekti harjoittaa ryhmätyötaitoja, käyttöliittymän suunnittelua sekä dyn
 - Opin JavaScriptin avulla käyttäjäinteraktiot ja DOM-manipulaation toteuttamista
 - Opin miten ryhmätyössä voidaan jakaa vastuuta ja yhdistää API-integraatio frontend-logiikkaan 
 
-  ## Video elokuvasivun toiminnasta
+  ## Linkki sivustoon (Ei toimi kunnolla esim kirjautumiset ja elokuvien haut)
+  https://movie-page-1-1xt1.onrender.com/
