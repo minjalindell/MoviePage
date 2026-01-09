@@ -34,5 +34,6 @@ Projekti harjoittaa ryhmätyötaitoja, käyttöliittymän suunnittelua sekä dyn
 - Opin JavaScriptin avulla käyttäjäinteraktiot ja DOM-manipulaation toteuttamista
 - Opin miten ryhmätyössä voidaan jakaa vastuuta ja yhdistää API-integraatio frontend-logiikkaan 
 
-  ## Linkki sivustoon (Ei toimi kunnolla esim kirjautumiset ja elokuvien haut)
+  ## Linkki sivustoon
+  Olemme käyttäneet vanhaa Finnkinon apia joka ei toimi enää, joten sivustommekaan ei oikein toimi miten pitäisi
   https://movie-page-1-1xt1.onrender.com/
